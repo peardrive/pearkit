@@ -1,0 +1,16 @@
+/* pearkit — import once at your app root (web/Electron and NativeWind native). */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Electron frameless windows: anything interactive inside a drag region stays clickable. */
+.app-region-drag [role='button'],
+.app-region-drag [role='link'],
+.app-region-drag [role='slider'],
+.app-region-drag [role='adjustable'],
+.app-region-drag button,
+.app-region-drag input,
+.app-region-drag textarea,
+.app-region-drag a {
+  -webkit-app-region: no-drag;
+}
