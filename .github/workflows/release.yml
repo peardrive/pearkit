@@ -1,0 +1,68 @@
+name: Release
+
+# Every push to main is a release (a merged release PR or hotfix).
+# This tags the commit with v<package.json version> and publishes a GitHub Release
+# whose notes are that version's section of CHANGELOG.md.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Read version
+        id: v
+        run: |
+          version=$(node -p "require('./package.json').version")
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "tag=v$version" >> "$GITHUB_OUTPUT"
+
+      - name: Extract release notes
+        run: |
+          awk -v v="${{ steps.v.outputs.version }}" '
+            $0 ~ "^## "v"([[:space:]]|$)" { on=1; next }
+            on && /^## / { exit }
+            on { print }
+          ' CHANGELOG.md > notes.md
+          if [ ! -s notes.md ]; then echo "Release ${{ steps.v.outputs.tag }}" > notes.md; fi
+          cat notes.md
+
+      - name: Tag
+        run: |
+          tag="${{ steps.v.outputs.tag }}"
+          if git rev-parse -q --verify "refs/tags/$tag" >/dev/null; then
+            if [ "$(git rev-list -n1 "$tag")" != "$GITHUB_SHA" ]; then
+              echo "::warning::$tag already exists on another commit; not moving it. Did this push forget to bump the version?"
+            fi
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -a "$tag" -m "pearkit $tag"
+          git push origin "$tag"
+
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          tag="${{ steps.v.outputs.tag }}"
+          if gh release view "$tag" >/dev/null 2>&1; then
+            echo "Release $tag already exists."
+          else
+            prerelease=""
+            case "${{ steps.v.outputs.version }}" in *-*) prerelease="--prerelease" ;; esac
+            gh release create "$tag" --verify-tag --title "pearkit $tag" --notes-file notes.md $prerelease
+          fi

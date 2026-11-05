@@ -1,0 +1,69 @@
+name: New component
+description: Propose a new component (primitive, chrome or pattern) for pearkit.
+title: "[Component] "
+labels: ["type: component", "status: triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        One issue per component. Work on it in a branch named `feat/<issue-number>-<short-name>`, e.g. `feat/42-segmented-control`.
+  - type: input
+    id: name
+    attributes:
+      label: Component name
+      description: The exported name, in PascalCase.
+      placeholder: SegmentedControl
+    validations:
+      required: true
+  - type: dropdown
+    id: layer
+    attributes:
+      label: Layer
+      options:
+        - Primitive
+        - Chrome (window, sidebar, toolbar, panes)
+        - Pattern (composed from other components)
+    validations:
+      required: true
+  - type: input
+    id: figma
+    attributes:
+      label: Figma link
+      description: Link to the frame or component (with node-id) this should match.
+      placeholder: https://www.figma.com/design/3A3p87KQ10gA367l8hY41X/...?node-id=...
+  - type: textarea
+    id: problem
+    attributes:
+      label: Why it is needed
+      description: Which app or screen needs it, and why existing components don't cover it.
+    validations:
+      required: true
+  - type: textarea
+    id: api
+    attributes:
+      label: Proposed API
+      description: Props, variants, controlled/uncontrolled behaviour, tokens it uses.
+      render: tsx
+      placeholder: |
+        <SegmentedControl
+          value="files"
+          onChange={setTab}
+          options={[{ value: 'files', label: 'Files' }, { value: 'peers', label: 'Peers' }]}
+        />
+  - type: checkboxes
+    id: platforms
+    attributes:
+      label: Platforms
+      options:
+        - label: Electron (react-native-web)
+        - label: React Native (iOS / Android)
+  - type: checkboxes
+    id: done
+    attributes:
+      label: Definition of done
+      options:
+        - label: Built from React Native primitives only, styled with token classes
+        - label: Exposes `className` and `style` on the root
+        - label: Story with a `Playground` and real variants
+        - label: Exported from `src/components/index.ts` and listed in `docs/components.md`
+        - label: Changeset added (`npx changeset`)

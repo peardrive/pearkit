@@ -1,0 +1,118 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [develop, main]
+  push:
+    branches: [develop, main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: verify
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # `npm ci` also runs the `prepare` script, which builds lib/ with bob.
+      # A broken build therefore fails here.
+      - name: Install and build library
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Build Storybook
+        run: npm run build-storybook -- --quiet
+
+  pr-title:
+    name: pr-title
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    steps:
+      - uses: amannn/action-semantic-pull-request@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          types: |
+            feat
+            fix
+            design
+            docs
+            refactor
+            perf
+            test
+            build
+            ci
+            chore
+            revert
+            release
+          requireScope: false
+          subjectPattern: ^(?![A-Z]).+$
+          subjectPatternError: |
+            Start the subject with a lowercase letter, e.g. "feat(Sidebar): add drag-to-collapse".
+
+  changeset:
+    name: changeset
+    # Feature/fix/design PRs into develop must describe their change for the changelog.
+    # Release PRs consume changesets, so they're exempt; so is anything labelled `no-changeset`.
+    if: >-
+      github.event_name == 'pull_request' &&
+      github.base_ref == 'develop' &&
+      !startsWith(github.head_ref, 'release/') &&
+      !contains(github.event.pull_request.labels.*.name, 'no-changeset')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Require a changeset
+        run: |
+          added=$(git diff --name-only --diff-filter=A "origin/${{ github.base_ref }}...HEAD" -- '.changeset/*.md' | grep -v 'README.md' || true)
+          if [ -z "$added" ]; then
+            echo "::error::No changeset found. Run 'npx changeset', commit the file, and push. For CI/tooling-only PRs, add the 'no-changeset' label."
+            exit 1
+          fi
+          echo "Changesets in this PR:"; echo "$added"
+
+  release-source:
+    name: release-source
+    # main only accepts release PRs from develop, or hotfix branches.
+    if: github.event_name == 'pull_request' && github.base_ref == 'main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Check source branch
+        run: |
+          head="${{ github.head_ref }}"
+          case "$head" in
+            develop|hotfix/*) echo "Source branch '$head' is allowed." ;;
+            *) echo "::error::PRs into main must come from 'develop' (a release) or 'hotfix/*'. Retarget this PR to develop."; exit 1 ;;
+          esac
+      - name: Check version was bumped
+        run: |
+          version=$(node -p "require('./package.json').version")
+          if git rev-parse -q --verify "refs/tags/v$version" >/dev/null; then
+            echo "::error::v$version is already released. Run the release prep (npm run release:prepare) on develop first."
+            exit 1
+          fi
+          if ls .changeset/*.md 2>/dev/null | grep -v README.md; then
+            echo "::error::Unconsumed changesets found. Run 'npm run release:prepare' so they're written into CHANGELOG.md."
+            exit 1
+          fi
+          echo "Releasing v$version"

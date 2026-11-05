@@ -1,0 +1,47 @@
+name: Bug report
+description: Something in pearkit renders or behaves incorrectly.
+title: "[Bug] "
+labels: ["type: bug", "status: triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Fixes go in a branch named `fix/<issue-number>-<short-name>`, e.g. `fix/63-tooltip-offset`.
+  - type: input
+    id: version
+    attributes:
+      label: pearkit version
+      description: From your app's package.json / lockfile, e.g. v0.2.0.
+    validations:
+      required: true
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      multiple: true
+      options:
+        - Electron (Windows)
+        - Electron (macOS)
+        - Electron (Linux)
+        - iOS
+        - Android
+        - Storybook only
+    validations:
+      required: true
+  - type: input
+    id: component
+    attributes:
+      label: Component(s)
+      placeholder: Sidebar, Tooltip
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what you expected
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Minimal reproduction
+      description: Code snippet or a Storybook story/args that shows the problem.
+      render: tsx

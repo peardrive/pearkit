@@ -1,0 +1,33 @@
+name: Repo setup (labels)
+
+# Run once from the Actions tab ("Run workflow") to create or update the issue labels.
+# Safe to re-run.
+on:
+  workflow_dispatch:
+
+permissions:
+  issues: write
+
+jobs:
+  labels:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - name: Create labels
+        run: |
+          label() { gh label create "$1" --color "$2" --description "$3" --force; }
+          label "type: component"   "1D76DB" "New component"
+          label "type: design"      "C5DEF5" "Design, token, theme or icon change"
+          label "type: bug"         "D73A4A" "Something renders or behaves incorrectly"
+          label "type: docs"        "0075CA" "Documentation and Storybook docs"
+          label "type: chore"       "EDEDED" "Tooling, CI, dependencies"
+          label "status: triage"    "FBCA04" "Needs a decision before work starts"
+          label "status: ready"     "0E8A16" "Agreed and ready to pick up"
+          label "status: in progress" "5319E7" "Someone is working on it"
+          label "breaking"          "B60205" "Changes public API; needs a major (or 0.x minor) bump"
+          label "platform: electron" "BFDADC" "Electron / react-native-web specific"
+          label "platform: native"  "BFD4F2" "iOS / Android specific"
+          label "no-changeset"      "EDEDED" "PR does not need a changelog entry"
+          label "release"           "0E8A16" "Release pull request"

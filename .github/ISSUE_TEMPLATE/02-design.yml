@@ -1,0 +1,42 @@
+name: Design change
+description: A new design, token change, theme update or visual revision of existing components.
+title: "[Design] "
+labels: ["type: design", "status: triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this for visual work that changes how existing components look (tokens, themes, icons, spacing, a redesign).
+        Work on it in a branch named `design/<issue-number>-<short-name>`, e.g. `design/57-light-theme-contrast`.
+  - type: input
+    id: figma
+    attributes:
+      label: Figma link
+      description: The frame(s) that define the new design, with node-id.
+    validations:
+      required: true
+  - type: textarea
+    id: summary
+    attributes:
+      label: What changes
+      description: What looks different and why. Before/after screenshots help.
+    validations:
+      required: true
+  - type: textarea
+    id: affected
+    attributes:
+      label: Affected components, tokens or icons
+      placeholder: |
+        - tokens: overlay, surfaceRaised
+        - components: Card, ShareRow, Sidebar
+  - type: dropdown
+    id: impact
+    attributes:
+      label: Impact on apps that use pearkit
+      description: Helps decide the version bump.
+      options:
+        - Visual only — no API change (patch)
+        - Adds tokens, props or variants (minor)
+        - Renames or removes tokens, props or components (breaking)
+    validations:
+      required: true
