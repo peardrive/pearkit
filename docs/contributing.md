@@ -1,5 +1,26 @@
 # Contributing
 
+## How work flows
+
+Every change starts as a GitHub issue (**New component**, **Design change** or **Bug report**), is built on its own branch off `develop`, and lands through a pull request. `main` only receives releases.
+
+```
+issue #42 ─▶ feat/42-segmented-control ─▶ PR into develop (squash) ─▶ release PR develop → main ─▶ v0.3.0
+```
+
+In short:
+
+1. Pick up an issue marked `status: ready`.
+2. `git switch develop && git pull --ff-only && git switch -c feat/42-segmented-control`
+3. Build it, with a story. Commit as often as you like.
+4. `npx changeset` to describe the change for the changelog, and commit the file.
+5. Open a PR **into develop** with a Conventional Commit title (`feat(SegmentedControl): add segmented control`) and `Closes #42` in the body.
+6. Once CI is green, **Squash and merge**.
+
+Branch types: `feat/`, `design/`, `fix/`, `docs/`, `refactor/`, `chore/` — always followed by the issue number.
+
+Releases, hotfixes, versioning and the one-time GitHub setup are in [releasing.md](releasing.md).
+
 ## Setup
 
 ```bash
@@ -23,6 +44,8 @@ src/
 icons/            SVG sources (vuesax = from Figma, pearkit = drawn for the kit)
 docs/             markdown guides (also rendered inside Storybook)
 examples/         Electron and React Native starter code
+.changeset/       pending changelog entries, consumed at release time
+.github/          issue/PR templates, CI and release workflows, branch rulesets
 tailwind.preset.js · global.css · vite.js
 ```
 
@@ -34,6 +57,7 @@ tailwind.preset.js · global.css · vite.js
 4. **Expose `className` and `style`** on the root of every component and merge with `cn()`.
 5. **Every component gets a story** next to it, with a `Playground` (args/controls) and at least one story showing real variants.
 6. **Layout stories use only exported components.** If a layout needs custom markup, it's a sign a component is missing.
+7. **Public API changes need a changeset.** Renaming or removing a prop, token or component is breaking: say so in the changeset and include a migration note.
 
 ## Icons
 

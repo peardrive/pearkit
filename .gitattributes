@@ -1,0 +1,15 @@
+# Normalise line endings so Windows, macOS and Linux contributors produce identical diffs.
+* text=auto eol=lf
+
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.avif binary
+*.ico  binary
+*.woff binary
+*.woff2 binary
+*.ttf  binary
+
+package-lock.json -diff linguist-generated
+src/icons/registry.ts linguist-generated

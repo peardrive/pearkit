@@ -1,7 +1,7 @@
 {
   "name": "pearkit",
   "version": "0.2.0",
-  "description": "Universal, themeable UI kit for PearDrive apps \u2014 one set of React components for React Native and Electron, styled with Tailwind (NativeWind).",
+  "description": "Universal, themeable UI kit for PearDrive apps — one set of React components for React Native and Electron, styled with Tailwind (NativeWind).",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
   "types": "./lib/typescript/commonjs/index.d.ts",
@@ -53,7 +53,9 @@
     "build-storybook": "storybook build",
     "icons": "node scripts/build-icons.mjs",
     "readme:header": "node scripts/capture-readme-header.mjs",
-    "test": "vitest"
+    "test": "vitest",
+    "changeset": "changeset",
+    "release:prepare": "node scripts/release-prepare.mjs"
   },
   "peerDependencies": {
     "@vitejs/plugin-react": ">=4",
@@ -79,6 +81,7 @@
   },
   "devDependencies": {
     "@babel/plugin-transform-react-jsx": "^7.27.1",
+    "@changesets/cli": "^2.31.1",
     "@chromatic-com/storybook": "latest",
     "@fontsource/plus-jakarta-sans": "^5.3.0",
     "@storybook/addon-a11y": "^10.6.5",

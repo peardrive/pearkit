@@ -32,7 +32,7 @@
 ## Quick start
 
 ```bash
-npm install github:peardrive/pearkit
+npm install "github:peardrive/pearkit#semver:^0.2.0"
 npm install nativewind@^4.1 tailwindcss@^3.4 react-native-svg
 ```
 
@@ -156,10 +156,14 @@ tailwind.preset.js · global.css · vite.js
 | `npm run prepare` | Build `lib/` (CommonJS, ESM, types) with react-native-builder-bob |
 | `npm run icons` | Regenerate the icon registry from `icons/**/*.svg` |
 | `npm run readme:header` | Re-render this README's header image from its story |
+| `npx changeset` | Describe your change for the changelog (every PR into `develop`) |
+| `npm run release:prepare` | Cut a release from `develop` (maintainers, see [docs/releasing.md](docs/releasing.md)) |
 
 ## Contributing
 
 PRs are welcome. PearDrive is open source and non-commercial. Read [docs/contributing.md](docs/contributing.md) for the conventions: RN primitives only, colour only through tokens, full Tailwind class names, a story for every component.
+
+Work starts from an issue, goes on a `feat/`, `design/` or `fix/` branch off `develop`, and reaches `main` only in a release. Pin your app to a release tag; `main` always points at the latest one. See [docs/releasing.md](docs/releasing.md) and the [CHANGELOG](CHANGELOG.md).
 
 ## License
 

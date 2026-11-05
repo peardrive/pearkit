@@ -7,7 +7,7 @@ pearkit is a React component library that runs unchanged in **React Native** (iO
 pearkit is installed from its GitHub repository:
 
 ```bash
-npm install github:peardrive/pearkit
+npm install "github:peardrive/pearkit#semver:^0.2.0"
 ```
 
 Peer dependencies (install the ones your platform needs):
