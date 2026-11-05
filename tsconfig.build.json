@@ -4,6 +4,6 @@
     "noEmit": false,
     "rootDir": "./src"
   },
-  "include": ["src"],
-  "exclude": ["**/*.stories.tsx", "**/*.stories.ts", "src/stories"]
+  "include": ["src", "nativewind-env.d.ts"],
+  "exclude": ["**/*.stories.tsx", "**/*.stories.ts", "**/*.mdx", "src/stories"]
 }

@@ -3,3 +3,7 @@ lib
 storybook-static
 .DS_Store
 *storybook.log
+*.tgz
+examples/*/node_modules
+examples/*/dist
+examples/*/dist-electron
