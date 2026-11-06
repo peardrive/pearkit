@@ -42,6 +42,7 @@ A map of everything pearkit exports. Storybook has full prop tables, controls an
 | `Toolbar`, `ToolbarButton`, `ToolbarSeparator`, `ToolbarSpacer` | 52px action bar with tooltips. |
 | `PaneHeader` | Title, subtitle, data-driven actions, `leading` slot. |
 | `AppWindow`, `Pane`, `PaneBody` | Layout skeleton: panes, surfaces, glow, scrolling. |
+| `FolderTabs`, `FolderTabPage` | Tabs that open into their page: the open tab lit, the page edge running on from it across the top and fading down the sides; tabs scroll when they outgrow the row; `trailing` slot. `FolderTabPage` is the framed page on its own. |
 
 ## PearDrop patterns
 
