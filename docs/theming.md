@@ -31,6 +31,7 @@ So `bg-primary`, `text-muted/80` or `border-overlay/[0.08]` always follow the cu
 | Brand | `primary`, `primary-foreground`, `primary-strong`, `primary-text`, `selected` |
 | Status | `success`, `warning`, `danger`, `danger-foreground`, `neutral`, `info`, `accent`, `favorite` |
 | Window & QR | `window-close`, `window-minimize`, `window-maximize`, `window-inactive`, `qr-background`, `qr-foreground` |
+| Media | `playhead` — the playhead over a scrubber, trim strip or timeline |
 
 `overlay` deserves a note: it's **white on dark themes and black on light ones**. Hover states, cards and hairlines are drawn with it at low opacity (`bg-overlay/[0.04]`, `border-overlay/[0.07]`), which is why the same components look right on any background.
 

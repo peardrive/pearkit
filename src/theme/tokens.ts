@@ -49,6 +49,8 @@ export const colorTokenNames = [
   // QR
   'qr-background',
   'qr-foreground',
+  // Media
+  'playhead', // the playhead over a scrubber, a trim strip, a timeline
 ] as const;
 
 export type ColorToken = (typeof colorTokenNames)[number];
