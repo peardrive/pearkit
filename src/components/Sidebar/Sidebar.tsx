@@ -1,14 +1,5 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
-import {
-  PanResponder,
-  Platform,
-  Pressable,
-  ScrollView,
-  View,
-  type AccessibilityActionEvent,
-  type StyleProp,
-  type ViewStyle,
-} from 'react-native';
+import { Platform, Pressable, ScrollView, View, type StyleProp, type ViewStyle } from 'react-native';
 import { cn } from '../../utils/cn';
 import { clamp } from '../../utils/format';
 import { renderIcon, type IconSource } from '../../icons/Icon';
@@ -23,6 +14,7 @@ import { Spacer } from '../Spacer/Spacer';
 import { StatusDot } from '../Status/StatusDot';
 import { Text } from '../Text/Text';
 import { Tooltip } from '../Tooltip/Tooltip';
+import { ResizeHandle } from '../ResizeHandle/ResizeHandle';
 
 /* ───────────────────────── context ───────────────────────── */
 
@@ -70,6 +62,11 @@ export interface SidebarProps {
   resetOnDoubleClick?: boolean;
   /** Keyboard / screen-reader resize step in px. Default 16. */
   resizeStep?: number;
+  /**
+   * Space kept between the sidebar and what is beside it, in px. The resize handle's bar sits in the
+   * middle of it, so it reads as the seam between the two. Default 0 (flush, the bar on the edge).
+   */
+  gutter?: number;
 
   /* Collapsing */
   collapsed?: boolean;
@@ -107,6 +104,7 @@ export function Sidebar({
   resizable = false,
   resetOnDoubleClick = true,
   resizeStep = 16,
+  gutter = 0,
   collapsed: collapsedProp,
   defaultCollapsed = false,
   onCollapsedChange,
@@ -123,12 +121,11 @@ export function Sidebar({
   const [innerWidth, setInnerWidth] = useState(defaultWidth);
   const [innerCollapsed, setInnerCollapsed] = useState(defaultCollapsed);
   const [resizing, setResizing] = useState(false);
-  const [handleHover, setHandleHover] = useState(false);
 
   const width = clamp(widthProp ?? innerWidth, minWidth, maxWidth);
   const collapsed = collapsedProp ?? innerCollapsed;
 
-  // Refs keep the PanResponder (created once) in sync with the latest props.
+  // Refs keep the drag callbacks (stable across renders) reading the latest props.
   const live = useRef({ width, collapsed, minWidth, maxWidth, collapseOnDrag, onWidthChange, onResizeEnd, onCollapsedChange, widthProp, collapsedProp, defaultWidth, resetOnDoubleClick });
   live.current = { width, collapsed, minWidth, maxWidth, collapseOnDrag, onWidthChange, onResizeEnd, onCollapsedChange, widthProp, collapsedProp, defaultWidth, resetOnDoubleClick };
 
@@ -146,92 +143,39 @@ export function Sidebar({
     l.onCollapsedChange?.(next);
   }, []);
 
-  const drag = useRef({ start: 0, lastTap: 0, latest: 0, ignore: false });
-  const handleRef = useRef<React.ComponentRef<typeof View>>(null);
-
-  const pan = useMemo(
-    () =>
-      PanResponder.create({
-        onStartShouldSetPanResponder: () => true,
-        onMoveShouldSetPanResponder: () => true,
-        onPanResponderTerminationRequest: () => false,
-        onPanResponderGrant: () => {
-          const l = live.current;
-          const now = Date.now();
-          if (l.resetOnDoubleClick && now - drag.current.lastTap < 300) {
-            if (l.collapsed) setCollapsed(false);
-            const reset = setWidth(l.defaultWidth);
-            l.onResizeEnd?.(reset);
-            drag.current.lastTap = 0;
-            drag.current.ignore = true; // don't resize for the rest of this gesture
-            return;
-          }
-          drag.current.lastTap = now;
-          drag.current.ignore = false;
-          drag.current.start = l.collapsed ? collapsedWidth : l.width;
-          drag.current.latest = drag.current.start;
-          setResizing(true);
-        },
-        onPanResponderMove: (_e, g) => {
-          if (drag.current.ignore) return;
-          const l = live.current;
-          const raw = drag.current.start + g.dx;
-          drag.current.latest = raw;
-          if (l.collapseOnDrag !== false && raw < l.minWidth - l.collapseOnDrag) {
-            if (!l.collapsed) setCollapsed(true);
-            return;
-          }
-          if (l.collapsed && raw >= l.minWidth - (l.collapseOnDrag || 0) / 2) setCollapsed(false);
-          if (!live.current.collapsed || raw >= l.minWidth) setWidth(raw);
-        },
-        onPanResponderRelease: () => {
-          setResizing(false);
-          if (drag.current.ignore) return;
-          const l = live.current;
-          if (!l.collapsed) l.onResizeEnd?.(l.width);
-        },
-        onPanResponderTerminate: () => setResizing(false),
-      }),
-    [collapsedWidth, setCollapsed, setWidth],
-  );
-
-  // While dragging on the web, keep the resize cursor everywhere and stop text selection.
-  useEffect(() => {
-    if (Platform.OS !== 'web' || !resizing || typeof document === 'undefined') return;
-    const { style: s } = document.body;
-    const prev = { cursor: s.cursor, userSelect: s.userSelect };
-    s.cursor = 'col-resize';
-    s.userSelect = 'none';
-    return () => { s.cursor = prev.cursor; s.userSelect = prev.userSelect; };
-  }, [resizing]);
+  // The handle reports the drag; the width, the collapse and the reset are decided here.
+  const drag = useRef({ start: 0 });
+  const dragStart = useCallback(() => {
+    const l = live.current;
+    drag.current.start = l.collapsed ? collapsedWidth : l.width;
+    setResizing(true);
+  }, [collapsedWidth]);
+  const dragMove = useCallback((delta: number) => {
+    const l = live.current;
+    const raw = drag.current.start + delta;
+    if (l.collapseOnDrag !== false && raw < l.minWidth - l.collapseOnDrag) {
+      if (!l.collapsed) setCollapsed(true);
+      return;
+    }
+    if (l.collapsed && raw >= l.minWidth - (l.collapseOnDrag || 0) / 2) setCollapsed(false);
+    if (!live.current.collapsed || raw >= l.minWidth) setWidth(raw);
+  }, [setCollapsed, setWidth]);
+  const dragEnd = useCallback(() => {
+    setResizing(false);
+    const l = live.current;
+    if (!l.collapsed) l.onResizeEnd?.(l.width);
+  }, []);
+  const resetWidth = useCallback(() => {
+    const l = live.current;
+    if (l.collapsed) setCollapsed(false);
+    l.onResizeEnd?.(setWidth(l.defaultWidth));
+  }, [setCollapsed, setWidth]);
 
   const nudge = (delta: number) => {
     const next = setWidth(width + delta); // evaluate first — onResizeEnd is optional
     onResizeEnd?.(next);
   };
-
-  const onA11yAction = (e: AccessibilityActionEvent) => {
-    if (e.nativeEvent.actionName === 'increment') nudge(resizeStep);
-    if (e.nativeEvent.actionName === 'decrement') nudge(-resizeStep);
-  };
-
-  const onKeyDown = (e: { key: string; preventDefault?: () => void }) => {
-    if (e.key === 'ArrowRight') { e.preventDefault?.(); nudge(resizeStep); }
-    if (e.key === 'ArrowLeft') { e.preventDefault?.(); nudge(-resizeStep); }
-    if (e.key === 'Enter') setCollapsed(!collapsed);
-  };
-
-  // react-native-web doesn't forward onKeyDown on View, so listen on the DOM node.
-  const keyHandler = useRef(onKeyDown);
-  keyHandler.current = onKeyDown;
-  useEffect(() => {
-    if (Platform.OS !== 'web' || !resizable) return;
-    const node = handleRef.current as unknown as HTMLElement | null;
-    if (!node?.addEventListener) return;
-    const listener = (e: KeyboardEvent) => keyHandler.current(e);
-    node.addEventListener('keydown', listener);
-    return () => node.removeEventListener('keydown', listener);
-  }, [resizable]);
+  const onStep = (direction: 1 | -1) => nudge(direction * resizeStep);
 
   const ctx = useMemo<SidebarContextValue>(
     () => ({ collapsed, setCollapsed, toggle: () => setCollapsed(!collapsed), width: collapsed ? collapsedWidth : width, resizing }),
@@ -248,31 +192,27 @@ export function Sidebar({
         accessibilityRole={Platform.OS === 'web' ? ('navigation' as never) : undefined}
         accessibilityLabel={accessibilityLabel}
         className={cn('relative h-full shrink-0', bordered && 'border-r border-overlay/[0.06]', !gradient && 'bg-sidebar', className)}
-        style={[{ width: effectiveWidth }, transition, style]}
+        style={[{ width: effectiveWidth }, gutter ? { marginRight: gutter } : null, transition, style]}
       >
         {gradient ? <LinearGradient colors={[theme.colors.sidebar, theme.colors['sidebar-to']]} direction="to-bottom" /> : null}
         <View className={cn('flex-1 gap-0.5 overflow-hidden px-3 pb-3 pt-3.5', collapsed && 'items-center', contentClassName)}>{children}</View>
 
         {resizable ? (
-          <View
-            ref={handleRef}
-            {...pan.panHandlers}
-            accessible
-            focusable
-            accessibilityRole="adjustable"
+          <ResizeHandle
+            orientation="vertical"
+            thickness={Math.max(12, gutter)}
+            barLength={48}
+            active={resizing}
+            onResizeStart={dragStart}
+            onResize={dragMove}
+            onResizeEnd={dragEnd}
+            onReset={resetOnDoubleClick ? resetWidth : undefined}
+            onStep={onStep}
             accessibilityLabel="Resize sidebar"
-            accessibilityHint="Drag, or use the arrow keys. Double-click to reset."
             accessibilityValue={{ min: minWidth, max: maxWidth, now: effectiveWidth }}
-            accessibilityActions={[{ name: 'increment' }, { name: 'decrement' }]}
-            onAccessibilityAction={onA11yAction}
-            {...({ onMouseEnter: () => setHandleHover(true), onMouseLeave: () => setHandleHover(false) } as object)}
-            className={cn('app-region-no-drag absolute bottom-0 top-0 z-10 items-center', Platform.OS === 'web' && 'cursor-col-resize')}
-            style={{ right: -4, width: 8 }}
-          >
-            <View
-              className={cn('h-full w-0.5 rounded-full', resizing ? 'bg-primary/70' : handleHover ? 'bg-primary/40' : 'bg-transparent')}
-            />
-          </View>
+            className="absolute bottom-0 top-0 z-10"
+            style={{ right: -(gutter / 2) - Math.max(12, gutter) / 2 }}
+          />
         ) : null}
       </View>
     </SidebarContext.Provider>
