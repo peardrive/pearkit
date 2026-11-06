@@ -29,6 +29,7 @@ export * from './Sidebar/Sidebar';
 export * from './Toolbar/Toolbar';
 export * from './PaneHeader/PaneHeader';
 export * from './Layout/AppWindow';
+export * from './FolderTabs/FolderTabs';
 
 // PearDrop patterns
 export * from './NetworkStatus/NetworkStatusCard';
