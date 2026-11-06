@@ -54,15 +54,25 @@ export const PIN = {
 /** Space to leave under a strip so the pins' balls have room. */
 export const PIN_PAD = 8;
 
+/** The house's size: its width, its full height, and where its walls end and its point begins. */
+export interface PlayheadCap {
+  width: number;
+  height: number;
+  shoulder: number;
+}
+
+/** The strip's cap (tiny). A timeline ruler passes its own, bigger one. */
+export const PLAYHEAD_CAP: PlayheadCap = { width: PLAYHEAD.capWidth, height: PLAYHEAD.capHeight, shoulder: PLAYHEAD.capShoulder };
+
 /** The house's five corners, point down, centred on `x` with its roof at `top`. */
-export function playheadCapPoints(x: number, top: number): Array<[number, number]> {
-  const w = PLAYHEAD.capWidth / 2, s = PLAYHEAD.capShoulder, h = PLAYHEAD.capHeight;
+export function playheadCapPoints(x: number, top: number, cap: PlayheadCap = PLAYHEAD_CAP): Array<[number, number]> {
+  const w = cap.width / 2, s = cap.shoulder, h = cap.height;
   return [[x - w, top], [x + w, top], [x + w, top + s], [x, top + h], [x - w, top + s]];
 }
 
 /** The house as an SVG path. */
-export function playheadCapPath(x: number, top: number): string {
-  return playheadCapPoints(x, top).map(([px, py], i) => `${i ? 'L' : 'M'}${px} ${py}`).join(' ') + ' Z';
+export function playheadCapPath(x: number, top: number, cap: PlayheadCap = PLAYHEAD_CAP): string {
+  return playheadCapPoints(x, top, cap).map(([px, py], i) => `${i ? 'L' : 'M'}${px} ${py}`).join(' ') + ' Z';
 }
 
 export interface PaintPlayheadOptions {
@@ -72,14 +82,27 @@ export interface PaintPlayheadOptions {
   /** How far down the line runs. */
   height: number;
   color: string;
+  /** Width of the line. Default 2. */
+  lineWidth?: number;
+  /** The house's size. Default the strip's tiny one; a timeline passes its bigger one. */
+  cap?: PlayheadCap;
+  /** Draw only the line (the head is drawn elsewhere, e.g. on a ruler that stays put while the lanes scroll). */
+  headless?: boolean;
 }
 
 /** Draw the playhead on a canvas: the line and the house. */
-export function paintPlayhead(ctx: Canvas2D, { x, top, height, color }: PaintPlayheadOptions): void {
+export function paintPlayhead(ctx: Canvas2D, { x, top, height, color, lineWidth = PLAYHEAD.lineWidth, cap = PLAYHEAD_CAP, headless = false }: PaintPlayheadOptions): void {
   ctx.fillStyle = color;
-  ctx.fillRect(x - PLAYHEAD.lineWidth / 2, top, PLAYHEAD.lineWidth, height);
+  ctx.fillRect(x - lineWidth / 2, top, lineWidth, height);
+  if (headless) return;
+  paintPlayheadCap(ctx, { x, top, color, cap });
+}
+
+/** Just the house — for a ruler that keeps the head while the lanes under it scroll. */
+export function paintPlayheadCap(ctx: Canvas2D, { x, top, color, cap = PLAYHEAD_CAP }: { x: number; top: number; color: string; cap?: PlayheadCap }): void {
+  ctx.fillStyle = color;
   ctx.beginPath();
-  playheadCapPoints(x, top).forEach(([px, py], i) => (i ? ctx.lineTo(px, py) : ctx.moveTo(px, py)));
+  playheadCapPoints(x, top, cap).forEach(([px, py], i) => (i ? ctx.lineTo(px, py) : ctx.moveTo(px, py)));
   ctx.closePath();
   ctx.fill();
 }
