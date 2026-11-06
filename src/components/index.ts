@@ -39,6 +39,19 @@ export * from './FileHeader/FileHeader';
 export * from './ShareLink/ShareLinkCard';
 export * from './DangerZone/DangerZone';
 
+// Media time
+export * from './Scrubber/timeRange';
+export * from './Scrubber/useTimeRange';
+export * from './Scrubber/timeGlyphs';
+export * from './Scrubber/Glyphs';
+export * from './Scrubber/Scrubber';
+export * from './Transport/Transport';
+export * from './Waveform/waveformBars';
+export * from './Waveform/Waveform';
+export * from './Filmstrip/filmstripCells';
+export * from './Filmstrip/Filmstrip';
+export * from './TrimStrip/TrimStrip';
+
 // Forms & overlays
 export * from './TextField/TextField';
 export * from './Dialog/Dialog';
