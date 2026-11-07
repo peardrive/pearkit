@@ -33,6 +33,13 @@ A map of everything pearkit exports. Storybook has full prop tables, controls an
 | `TextField` | Label, hint / error, icons, trailing slot, password reveal, monospace and multiline modes. |
 | `Dialog` | Modal on RN `Modal` (portalled on web with the theme re-applied), icon + title + description, footer actions, Escape / backdrop to close. |
 
+## Media browse
+
+| Component | Highlights |
+| --- | --- |
+| `Masonry` | Balanced mixed-height columns: `columns` or auto from `minColumnWidth`, `gap`, `getAspectRatio` balancing; pure `masonryColumns()` for virtualized/canvas hosts. |
+| `MediaTile` | One tile of a media wall: picture or kind icon, corner `badge`, title/meta scrim (`reveal: auto · hover · always`), selection ring, `favorite`, and a host-owned `preview` slot driven by `onHoverChange`. |
+
 ## App chrome
 
 | Component | Highlights |
