@@ -40,6 +40,11 @@ export * from './FileHeader/FileHeader';
 export * from './ShareLink/ShareLinkCard';
 export * from './DangerZone/DangerZone';
 
+// Media browse
+export * from './Masonry/masonryColumns';
+export * from './Masonry/Masonry';
+export * from './MediaTile/MediaTile';
+
 // Forms & overlays
 export * from './TextField/TextField';
 export * from './Dialog/Dialog';
