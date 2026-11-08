@@ -42,3 +42,6 @@ export * from './DangerZone/DangerZone';
 // Forms & overlays
 export * from './TextField/TextField';
 export * from './Dialog/Dialog';
+
+// In-app tools
+export * from './DebugNotes/DebugNotesButton';

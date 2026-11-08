@@ -54,6 +54,13 @@ A map of everything pearkit exports. Storybook has full prop tables, controls an
 | `NetworkStatusCard` | Connection state, peers, rates, pause/resume, `compact` rail mode. |
 | `DangerZone` | Destructive action with its consequence. |
 
+## In-app tools
+
+| Export | Highlights |
+| --- | --- |
+| `DebugNotesButton`, `useDebugNotes`, `useMicLevel` | The debug-notes button: mic + label idle, red with a live level and `m:ss · steps` while a note records, grey without a microphone. |
+| `createDebugNotes` (+ `createTrace`, `createWebRecorder`, `createUnavailableRecorder`, `installCapture`, `domPath`, `noteId`) | Headless debug notes: a voice recording plus a timed trace of every step, saved as `note.<audio>` + `trace.jsonl` + `note.json`. See [debug-notes.md](debug-notes.md). |
+
 ## Utilities
 
 `cn`, `formatBytes`, `formatSpeed`, `formatEta`, `truncateMiddle`, `clamp`, `copyToClipboard`.
