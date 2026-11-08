@@ -9,7 +9,7 @@ A map of everything pearkit exports. Storybook has full prop tables, controls an
 | `ThemeProvider`, `useTheme`, `useThemeColor` | Provide / read the active theme. |
 | `darkTheme`, `lightTheme`, `createTheme`, `withAlpha` | Built-in themes and helpers. |
 | `Text` | Typography: `variant` (display · title · body-lg · body · body-sm · label · caption · micro · overline), `weight`, `tone`, `truncate`. |
-| `Icon`, `iconNames`, `renderIcon` | 37 SVG icons, coloured by `tone` or `color`. |
+| `Icon`, `iconNames`, `renderIcon` | 39 SVG icons, coloured by `tone` or `color`. |
 | `LinearGradient`, `RadialGlow` | Cross-platform SVG gradients. |
 
 ## Components
@@ -29,6 +29,7 @@ A map of everything pearkit exports. Storybook has full prop tables, controls an
 | `LinkField` | Copyable recessed field with "copied" feedback. |
 | `KeyValueList`, `KeyValueRow` | Metadata lists, data-driven or composed. |
 | `EmptyState` | Icon, title, description, actions. |
+| `MediaNotice` | Over a player that cannot play: `offline` / `unplayable` presets or custom copy, theme scrim, retry button, inline mode. |
 | `Card`, `Divider`, `Kbd`, `SectionLabel`, `Spacer` | Small building blocks. |
 | `TextField` | Label, hint / error, icons, trailing slot, password reveal, monospace and multiline modes. |
 | `Dialog` | Modal on RN `Modal` (portalled on web with the theme re-applied), icon + title + description, footer actions, Escape / backdrop to close. |
