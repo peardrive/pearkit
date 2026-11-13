@@ -45,3 +45,4 @@ export * from './Dialog/Dialog';
 
 // In-app tools
 export * from './DebugNotes/DebugNotesButton';
+export * from './UpdateNotice/UpdateNotice';
