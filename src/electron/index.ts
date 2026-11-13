@@ -18,6 +18,7 @@
 import type { PearkitWindowState } from './types';
 
 export * from './types';
+export { installUpdate, installedAt, swapScript, type InstallUpdateOptions, type SwapScriptOptions } from './install';
 
 /** `process.platform` when running under Node/Electron (no Node typings needed). */
 function hostPlatform(): string | undefined {
