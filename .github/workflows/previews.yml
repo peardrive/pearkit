@@ -7,6 +7,8 @@ on:
     branches: [main, develop]
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review, closed]
+  # Build any branch's preview on demand (Actions → Previews → Run workflow), e.g. main before its next release.
+  workflow_dispatch:
 
 permissions:
   contents: write
