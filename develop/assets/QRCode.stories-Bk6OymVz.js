@@ -1,0 +1,7 @@
+import{n as e}from"./rolldown-runtime-BCiCTKAo.js";import{a as t}from"./iframe-CmcEqaQC.js";import{n,t as r}from"./QRCode-CnMlhi4b.js";import{i,n as a}from"./helpers-DlFGh-SZ.js";var o,s,c,l,u;function d(){return(d=e((()=>{n(),i(),o=t(),s={title:`Components/QRCode`,component:r,parameters:{docs:{description:{component:"Real, scannable QR code generated in JS and drawn as one SVG path. Colours come from the `qr-foreground` / `qr-background` tokens."}}},argTypes:{errorCorrection:{control:`inline-radio`,options:[`L`,`M`,`Q`,`H`]},size:{control:{type:`range`,min:64,max:280,step:4}}},args:{value:`peardrop://1de0909835728b6e0f3a4c19d2e7b8a5c6f71d0e9f684cb145a28`,size:108}},c={},l={render:()=>(0,o.jsxs)(a,{children:[(0,o.jsx)(r,{value:`peardrop://demo`,size:108}),(0,o.jsx)(r,{value:`peardrop://demo`,size:108,color:`#a6ce39`,backgroundColor:`#0d0c11`}),(0,o.jsx)(r,{value:`peardrop://demo`,size:108,radius:54,padding:20})]})},u=[`Playground`,`Styles`],c.parameters={...c.parameters,docs:{...c.parameters?.docs,source:{originalSource:`{}`,...c.parameters?.docs?.source}}},l.parameters={...l.parameters,docs:{...l.parameters?.docs,source:{originalSource:`{
+  render: () => <Showcase>
+      <QRCode value="peardrop://demo" size={108} />
+      <QRCode value="peardrop://demo" size={108} color="#a6ce39" backgroundColor="#0d0c11" />
+      <QRCode value="peardrop://demo" size={108} radius={54} padding={20} />
+    </Showcase>
+}`,...l.parameters?.docs?.source}}}})))()}d();export{c as Playground,l as Styles,u as __namedExportsOrder,s as default};
