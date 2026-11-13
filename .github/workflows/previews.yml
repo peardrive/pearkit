@@ -1,0 +1,67 @@
+name: Previews
+
+# A Storybook for every place a component can be looked at: main, develop and each open pull request, published to
+# GitHub Pages at /<slot>/ (main, develop, pr-<n>). Pearkit Studio shows these; they're also plain links to share.
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review, closed]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: previews-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    # Pull requests from forks get a read-only token; they're previewed once a maintainer opens them from a branch here.
+    if: >-
+      github.event.action != 'closed' &&
+      (github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Build Storybook
+        run: npm run build-storybook -- --quiet
+
+      - name: Which slot
+        id: slot
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then echo "dir=pr-${{ github.event.pull_request.number }}" >> "$GITHUB_OUTPUT";
+          else echo "dir=${GITHUB_REF_NAME}" >> "$GITHUB_OUTPUT"; fi
+          echo '{"sha":"${{ github.event.pull_request.head.sha || github.sha }}","builtAt":"'"$(date -u +%FT%TZ)"'"}' > storybook-static/preview.json
+
+      - uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./storybook-static
+          destination_dir: ${{ steps.slot.outputs.dir }}
+          keep_files: true
+          commit_message: "preview: ${{ steps.slot.outputs.dir }} @ ${{ github.event.pull_request.head.sha || github.sha }}"
+
+  remove:
+    # A closed pull request takes its preview with it.
+    if: github.event.action == 'closed' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+      - run: |
+          dir="pr-${{ github.event.pull_request.number }}"
+          [ -d "$dir" ] || exit 0
+          git rm -rq "$dir"
+          git -c user.name=github-actions -c user.email=github-actions@users.noreply.github.com commit -qm "preview: remove $dir"
+          git push -q
