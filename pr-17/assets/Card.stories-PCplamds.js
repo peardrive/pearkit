@@ -1,0 +1,11 @@
+import{n as e}from"./rolldown-runtime-BCiCTKAo.js";import{n as t,t as n}from"./Text-C7CcZ4xr.js";import{N as r,a as i,u as a}from"./iframe-CmcEqaQC.js";import{n as o,t as s}from"./Card-D-x-TCwa.js";var c,l,u,d,f;function p(){return(p=e((()=>{a(),o(),t(),c=i(),l={title:`Components/Card`,component:s,parameters:{docs:{description:{component:"Translucent grouping surface. `md` for detail panels (16px padding, 14px radius), `sm` for sidebar cards (12px / 12px). Because it tints with the `overlay` token, it adapts to any background and theme."}}},argTypes:{size:{control:`inline-radio`,options:[`sm`,`md`]},variant:{control:`inline-radio`,options:[`surface`,`outline`,`plain`]}},args:{size:`md`,variant:`surface`},decorators:[e=>(0,c.jsx)(r,{style:{width:360},children:(0,c.jsx)(e,{})})]},u={render:e=>(0,c.jsxs)(s,{...e,children:[(0,c.jsx)(n,{variant:`body-lg`,children:`Card title`}),(0,c.jsx)(n,{variant:`caption`,children:`Cards stack their children with a 12px gap.`})]})},d={render:()=>(0,c.jsxs)(r,{className:`gap-3`,children:[[`surface`,`outline`,`plain`].map(e=>(0,c.jsx)(s,{variant:e,children:(0,c.jsx)(n,{variant:`label`,children:e})},e)),(0,c.jsx)(s,{size:`sm`,children:(0,c.jsx)(n,{variant:`label`,children:`size sm`})})]})},f=[`Playground`,`Variants`],u.parameters={...u.parameters,docs:{...u.parameters?.docs,source:{originalSource:`{
+  render: args => <Card {...args}>
+      <Text variant="body-lg">Card title</Text>
+      <Text variant="caption">Cards stack their children with a 12px gap.</Text>
+    </Card>
+}`,...u.parameters?.docs?.source}}},d.parameters={...d.parameters,docs:{...d.parameters?.docs,source:{originalSource:`{
+  render: () => <View className="gap-3">
+      {(['surface', 'outline', 'plain'] as const).map(v => <Card key={v} variant={v}><Text variant="label">{v}</Text></Card>)}
+      <Card size="sm"><Text variant="label">size sm</Text></Card>
+    </View>
+}`,...d.parameters?.docs?.source}}}})))()}p();export{u as Playground,d as Variants,f as __namedExportsOrder,l as default};

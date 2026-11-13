@@ -1,0 +1,18 @@
+import{n as e}from"./rolldown-runtime-BCiCTKAo.js";import{n as t,t as n}from"./Text-C7CcZ4xr.js";import{N as r,a as i,u as a}from"./iframe-CmcEqaQC.js";import{n as o,r as s,t as c}from"./WindowControls-Z0cu_li-.js";import{i as l,n as u,t as d}from"./helpers-DlFGh-SZ.js";var f,p,m,h,g,_,v;function y(){return(y=e((()=>{a(),s(),t(),l(),f=i(),{fn:p}=__STORYBOOK_MODULE_TEST__,m={title:`Components/WindowControls`,component:o,parameters:{docs:{description:{component:"macOS traffic lights drawn inside the app, for frameless Electron windows whose sidebar runs to the top edge. With the `pearkit/electron` preload bridge they close / minimise / zoom the real window and dim when it loses focus — no props needed. Outside Electron, pass handlers."}}},argTypes:{showGlyphs:{control:`inline-radio`,options:[`hover`,`always`,`never`]},zoomGlyph:{control:`inline-radio`,options:[`fullscreen`,`plus`]}},args:{showGlyphs:`hover`,zoomGlyph:`fullscreen`,size:12,gap:8,onClose:p(),onMinimize:p(),onZoom:p()}},h={},g={render:()=>(0,f.jsxs)(d,{children:[(0,f.jsx)(u,{title:`Focused · hover glyphs`,children:(0,f.jsx)(o,{})}),(0,f.jsx)(u,{title:`Glyphs always`,children:(0,f.jsx)(o,{showGlyphs:`always`})}),(0,f.jsx)(u,{title:`Zoom glyph: plus`,children:(0,f.jsx)(o,{showGlyphs:`always`,zoomGlyph:`plus`})}),(0,f.jsx)(u,{title:`Window unfocused`,children:(0,f.jsx)(o,{focused:!1})}),(0,f.jsx)(u,{title:`Close only (dialogs)`,children:(0,f.jsx)(o,{hide:[`minimize`,`zoom`]})}),(0,f.jsx)(u,{title:`Larger`,children:(0,f.jsx)(o,{size:14,gap:9,showGlyphs:`always`})})]})},_={name:`In a title bar`,render:()=>(0,f.jsxs)(c,{className:`h-11 w-[480px] flex-row items-center gap-3 rounded-t-card border border-overlay/[0.08] bg-pane px-3.5`,children:[(0,f.jsx)(o,{}),(0,f.jsx)(r,{className:`flex-1 items-center pr-14`,children:(0,f.jsx)(n,{variant:`label`,weight:`semibold`,tone:`muted`,children:`PearDrop`})})]})},v=[`Playground`,`States`,`InTitleBar`],h.parameters={...h.parameters,docs:{...h.parameters?.docs,source:{originalSource:`{}`,...h.parameters?.docs?.source},description:{story:`Hover the buttons to reveal the glyphs.`,...h.parameters?.docs?.description}}},g.parameters={...g.parameters,docs:{...g.parameters?.docs,source:{originalSource:`{
+  render: () => <Column>
+      <Showcase title="Focused · hover glyphs"><WindowControls /></Showcase>
+      <Showcase title="Glyphs always"><WindowControls showGlyphs="always" /></Showcase>
+      <Showcase title="Zoom glyph: plus"><WindowControls showGlyphs="always" zoomGlyph="plus" /></Showcase>
+      <Showcase title="Window unfocused"><WindowControls focused={false} /></Showcase>
+      <Showcase title="Close only (dialogs)"><WindowControls hide={['minimize', 'zoom']} /></Showcase>
+      <Showcase title="Larger"><WindowControls size={14} gap={9} showGlyphs="always" /></Showcase>
+    </Column>
+}`,...g.parameters?.docs?.source}}},_.parameters={..._.parameters,docs:{..._.parameters?.docs,source:{originalSource:`{
+  name: 'In a title bar',
+  render: () => <DragRegion className="h-11 w-[480px] flex-row items-center gap-3 rounded-t-card border border-overlay/[0.08] bg-pane px-3.5">
+      <WindowControls />
+      <View className="flex-1 items-center pr-14">
+        <Text variant="label" weight="semibold" tone="muted">PearDrop</Text>
+      </View>
+    </DragRegion>
+}`,..._.parameters?.docs?.source},description:{story:"A custom title bar: `DragRegion` makes empty space drag the window in Electron while buttons stay clickable.",..._.parameters?.docs?.description}}}})))()}y();export{_ as InTitleBar,h as Playground,g as States,v as __namedExportsOrder,m as default};
