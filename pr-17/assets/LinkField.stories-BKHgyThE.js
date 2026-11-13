@@ -1,6 +1,0 @@
-import{n as e}from"./rolldown-runtime-BCiCTKAo.js";import{N as t,a as n,u as r}from"./iframe-CmcEqaQC.js";import{n as i,t as a}from"./LinkField-bJx_qEuQ.js";var o,s,c,l,u,d;function f(){return(f=e((()=>{r(),i(),o=n(),{fn:s}=__STORYBOOK_MODULE_TEST__,c={title:`Components/LinkField`,component:a,parameters:{docs:{description:{component:"Read-only recessed field for a share link. Tap anywhere to copy — shows a tick for a moment. Uses the web clipboard unless you pass `onCopy` (e.g. `expo-clipboard` on native)."}}},args:{value:`peardrop://1de0909835728b6e0f3a4c19d2e7b8a5c6f71d0e9f684cb145a28`,onCopy:s()},decorators:[e=>(0,o.jsx)(t,{style:{width:340},children:(0,o.jsx)(e,{})})]},l={},u={name:`Custom display value`,args:{displayValue:`peardrop://photo_2.mp4`}},d=[`Playground`,`CustomDisplay`],l.parameters={...l.parameters,docs:{...l.parameters?.docs,source:{originalSource:`{}`,...l.parameters?.docs?.source}}},u.parameters={...u.parameters,docs:{...u.parameters?.docs,source:{originalSource:`{
-  name: 'Custom display value',
-  args: {
-    displayValue: 'peardrop://photo_2.mp4'
-  }
-}`,...u.parameters?.docs?.source}}}})))()}f();export{u as CustomDisplay,l as Playground,d as __namedExportsOrder,c as default};

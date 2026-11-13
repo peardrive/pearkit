@@ -1,7 +1,0 @@
-import{n as e}from"./rolldown-runtime-BCiCTKAo.js";import{a as t}from"./iframe-CmcEqaQC.js";import{r as n,t as r}from"./Avatar-CnjppF6x.js";import{i,n as a}from"./helpers-DlFGh-SZ.js";var o,s,c,l,u;function d(){return(d=e((()=>{n(),i(),o=t(),s={title:`Components/Avatar`,component:r,parameters:{docs:{description:{component:"Deterministic gradient avatar: the same `seed` (peer key, device id) always picks the same gradient from the theme-aware `avatarPalette`."}}},args:{seed:`a12b9f03c7d14f5g`,size:40}},c={},l={render:()=>(0,o.jsxs)(a,{children:[[`a12b`,`9e7c`,`c03f`,`peer-4`,`peer-5`,`peer-6`].map(e=>(0,o.jsx)(r,{seed:e,size:32},e)),(0,o.jsx)(r,{seed:`ak`,size:32,label:`AK`}),(0,o.jsx)(r,{seed:`x`,size:32,colors:[`#a6ce39`,`#3eb679`]})]})},u=[`Playground`,`Seeds`],c.parameters={...c.parameters,docs:{...c.parameters?.docs,source:{originalSource:`{}`,...c.parameters?.docs?.source}}},l.parameters={...l.parameters,docs:{...l.parameters?.docs,source:{originalSource:`{
-  render: () => <Showcase>
-      {['a12b', '9e7c', 'c03f', 'peer-4', 'peer-5', 'peer-6'].map(s => <Avatar key={s} seed={s} size={32} />)}
-      <Avatar seed="ak" size={32} label="AK" />
-      <Avatar seed="x" size={32} colors={['#a6ce39', '#3eb679']} />
-    </Showcase>
-}`,...l.parameters?.docs?.source}}}})))()}d();export{c as Playground,l as Seeds,u as __namedExportsOrder,s as default};
