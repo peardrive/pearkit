@@ -18,7 +18,7 @@ const meta: Meta<typeof DebugNotesButton> = {
     docs: {
       description: {
         component:
-          'The debug-notes button every app gets. Idle: a mic and a label. Recording: red, a five-bar level following the voice, and `m:ss · steps`. Without a microphone: grey, steps only, and the reason is kept on the note. Press to start, press again to stop; `save` receives `{ id, meta, steps, blob }`. Pair it with `createDebugNotes` (headless) and `useDebugNotes`.',
+          'The debug-notes button every app gets (pearcast\'s look). Idle: a mic and a label. `variant="compact"`: just the mic, and the red circle with three bars while recording. Recording: red, a five-bar level following the voice, and `m:ss · steps`. Without a microphone: grey, steps only, and the reason is kept on the note. Press to start, press again to stop; `save` receives `{ id, meta, steps, blob }`. Pair it with `createDebugNotes` (headless) and `useDebugNotes`.',
       },
     },
   },
@@ -27,7 +27,7 @@ export default meta;
 type Story = StoryObj<typeof DebugNotesButton>;
 
 /** A small app to click around in while a note records; the saved notes appear underneath. */
-function Playground({ noMic }: { noMic?: boolean }) {
+function Playground({ noMic, variant }: { noMic?: boolean; variant?: 'expanded' | 'compact' }) {
   const [saved, setSaved] = useState<SaveNoteInput[]>([]);
   const [view, setView] = useState('Files');
   const notes = useMemo(
@@ -60,7 +60,7 @@ function Playground({ noMic }: { noMic?: boolean }) {
         <Text variant="body-lg">PearDrop</Text>
         <ToolbarSpacer />
         <SearchField placeholder="Search" className="w-56" />
-        <DebugNotesButton notes={notes} onStopped={(s) => console.log('stopped', s)} />
+        <DebugNotesButton notes={notes} variant={variant} onStopped={(s) => console.log('stopped', s)} />
       </Toolbar>
       <View className="flex-row gap-5 p-5">
         <View className="w-60 gap-2" accessibilityRole={'navigation' as never} aria-label="sidebar">
@@ -113,6 +113,42 @@ function Playground({ noMic }: { noMic?: boolean }) {
 export const Default: Story = {
   name: 'In a toolbar',
   render: () => <Playground />,
+};
+
+export const Compact: Story = {
+  name: 'Compact (phone, crowded bar)',
+  parameters: { docs: { description: { story: '`variant="compact"`: a round mic when idle; recording, a red circle with three bars and nothing else. The time and steps are in the accessibility label.' } } },
+  render: () => <Playground variant="compact" />,
+};
+
+/** Both variants side by side, each with its own note: top row records a voice, bottom row has no microphone. */
+function SideBySide() {
+  const notes = useMemo(
+    () =>
+      [false, false, true, true].map((noMic) =>
+        createDebugNotes({ app: 'storybook', save: async () => ({ stored: true }), recorder: noMic ? createUnavailableRecorder('NotAllowedError: Permission denied') : undefined }),
+      ),
+    [],
+  );
+  useEffect(() => () => notes.forEach((n) => n.uninstall()), [notes]);
+  return (
+    <View className="gap-4 bg-background p-6">
+      <Text variant="caption" tone="muted">
+        Press any of them. Top row records a voice; bottom row has no microphone (grey).
+      </Text>
+      {[0, 2].map((row) => (
+        <View key={row} className="flex-row items-center gap-4">
+          <DebugNotesButton notes={notes[row]!} />
+          <DebugNotesButton notes={notes[row + 1]!} variant="compact" />
+        </View>
+      ))}
+    </View>
+  );
+}
+
+export const Variants: Story = {
+  name: 'Expanded and compact',
+  render: () => <SideBySide />,
 };
 
 export const NoMicrophone: Story = {

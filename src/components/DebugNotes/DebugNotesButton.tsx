@@ -95,7 +95,13 @@ export function useMicLevel(stream: MediaStream | null): number[] {
 
 export interface DebugNotesButtonProps {
   notes: DebugNotes;
-  /** The idle label. Default "Debug". */
+  /**
+   * `expanded` (default, pearcast's title-bar button): mic and label when idle; recording shows the five-bar level and
+   * `m:ss · steps`. `compact`, for a phone or a crowded bar: a round mic when idle; recording, a red circle with
+   * three bars and nothing else. The time and step count stay in the accessibility label.
+   */
+  variant?: 'expanded' | 'compact';
+  /** The idle label (expanded only). Default "Debug notes". */
   label?: string;
   /** Pressed while idle: show a dialog (pick the mic, see a refusal before talking) instead of starting at once. */
   onIdleClick?: () => void | Promise<void>;
@@ -106,6 +112,9 @@ export interface DebugNotesButtonProps {
   style?: StyleProp<ViewStyle>;
 }
 
+const COMPACT_BARS = [1, 2, 3]; // the middle three of the five: the centre swings most
+const COMPACT_REST = [5, 8, 5]; // at rest the three bars keep a waveform's shape, so silence never reads as "more" (•••)
+
 const clock = (s: number) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
 
 /**
@@ -113,14 +122,20 @@ const clock = (s: number) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60))
  * five-bar level following the voice and the clock — nothing else (Guy, memo
  * 2026-10-22: "it should never actually show recording … the red and the
  * counting is enough"). Grey instead of red when the note runs without a
- * microphone. Press to start, press again to stop and save.
+ * microphone. Press to start, press again to stop and save. The look is
+ * pearcast's title-bar button (hairline ring idle, red ring and glow recording);
+ * `variant="compact"` is the same button reduced to the mic and the indicator.
  */
-export function DebugNotesButton({ notes, label = 'Debug', onIdleClick, onStopped, size = 'sm', className, style }: DebugNotesButtonProps) {
+export function DebugNotesButton({ notes, variant = 'expanded', label = 'Debug notes', onIdleClick, onStopped, size = 'sm', className, style }: DebugNotesButtonProps) {
   const s = useDebugNotes(notes);
   const silent = s.active && !s.audio;
-  const bars = useMicLevel(s.active && s.audio ? notes.recorder.stream : null);
+  const recording = s.active && !silent;
+  const compact = variant === 'compact';
+  const level = useMicLevel(recording ? notes.recorder.stream : null);
+  const bars = compact ? COMPACT_BARS.map((i) => level[i]!) : level;
   const busy = useRef(false);
   const [, bump] = useState(0);
+  const [hovered, setHovered] = useState(false); // pearcast: the idle label brightens under the pointer
 
   const press = useCallback(async () => {
     if (busy.current) return;
@@ -140,43 +155,51 @@ export function DebugNotesButton({ notes, label = 'Debug', onIdleClick, onStoppe
       ? `No microphone (${s.error || 'refused'}): this note keeps your steps only. Press to stop.`
       : 'Recording a debug note. Press to stop and save.'
     : 'Record a debug note: talk, and keep using the app';
-  const h = size === 'md' ? 'h-8 px-3' : 'h-7 px-2.5';
+  const box = compact ? (size === 'md' ? 'h-8 w-8 justify-center' : 'h-7 w-7 justify-center') : size === 'md' ? 'h-8 pl-2.5 pr-3' : 'h-7 pl-2 pr-2.5';
+  const barMax = compact ? 8 : 15;
 
   return (
     <Pressable
       accessibilityRole="button"
-      accessibilityLabel={s.active ? 'Stop the debug note' : 'Start a debug note'}
+      accessibilityLabel={s.active ? `Stop the debug note (${clock(s.seconds)}, ${s.steps} steps)` : 'Start a debug note'}
       accessibilityHint={hint}
       accessibilityState={{ selected: s.active }}
       onPress={press}
+      onHoverIn={() => setHovered(true)}
+      onHoverOut={() => setHovered(false)}
       className={cn(
-        'flex-row items-center gap-1.5 self-start rounded-full',
-        h,
+        'flex-row items-center gap-1.5 self-start rounded-full border',
+        box,
         Platform.OS === 'web' && 'cursor-pointer select-none app-region-no-drag',
-        !s.active && 'bg-overlay/[0.06] hover:bg-overlay/10 active:bg-overlay/[0.14]',
-        s.active && !silent && 'bg-danger',
-        silent && 'bg-neutral',
+        !s.active && 'border-overlay/[0.08] bg-overlay/[0.06] hover:bg-overlay/10 active:bg-overlay/[0.14]',
+        recording && 'border-danger/50 bg-danger',
+        silent && 'border-overlay/25 bg-neutral',
         className,
       )}
-      style={[s.active && !silent ? ({ boxShadow: '0 0 18px -4px rgb(var(--pk-danger))' } as ViewStyle) : null, style]}
+      style={[recording ? ({ boxShadow: '0 0 18px -4px rgb(var(--pk-danger))' } as ViewStyle) : null, style]}
       // The capture never writes this button's own presses into the trace.
       {...({ dataSet: { debugIgnore: '' } } as object)}
     >
-      {s.active && !silent ? (
+      {recording ? (
         <View className="h-[18px] flex-row items-center gap-[2px]" accessibilityElementsHidden importantForAccessibility="no-hide-descendants">
           {bars.map((lvl, i) => (
-            <View key={i} className="w-[3px] rounded-[2px] bg-danger-foreground" style={{ height: 3 + lvl * 15 }} />
+            <View key={i} className="w-[3px] rounded-[2px] bg-danger-foreground" style={{ height: (compact ? COMPACT_REST[i]! : 3) + lvl * barMax }} />
           ))}
         </View>
       ) : (
-        <Icon name={silent ? 'microphone-slash' : 'microphone'} size={13} tone={silent ? 'danger-foreground' : 'icon-strong'} style={silent ? { opacity: 0.6 } : undefined} />
+        <Icon
+          name={silent ? 'microphone-slash' : 'microphone'}
+          size={compact ? 14 : 13}
+          tone={silent ? 'danger-foreground' : hovered ? 'foreground' : 'icon-strong'}
+          style={silent ? { opacity: 0.5 } : undefined}
+        />
       )}
-      {s.active ? (
+      {compact ? null : s.active ? (
         <Text variant="label" weight="semibold" tone="danger-foreground" style={{ fontVariant: ['tabular-nums'] }}>
           {clock(s.seconds)} · {s.steps}
         </Text>
       ) : (
-        <Text variant="label" weight="semibold" tone="muted">
+        <Text variant="label" weight="semibold" tone={hovered ? 'foreground' : 'muted'}>
           {label}
         </Text>
       )}
