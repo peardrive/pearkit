@@ -1,0 +1,7 @@
+import{n as e}from"./rolldown-runtime-BCiCTKAo.js";import{N as t,a as n,u as r}from"./iframe-BhG_hyu7.js";import{n as i,t as a}from"./IconButton-C16fnsZl.js";import{n as o,t as s}from"./SectionLabel-BbriQlH0.js";var c,l,u,d,f;function p(){return(p=e((()=>{r(),o(),i(),c=n(),l={title:`Components/SectionLabel`,component:s,parameters:{docs:{description:{component:`Uppercase, tracked overline that titles a group: LIBRARY, STATUS, IN PROGRESS · 2, DETAILS.`}}},argTypes:{inset:{control:`inline-radio`,options:[`sidebar`,`list`,`none`]}},args:{label:`In progress`,count:2,inset:`list`},decorators:[e=>(0,c.jsx)(t,{style:{width:300},children:(0,c.jsx)(e,{})})]},u={},d={render:()=>(0,c.jsxs)(t,{children:[(0,c.jsx)(s,{label:`Library`}),(0,c.jsx)(s,{label:`Recent`,inset:`list`}),(0,c.jsx)(s,{label:`Folders`,trailing:(0,c.jsx)(a,{icon:`add`,size:`xs`,accessibilityLabel:`New folder`})})]})},f=[`Playground`,`Examples`],u.parameters={...u.parameters,docs:{...u.parameters?.docs,source:{originalSource:`{}`,...u.parameters?.docs?.source}}},d.parameters={...d.parameters,docs:{...d.parameters?.docs,source:{originalSource:`{
+  render: () => <View>
+      <SectionLabel label="Library" />
+      <SectionLabel label="Recent" inset="list" />
+      <SectionLabel label="Folders" trailing={<IconButton icon="add" size="xs" accessibilityLabel="New folder" />} />
+    </View>
+}`,...d.parameters?.docs?.source}}}})))()}p();export{d as Examples,u as Playground,f as __namedExportsOrder,l as default};
