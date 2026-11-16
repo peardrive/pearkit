@@ -4,6 +4,7 @@
  *   const notes = createDebugNotes({
  *     app: 'peardrop',
  *     save: async ({ id, meta, steps, blob }) => { … store the three files … },  // the app's store (HTTP, IPC, fs…)
+ *     sink: { begin, chunk, steps },             // optional: write the note to disk AS it records (see NoteSink)
  *     where: () => ({ space, path }),            // what the app is showing — stamped on the note
  *     region: (el) => 'sidebar' | 'toolbar' | …, // optional, web: names for the areas of the screen
  *     describe: (el) => ({ text, data }),        // optional, web: what a clicked thing IS (a file, a message)
@@ -18,7 +19,7 @@
 import { installCapture, type CaptureOptions, type DescribeFn, type RegionFn } from './capture';
 import { canRecordAudio, createUnavailableRecorder, createWebRecorder } from './recorder';
 import { createTrace } from './trace';
-import type { DebugLog, DebugRecorder, DebugTrace, SaveNote, WhereFn } from './types';
+import type { DebugLog, DebugRecorder, DebugTrace, NoteSink, SaveNote, WhereFn } from './types';
 
 export * from './types';
 export { createTrace, noteId } from './trace';
@@ -38,6 +39,11 @@ export interface DebugNotesOptions {
   app: string;
   /** Store a finished note: `note.<ext>`, `trace.jsonl`, `note.json`. */
   save: SaveNote;
+  /**
+   * Write the note while it records (each second of voice, the steps so far), so a crash or a stuck window loses
+   * nothing. Optional: without it the recording is held in memory until it stops.
+   */
+  sink?: NoteSink;
   /** What the app is showing (space, path, view…). Stamped on the first step and on `note.json`. */
   where?: WhereFn;
   /** Web: the area of the screen an element is in. Default: nearest landmark or top-level id. */
@@ -79,7 +85,7 @@ function defaultStorage(): DebugNotesStorage | null {
 }
 
 export function createDebugNotes(opts: DebugNotesOptions): DebugNotes {
-  const { app, save, where, region, describe, sharedStream, capture = true, log = () => {} } = opts;
+  const { app, save, sink, where, region, describe, sharedStream, capture = true, log = () => {} } = opts;
   if (!app || typeof save !== 'function') throw new Error('createDebugNotes needs { app, save }');
   const storage = opts.storage ?? defaultStorage();
   const key = `pear-debug-mic:${app}`;
@@ -97,7 +103,7 @@ export function createDebugNotes(opts: DebugNotesOptions): DebugNotes {
     (canRecordAudio()
       ? createWebRecorder({ shared: sharedStream, micId: () => micId, log })
       : createUnavailableRecorder('no voice recorder on this platform: pass `recorder` to createDebugNotes'));
-  const trace = createTrace({ app, recorder, save, where, log });
+  const trace = createTrace({ app, recorder, save, sink, where, log });
   const captureOpts: CaptureOptions = { region, describe };
   const uninstall = capture ? installCapture(trace, captureOpts) : () => {};
 
