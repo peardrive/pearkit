@@ -22,8 +22,11 @@ export interface ResizeHandleProps {
    * Default 12.
    */
   thickness?: number;
-  /** Length of the visible bar in px, or `'full'` to run the handle's length (minus `inset`). Default 48. */
-  barLength?: number | 'full';
+  /**
+   * Length of the visible bar: a share of the handle's length (`'75%'`, the default: it scales with whatever it sits
+   * between), a fixed length in px, or `'full'` to run the whole handle minus `inset`.
+   */
+  barLength?: number | `${number}%` | 'full';
   /** With `barLength="full"`, how far the bar stops short of each end. Default 14. */
   inset?: number;
   /** Show the bar only on hover / drag instead of faintly at rest. Default false. */
@@ -61,7 +64,7 @@ export interface ResizeHandleProps {
 export function ResizeHandle({
   orientation = 'vertical',
   thickness = 12,
-  barLength = 48,
+  barLength = '75%',
   inset = 14,
   hideAtRest = false,
   onResizeStart,
@@ -158,7 +161,9 @@ export function ResizeHandle({
   const bar: ViewStyle =
     barLength === 'full'
       ? vertical ? { top: inset, bottom: inset, width: 3 } : { left: inset, right: inset, height: 3 }
-      : vertical ? { height: lit ? barLength + 8 : barLength, width: 3 } : { width: lit ? barLength + 8 : barLength, height: 3 };
+      : typeof barLength === 'string'
+        ? vertical ? { height: barLength, width: 3 } : { width: barLength, height: 3 }
+        : vertical ? { height: lit ? barLength + 8 : barLength, width: 3 } : { width: lit ? barLength + 8 : barLength, height: 3 };
   const transition =
     Platform.OS === 'web' ? ({ transitionProperty: 'background-color, height, width, opacity', transitionDuration: '150ms' } as ViewStyle) : null;
 

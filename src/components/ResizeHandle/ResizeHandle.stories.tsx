@@ -18,9 +18,9 @@ const meta: Meta<typeof ResizeHandle> = {
   },
   argTypes: {
     orientation: { control: 'inline-radio', options: ['vertical', 'horizontal'] },
-    barLength: { control: 'number' },
+    barLength: { control: 'text', description: "'75%', a number of px, or 'full'" },
   },
-  args: { orientation: 'vertical', thickness: 12, barLength: 48, hideAtRest: false },
+  args: { orientation: 'vertical', thickness: 12, barLength: '75%', hideAtRest: false },
 };
 export default meta;
 

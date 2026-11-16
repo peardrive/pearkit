@@ -201,7 +201,7 @@ export function Sidebar({
           <ResizeHandle
             orientation="vertical"
             thickness={Math.max(12, gutter)}
-            barLength={48}
+            barLength="75%"
             active={resizing}
             onResizeStart={dragStart}
             onResize={dragMove}
