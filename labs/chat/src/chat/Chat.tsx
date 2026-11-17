@@ -355,6 +355,9 @@ function Composer({ f, placeholder, replyingTo, onCancelReply, onSend, onAttach,
   const input = useRef<React.ComponentRef<typeof TextInput>>(null);
   const compact = f.density === 'compact';
   const min = compact ? 34 : 40;
+  // A phone's browser zooms the page when a field's text is under 16px; with a mouse the field matches the messages.
+  const touch = Platform.OS !== 'web' || !!globalThis.matchMedia?.('(pointer: coarse)').matches;
+  const size = touch ? 16 : compact ? 13 : 14.5;
   const send = () => {
     const t = text.trim();
     if (!t) return;
@@ -401,14 +404,13 @@ function Composer({ f, placeholder, replyingTo, onCancelReply, onSend, onAttach,
             onKeyPress={(e) => {
               const ev = e.nativeEvent as unknown as { key: string; shiftKey?: boolean; isComposing?: boolean };
               // A phone's Return key is a new line: only a real keyboard's Enter sends.
-              const touch = Platform.OS !== 'web' || globalThis.matchMedia?.('(pointer: coarse)').matches;
               if (f.enterSends && !touch && ev.key === 'Enter' && !ev.shiftKey && !ev.isComposing) {
                 e.preventDefault();
                 send();
               }
             }}
             style={[
-              { flex: 1, color: theme.colors.foreground, fontFamily: Platform.OS === 'web' ? theme.fonts.web : theme.fonts.native?.medium, fontSize: 16, lineHeight: 21, paddingHorizontal: 13, paddingVertical: (min - 21) / 2 - 1, height: Math.max(min - 2, Math.min(132, height)) },
+              { flex: 1, color: theme.colors.foreground, fontFamily: Platform.OS === 'web' ? theme.fonts.web : theme.fonts.native?.medium, fontSize: size, lineHeight: 21, paddingHorizontal: 13, paddingVertical: (min - 21) / 2 - 1, height: Math.max(min - 2, Math.min(132, height)) },
               Platform.OS === 'web' ? ({ outlineStyle: 'none', resize: 'none' } as object) : null,
             ]}
           />
