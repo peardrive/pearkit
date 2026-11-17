@@ -8,8 +8,11 @@
  *
  *   macOS   the zip is unpacked with ditto; the .app inside replaces the running bundle (/Applications/X.app, or
  *           wherever this copy runs from). Files the app wrote itself carry no quarantine mark, so Gatekeeper doesn't
- *           stand in the way; the bundle is re-signed (ad hoc, or `signId`) with the app's own identifier so macOS
- *           keeps treating it as the same app (the microphone permission is keyed on that).
+ *           stand in the way. A build signed by its publisher (a Developer ID certificate) is left exactly as it
+ *           came: signing it again would replace the publisher's signature with a nameless one, and a firewall or
+ *           macOS would see a different app after every update. Only an unsigned build is signed on the spot (ad
+ *           hoc, or `signId`) with the app's own identifier, so macOS keeps treating it as the same app (the
+ *           microphone permission is keyed on that).
  *   Linux   the AppImage replaces the file named by $APPIMAGE (set by the AppImage runtime).
  *
  * Running from source (electron .) has nothing to swap: installUpdate refuses, with the file's path.
@@ -67,7 +70,9 @@ rm -rf "$DEST.previous"
 mv "$DEST" "$DEST.previous" || exit 1
 if ditto "$NEW" "$DEST"; then
   xattr -dr com.apple.quarantine "$DEST" 2>/dev/null
-  codesign --force --deep --sign ${sh(sign)}${identifier ? ` --identifier ${sh(identifier)}` : ''} "$DEST" 2>/dev/null
+  if codesign -dv "$DEST" 2>&1 | grep -q '^TeamIdentifier=[A-Z0-9]\\{10\\}$'; then :; else
+    codesign --force --deep --sign ${sh(sign)}${identifier ? ` --identifier ${sh(identifier)}` : ''} "$DEST" 2>/dev/null
+  fi
 else
   rm -rf "$DEST"; mv "$DEST.previous" "$DEST"
 fi
