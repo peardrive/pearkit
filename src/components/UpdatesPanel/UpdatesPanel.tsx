@@ -191,7 +191,7 @@ export function UpdatesPanel({ appName, running, status, latest, behind, progres
           <Text variant="overline" className="pb-1.5 pt-3">
             Versions
           </Text>
-          <ScrollView ref={list} className="rounded-field border border-overlay/[0.08] bg-inset" style={{ maxHeight: 196, flexGrow: 0 }} contentContainerClassName="gap-0.5 p-1">
+          <ScrollView ref={list} showsVerticalScrollIndicator={false} className="rounded-field border border-overlay/[0.08] bg-inset" style={{ maxHeight: 196, flexGrow: 0 }} contentContainerClassName="gap-0.5 p-1">
             {versions.map((v, i) => {
               const mine = v.version === running;
               const newest = i === 0 && !mine;
