@@ -2,6 +2,8 @@
   <img src="docs/assets/header.png" alt="pearkit: primitives nest into patterns, patterns into full layouts" width="100%" />
 </p>
 
+<p align="center"><img src="docs/assets/icon.png" alt="The Pearkit icon" width="112" /></p>
+
 <h1 align="center">pearkit</h1>
 
 <p align="center">
