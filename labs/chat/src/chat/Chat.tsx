@@ -5,9 +5,9 @@
  * React Native primitives and Pearkit pieces only, so the same file runs in Electron, the browser and on a phone.
  */
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Platform, Pressable, ScrollView, TextInput, View } from 'react-native';
-import { Avatar, Button, cn, IconButton, Text, useTheme } from 'pearkit';
-import { EMOJI, QUICK_REACTIONS, type ChatAuthor, type ChatFeatures, type ChatMessage } from './types';
+import { Image, Platform, Pressable, ScrollView, TextInput, View } from 'react-native';
+import { Avatar, Button, cn, Icon, IconButton, Text, useTheme } from 'pearkit';
+import { EMOJI, QUICK_REACTIONS, type ChatAttachment, type ChatAuthor, type ChatFeatures, type ChatMessage } from './types';
 
 export interface ChatProps {
   messages: ChatMessage[];
@@ -18,6 +18,8 @@ export interface ChatProps {
   onReact?: (messageId: string, emoji: string) => void;
   onChoose?: (messageId: string, optionId: string) => void;
   onAttach?: () => void;
+  /** A tile on a message was pressed: open the file or the picture. */
+  onOpen?: (attachment: ChatAttachment, messageId: string) => void;
   /** Names of the others writing right now. */
   typing?: string[];
   placeholder?: string;
@@ -38,7 +40,7 @@ const day = (at: number) => {
 };
 const sameDay = (a: number, b: number) => new Date(a).toDateString() === new Date(b).toDateString();
 
-export function Chat({ messages, me, features: f, onSend, onReact, onChoose, onAttach, typing = [], placeholder = 'Message', emptyText, starters = [], busy, onStop }: ChatProps) {
+export function Chat({ messages, me, features: f, onSend, onReact, onChoose, onAttach, onOpen, typing = [], placeholder = 'Message', emptyText, starters = [], busy, onStop }: ChatProps) {
   const [active, setActive] = useState<string | null>(null); // the message whose actions are open
   const [replyTo, setReplyTo] = useState<string | null>(null);
   const scroller = useRef<React.ComponentRef<typeof ScrollView>>(null);
@@ -65,7 +67,7 @@ export function Chat({ messages, me, features: f, onSend, onReact, onChoose, onA
       <ScrollView
         ref={scroller}
         className="flex-1"
-        contentContainerStyle={{ padding: pad, paddingBottom: 6, flexGrow: 1, justifyContent: messages.length ? 'flex-end' : 'center' }}
+        contentContainerStyle={{ padding: pad, paddingBottom: 6, flexGrow: 1, justifyContent: 'flex-end' }}
         scrollEventThrottle={50}
         onScroll={(e) => {
           const n = e.nativeEvent;
@@ -75,16 +77,21 @@ export function Chat({ messages, me, features: f, onSend, onReact, onChoose, onA
         keyboardShouldPersistTaps="handled"
       >
         {!messages.length ? (
-          <View className="items-center gap-3 px-4">
+          <View className="gap-3">
             {emptyText ? (
-              <Text variant="label" tone="muted" className="text-center">
+              <Text variant="caption" tone="muted" className="px-4 text-center">
                 {emptyText}
               </Text>
             ) : null}
+            {/* Things to say first, as messages not yet sent: the outline of my own bubble, on my side. */}
             {f.starters && starters.length ? (
-              <View className="flex-row flex-wrap justify-center gap-2">
+              <View className={cn('gap-1.5', f.mineOnRight ? 'items-end' : 'items-start')}>
                 {starters.map((s) => (
-                  <Button key={s} size="sm" variant="secondary" label={s} onPress={() => onSend(s)} />
+                  <Pressable key={s} onPress={() => onSend(s)} accessibilityRole="button" className="border border-dashed border-primary/45 px-3 py-1.5 active:bg-primary/[0.14]" style={{ borderRadius: 16, borderBottomRightRadius: f.mineOnRight ? 5 : 16, borderBottomLeftRadius: f.mineOnRight ? 16 : 5 }}>
+                    <Text variant="label" tone="primary-text" style={{ fontSize: f.density === 'compact' ? 13 : 14.5 }}>
+                      {s}
+                    </Text>
+                  </Pressable>
                 ))}
               </View>
             ) : null}
@@ -119,6 +126,7 @@ export function Chat({ messages, me, features: f, onSend, onReact, onChoose, onA
                 onReact={onReact ? (e) => { onReact(m.id, e); setActive(null); } : undefined}
                 onReply={() => { setReplyTo(m.id); setActive(null); }}
                 onChoose={onChoose ? (o) => onChoose(m.id, o) : undefined}
+                onOpen={onOpen ? (a) => onOpen(a, m.id) : undefined}
               />
             </React.Fragment>
           );
@@ -149,7 +157,7 @@ export function Chat({ messages, me, features: f, onSend, onReact, onChoose, onA
 
 /* ───────── one message ───────── */
 
-function Message({ m, me, f, first, last, quoted, active, onToggle, onReact, onReply, onChoose }: {
+function Message({ m, me, f, first, last, quoted, active, onToggle, onReact, onReply, onChoose, onOpen }: {
   m: ChatMessage;
   me: ChatAuthor;
   f: ChatFeatures;
@@ -161,6 +169,7 @@ function Message({ m, me, f, first, last, quoted, active, onToggle, onReact, onR
   onReact?: (emoji: string) => void;
   onReply: () => void;
   onChoose?: (optionId: string) => void;
+  onOpen?: (attachment: ChatAttachment) => void;
 }) {
   const theme = useTheme();
   const [copied, setCopied] = useState(false);
@@ -227,8 +236,9 @@ function Message({ m, me, f, first, last, quoted, active, onToggle, onReact, onR
                   key={o.id}
                   disabled={!!m.chosen}
                   onPress={() => onChoose?.(o.id)}
-                  className={cn('flex-row gap-2 rounded-control border px-2.5 py-2', chosen ? 'border-primary/70 bg-primary/[0.14]' : 'border-overlay/[0.10] bg-background', m.chosen && !chosen && 'opacity-45')}
+                  className={cn('flex-row items-center gap-2 rounded-control border px-2.5 py-2', chosen ? 'border-primary/70 bg-primary/[0.14]' : 'border-overlay/[0.10] bg-background', m.chosen && !chosen && 'opacity-45')}
                 >
+                  {o.image ? <Image source={{ uri: o.image }} resizeMode="cover" style={{ width: 56, height: 42, borderRadius: 6 }} /> : null}
                   <Text variant="caption" weight="bold" tone="primary-text">
                     {chosen ? '✓' : n + 1}
                   </Text>
@@ -248,6 +258,29 @@ function Message({ m, me, f, first, last, quoted, active, onToggle, onReact, onR
           </View>
         ) : null}
       </Pressable>
+
+      {m.attachments?.length && !m.streaming ? (
+        <View className={cn('flex-row flex-wrap items-start gap-1.5 pt-1.5', right && 'justify-end')}>
+          {m.attachments.map((a) => (
+            <Pressable key={a.id} onPress={() => onOpen?.(a)} accessibilityRole="button" accessibilityLabel={`Open ${a.name}`} className="overflow-hidden rounded-control border border-overlay/[0.10] bg-pane active:border-primary/60" style={{ width: a.image ? 132 : undefined, maxWidth: 200 }}>
+              {a.image ? <Image source={{ uri: a.image }} resizeMode="cover" style={{ width: 132, height: 84 }} /> : null}
+              <View className="flex-row items-center gap-1.5 px-2 py-1.5">
+                <Icon name={a.kind === 'image' ? 'image' : 'document'} size={14} color={theme.colors.muted} />
+                <View className="shrink">
+                  <Text variant="micro" weight="semibold" tone="foreground" numberOfLines={1}>
+                    {a.name}
+                  </Text>
+                  {a.detail ? (
+                    <Text variant="micro" tone="muted" numberOfLines={1}>
+                      {a.detail}
+                    </Text>
+                  ) : null}
+                </View>
+              </View>
+            </Pressable>
+          ))}
+        </View>
+      ) : null}
 
       {f.reactions && reactions.length ? (
         <View className={cn('flex-row flex-wrap gap-1 pt-1', right && 'justify-end')}>

@@ -1,5 +1,5 @@
 /** Three places the same chat goes, each with made-up people and a made-up agent, so every feature can be tried. */
-import { ROOM, SIDEBAR, type ChatAuthor, type ChatFeatures, type ChatMessage, type ChatOption } from './chat/types';
+import { ROOM, SIDEBAR, type ChatAttachment, type ChatAuthor, type ChatFeatures, type ChatMessage, type ChatOption } from './chat/types';
 
 export const ME: ChatAuthor = { id: 'me', name: 'Guy', kind: 'person' };
 const agent = (name: string): ChatAuthor => ({ id: 'agent', name, kind: 'agent' });
@@ -20,10 +20,13 @@ export interface Scenario {
   starters: string[];
   seed: () => ChatMessage[];
   /** What the agent answers: a text, sometimes with choices. */
-  answer: (question: string, n: number) => { text: string; options?: ChatOption[] };
+  answer: (question: string, n: number) => { text: string; options?: ChatOption[]; attachments?: ChatAttachment[] };
 }
 
 const min = 60000;
+/** A pretend picture of a button, so thumbnails have something to show. */
+const pic = (fill: string, r: number, label = 'Button') =>
+  `data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="264" height="168"><rect width="264" height="168" fill="#10151a"/><rect x="72" y="62" width="120" height="44" rx="${r}" fill="${fill}"/><text x="132" y="90" font-family="sans-serif" font-size="15" font-weight="600" fill="#fff" text-anchor="middle">${label}</text></svg>`)}`;
 let n = 0;
 export const newId = () => `m${Date.now().toString(36)}${(n++).toString(36)}`;
 
@@ -44,14 +47,20 @@ export const SCENARIOS: Scenario[] = [
         ? {
             text: 'Three directions, from smallest change to largest:',
             options: [
-              { id: 'a', label: 'Softer press', detail: 'The face sinks 1px and the glow fades on press, instead of only dimming.' },
-              { id: 'b', label: 'Taller small size', detail: 'Small goes from 28 to 30px so the label has the same breathing room as medium.' },
-              { id: 'c', label: 'Quiet secondary', detail: 'Secondary loses its border and keeps only the overlay fill, so primary stands out more.' },
+              { id: 'a', label: 'Softer press', detail: 'The face sinks 1px and the glow fades on press, instead of only dimming.', image: pic('#3f9d63', 10) },
+              { id: 'b', label: 'Taller small size', detail: 'Small goes from 28 to 30px so the label has the same breathing room as medium.', image: pic('#58c47a', 14) },
+              { id: 'c', label: 'Quiet secondary', detail: 'Secondary loses its border and keeps only the overlay fill, so primary stands out more.', image: pic('#2a323a', 10) },
             ],
           }
         : i % 2
           ? { text: 'It can. The primary button is a gradient from primary to primary-strong with an inner highlight on the top edge; the glow under it is a separate layer, so it can be turned off per button.' }
-          : { text: 'Button is a pressable row: an optional icon, a label, an optional icon on the right. It comes in primary, secondary, ghost and danger, and in two heights. The label never wraps; a long one is cut with an ellipsis.' },
+          : {
+              text: 'Button is a pressable row: an optional icon, a label, an optional icon on the right. It comes in primary, secondary, ghost and danger, and in two heights. The label never wraps; a long one is cut with an ellipsis.',
+              attachments: [
+                { id: 'f1', name: 'Button.tsx', kind: 'file', detail: '142 lines' },
+                { id: 'f2', name: 'Variants', kind: 'image', image: pic('#58c47a', 10), detail: 'as it is now' },
+              ],
+            },
   },
   {
     id: 'pearcast',

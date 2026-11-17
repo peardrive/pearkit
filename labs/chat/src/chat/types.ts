@@ -16,6 +16,18 @@ export interface ChatOption {
   id: string;
   label: string;
   detail?: string;
+  /** A picture of the option (a rendered version, a drawing). Shown as a thumbnail. */
+  image?: string;
+}
+
+/** A file, a picture or an example that comes with a message. Shown as a small tile; pressing it opens it. */
+export interface ChatAttachment {
+  id: string;
+  name: string;
+  kind: 'image' | 'file';
+  /** A picture to show on the tile (the image itself, or a preview of the file). */
+  image?: string;
+  detail?: string;
 }
 
 export interface ChatMessage {
@@ -33,6 +45,7 @@ export interface ChatMessage {
   streaming?: boolean;
   options?: ChatOption[];
   chosen?: string;
+  attachments?: ChatAttachment[];
   edited?: boolean;
 }
 

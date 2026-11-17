@@ -87,6 +87,7 @@ function Room({ scenario, features }: { scenario: Scenario; features: ChatFeatur
   const [messages, setMessages] = useState<ChatMessage[]>(scenario.seed);
   const [typing, setTyping] = useState<string[]>([]);
   const [busy, setBusy] = useState(false);
+  const [opened, setOpened] = useState<string | null>(null);
   const asked = useRef(0);
   const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
   const stream = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -105,13 +106,13 @@ function Room({ scenario, features }: { scenario: Scenario; features: ChatFeatur
     stream.current = null;
     setBusy(false);
     setTyping([]);
-    setMessages((all) => all.map((m) => (m.streaming ? { ...m, streaming: false, options: undefined } : m)));
+    setMessages((all) => all.map((m) => (m.streaming ? { ...m, streaming: false, options: undefined, attachments: undefined } : m)));
   }, []);
 
   /** The agent's answer arrives word by word. */
   const agentAnswers = (question: string) => {
     const agent = scenario.agent!;
-    const { text, options } = scenario.answer(question, asked.current++);
+    const { text, options, attachments } = scenario.answer(question, asked.current++);
     setBusy(true);
     setTyping([agent.name]);
     later(() => {
@@ -119,7 +120,7 @@ function Room({ scenario, features }: { scenario: Scenario; features: ChatFeatur
       const id = newId();
       const words = text.split(' ');
       let shown = 0;
-      setMessages((all) => [...all, { id, author: agent, text: '', at: Date.now(), streaming: true, options }]);
+      setMessages((all) => [...all, { id, author: agent, text: '', at: Date.now(), streaming: true, options, attachments }]);
       stream.current = setInterval(() => {
         shown += 2;
         patch(id, { text: words.slice(0, shown).join(' ') });
@@ -187,6 +188,7 @@ function Room({ scenario, features }: { scenario: Scenario; features: ChatFeatur
         onReact={react}
         onChoose={choose}
         onAttach={() => send('📎 drawing-v3.svg')}
+        onOpen={(a) => setOpened(a.name)}
         typing={typing}
         placeholder={scenario.placeholder}
         emptyText={scenario.emptyText}
@@ -194,6 +196,12 @@ function Room({ scenario, features }: { scenario: Scenario; features: ChatFeatur
         busy={busy}
         onStop={stop}
       />
+      {/* The lab has nothing to open: it only shows that the press arrived. */}
+      {opened ? (
+        <Pressable onPress={() => setOpened(null)} className="absolute left-3 right-3 top-3 rounded-control border border-primary/50 bg-pane px-3 py-2">
+          <Text variant="caption">The app would open "{opened}" here. Tap to close.</Text>
+        </Pressable>
+      ) : null}
     </View>
   );
 }
