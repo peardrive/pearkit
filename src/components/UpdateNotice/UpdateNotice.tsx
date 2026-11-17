@@ -41,7 +41,7 @@ export function UpdateNotice({ version, behind, state = 'available', progress, e
 
   const label =
     state === 'downloading'
-      ? 'Downloading…'
+      ? 'Downloading update…'
       : state === 'restarting'
         ? 'Restarting…'
         : failed

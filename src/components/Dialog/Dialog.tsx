@@ -76,7 +76,7 @@ export function Dialog({
           className={cn('max-h-full w-full overflow-hidden rounded-xl border border-overlay/10 bg-pane', className)}
           style={[{ maxWidth: width, boxShadow: '0px 30px 70px 0px rgba(0,0,0,0.55)' } as ViewStyle, style]}
         >
-          <ScrollView contentContainerClassName="gap-4 p-5" keyboardShouldPersistTaps="handled">
+          <ScrollView showsVerticalScrollIndicator={false} contentContainerClassName="gap-4 p-5" keyboardShouldPersistTaps="handled">
             {title || icon ? (
               <View className="flex-row items-start gap-3">
                 {icon ? (
