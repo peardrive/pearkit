@@ -6,6 +6,7 @@
  */
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Image, Platform, Pressable, ScrollView, TextInput, View } from 'react-native';
+import Svg, { Path } from 'react-native-svg';
 import { Avatar, Button, cn, Icon, IconButton, Text, useTheme } from 'pearkit';
 import { EMOJI, QUICK_REACTIONS, type ChatAttachment, type ChatAuthor, type ChatFeatures, type ChatMessage } from './types';
 
@@ -207,8 +208,9 @@ function Message({ m, me, f, first, last, quoted, active, onToggle, onReact, onR
         onPress={hasActions ? onToggle : undefined}
         className={cn(
           f.look === 'bubbles' && (compact ? 'px-3 py-1.5' : 'px-3.5 py-2'),
-          f.look === 'bubbles' && (mine ? 'bg-primary/[0.16]' : 'bg-pane'),
-          f.look === 'bubbles' && 'border border-overlay/[0.06]',
+          // Both bubbles must stand clear of the surface behind them (a pane or the background), so neither uses a
+          // surface colour: mine is tinted with the primary, the other side is a lighter overlay with a visible edge.
+          f.look === 'bubbles' && (mine ? 'border border-primary/35 bg-primary/[0.22]' : 'border border-overlay/[0.16] bg-overlay/[0.09]'),
           m.status === 'failed' && 'border-danger/50',
         )}
         style={f.look === 'bubbles' ? { borderRadius: 16, borderBottomRightRadius: right && last ? 5 : 16, borderBottomLeftRadius: !right && last ? 5 : 16 } : undefined}
@@ -330,7 +332,10 @@ function Message({ m, me, f, first, last, quoted, active, onToggle, onReact, onR
 
   return (
     <View className={cn('flex-row gap-2', right ? 'justify-end' : 'justify-start')} style={{ paddingTop: first ? (compact ? 8 : 12) : 2 }}>
-      {f.avatars && !right ? <View style={{ width: avatar }}>{first ? <Avatar seed={m.author.id} size={avatar} label={m.author.kind === 'agent' ? '✦' : m.author.name.slice(0, 1)} /> : null}</View> : null}
+      {/* An agent always shows its mark, even where people's avatars are off: it says "this is the AI talking". */}
+      {(f.avatars || m.author.kind === 'agent') && !right ? (
+        <View style={{ width: avatar }}>{first ? m.author.kind === 'agent' ? <AgentMark size={avatar} /> : <Avatar seed={m.author.id} size={avatar} label={m.author.name.slice(0, 1)} /> : null}</View>
+      ) : null}
       {body}
     </View>
   );
@@ -426,6 +431,24 @@ function Composer({ f, placeholder, replyingTo, onCancelReply, onSend, onAttach,
           <IconButton icon="arrow-up" size={compact ? 'sm' : 'md'} variant="solid" disabled={!text.trim()} accessibilityLabel="Send" onPress={send} />
         )}
       </View>
+    </View>
+  );
+}
+
+/** The agent's mark: a small robot head in a tinted circle. (Drawn here until Pearkit's icon set has a robot.) */
+export function AgentMark({ size = 24 }: { size?: number }) {
+  const theme = useTheme();
+  const c = theme.colors.primary;
+  const stroke = { stroke: c, strokeWidth: 1.5, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const };
+  return (
+    <View accessibilityLabel="AI" className="items-center justify-center rounded-full border border-primary/40 bg-primary/[0.16]" style={{ width: size, height: size }}>
+      <Svg width={size * 0.66} height={size * 0.66} viewBox="0 0 24 24" fill="none">
+        <Path d="M12 3V6" {...stroke} />
+        <Path d="M8 6H16C18.2 6 20 7.8 20 10V15C20 17.2 18.2 19 16 19H8C5.8 19 4 17.2 4 15V10C4 7.8 5.8 6 8 6Z" {...stroke} />
+        <Path d="M2 11.5V14.5M22 11.5V14.5" {...stroke} />
+        <Path d="M9 11.5V13.5M15 11.5V13.5" {...stroke} strokeWidth={2} />
+        <Path d="M10 22H14" {...stroke} />
+      </Svg>
     </View>
   );
 }
