@@ -7,12 +7,14 @@
  * Runs on web, Electron and React Native (nothing here touches the DOM).
  * From pearcast's spikes/capture/src/trace.js and pear-ui/debug/trace.js.
  */
-import type { DebugLog, DebugRecorder, DebugTrace, NoteMeta, SaveNote, Step, StepKind, TraceStepOptions, WhereFn } from './types';
+import type { DebugLog, DebugRecorder, DebugTrace, NoteMeta, NoteSink, SaveNote, Step, StepKind, StoppedNote, TraceStepOptions, WhereFn } from './types';
 
 export interface CreateTraceOptions {
   app: string;
   recorder: DebugRecorder;
   save: SaveNote;
+  /** Where the note is written while it records. Without one the recording is held in memory until `save`. */
+  sink?: NoteSink;
   where?: WhereFn;
   log?: DebugLog;
 }
@@ -23,6 +25,11 @@ interface OpenNote {
   steps: Step[];
   audio: boolean;
 }
+
+/** How often the steps so far go to the sink. */
+const STEPS_EVERY_MS = 5000;
+/** How long a stop waits for the sink to take the last pieces before saving the whole recording instead. */
+const SINK_WAIT_MS = 8000;
 
 const nowMs = () => (typeof performance !== 'undefined' && performance.now ? performance.now() : Date.now());
 
@@ -41,8 +48,37 @@ export function noteId(date = new Date()): string {
   return date.toISOString().replace(/[:.]/g, '-').slice(0, 19);
 }
 
-export function createTrace({ app, recorder, save, where = () => ({}), log = () => {} }: CreateTraceOptions): DebugTrace {
+export function createTrace({ app, recorder, save, sink, where = () => ({}), log = () => {} }: CreateTraceOptions): DebugTrace {
   let note: OpenNote | null = null;
+  let starting = false;
+  let stopping: Promise<StoppedNote | null> | null = null;
+
+  // The sink: one call at a time, in order. The first failure turns it off for this note, and `save` then gets
+  // the whole recording as it always did.
+  let sinkOk = false;
+  let sinkQueue: Promise<void> = Promise.resolve();
+  let stepsTimer: ReturnType<typeof setInterval> | null = null;
+  let stepsSent = '';
+  const toSink = (what: string, fn: () => unknown) => {
+    sinkQueue = sinkQueue.then(async () => {
+      if (!sinkOk) return;
+      try {
+        await fn();
+      } catch (err) {
+        sinkOk = false;
+        log('warn', `Debug note: writing as it records stopped (${what}: ${(err as Error)?.message || String(err)}); the note is saved whole when it stops`);
+      }
+    });
+  };
+  const sendSteps = (n: OpenNote) => {
+    if (!sink?.steps || !sinkOk) return;
+    const last = n.steps[n.steps.length - 1];
+    const mark = `${n.steps.length}:${last?.until ?? last?.t ?? 0}:${last?.text ?? ''}`;
+    if (mark === stepsSent) return;
+    stepsSent = mark;
+    const copy = n.steps.map((s) => ({ ...s }));
+    toSink('steps', () => sink.steps!(n.id, copy));
+  };
   const listeners = new Set<() => void>();
   const emit = () => {
     for (const fn of listeners) {
@@ -84,10 +120,42 @@ export function createTrace({ app, recorder, save, where = () => ({}), log = () 
   }
 
   async function start(): Promise<boolean> {
-    if (note) return false;
+    if (note || starting || stopping) return false;
+    starting = true;
+    try {
+      return await begin();
+    } finally {
+      starting = false;
+    }
+  }
+
+  async function begin(): Promise<boolean> {
     const id = noteId();
-    const audio = await recorder.start();
-    note = { id, t0: nowMs(), steps: [], audio };
+    sinkOk = !!sink;
+    sinkQueue = Promise.resolve();
+    stepsSent = '';
+    // Pieces that arrive before the sink has opened the note wait in the queue behind `begin`.
+    const early: Blob[] = [];
+    let opened = false;
+    const onChunk = (data: Blob) => {
+      if (!sink?.chunk || !sinkOk) return;
+      if (!opened) early.push(data);
+      else toSink('chunk', () => sink.chunk!(id, data));
+    };
+    const audio = await recorder.start(sink?.chunk ? { onChunk } : undefined);
+    const n: OpenNote = { id, t0: nowMs(), steps: [], audio };
+    note = n;
+    if (sink) {
+      const vp0 = viewport();
+      const ua0 = userAgent();
+      const meta = { startedAt: new Date().toISOString(), app, ...(ua0 ? { userAgent: ua0 } : {}), ...(vp0 ? { window: vp0 } : {}), ...where(), ...(audio ? {} : { noAudio: recorder.error || 'no audio captured' }) };
+      toSink('begin', () => sink.begin({ id, type: audio ? recorder.type || 'audio/webm' : null, meta }));
+      opened = true;
+      for (const data of early) toSink('chunk', () => sink.chunk!(id, data));
+      stepsTimer = setInterval(() => {
+        if (note === n) sendSteps(n);
+      }, STEPS_EVERY_MS);
+    }
     const w = where();
     const place = Object.entries(w)
       .filter(([, v]) => v)
@@ -99,10 +167,36 @@ export function createTrace({ app, recorder, save, where = () => ({}), log = () 
     return true;
   }
 
-  async function stop(extra: Record<string, unknown> = {}) {
-    if (!note) return null;
+  // One stop at a time. A second press while the first is closing waits for the same result: it can never stop
+  // the recorder a second time (which used to answer "no audio") or leave the note without an ending.
+  function stop(extra: Record<string, unknown> = {}): Promise<StoppedNote | null> {
+    if (stopping) return stopping;
+    if (!note) return Promise.resolve(null);
     const n = note;
-    const got = n.audio ? await recorder.stop() : null;
+    stopping = finish(n, extra).finally(() => {
+      stopping = null;
+      emit();
+    });
+    emit();
+    return stopping;
+  }
+
+  async function finish(n: OpenNote, extra: Record<string, unknown>): Promise<StoppedNote> {
+    if (stepsTimer) clearInterval(stepsTimer);
+    stepsTimer = null;
+    let got: Awaited<ReturnType<DebugRecorder['stop']>> = null;
+    try {
+      got = n.audio ? await recorder.stop() : null;
+    } catch (err) {
+      log('error', `Debug note: the recorder failed to stop (${(err as Error)?.message || String(err)})`);
+    }
+    // The last pieces reach the sink before the note is saved; a sink that hangs is given up on.
+    let streamed = false;
+    if (sink) {
+      const settled = await Promise.race([sinkQueue.then(() => true), new Promise<boolean>((r) => setTimeout(() => r(false), SINK_WAIT_MS))]);
+      streamed = settled && sinkOk;
+      sinkOk = false;
+    }
     note = null;
     emit();
     const seconds = Math.round(nowMs() - n.t0) / 1000;
@@ -119,7 +213,7 @@ export function createTrace({ app, recorder, save, where = () => ({}), log = () 
       ...extra,
       ...(got ? {} : { noAudio: recorder.error || 'no audio captured' }),
     };
-    const saved = await save({ id: n.id, meta, steps: n.steps, blob: got?.blob ?? null, ...(got?.uri ? { uri: got.uri } : {}), ...(got?.type ? { type: got.type } : {}) });
+    const saved = await save({ id: n.id, meta, steps: n.steps, blob: got?.blob ?? null, ...(got?.uri ? { uri: got.uri } : {}), ...(got?.type ? { type: got.type } : {}), ...(sink ? { streamed } : {}) });
     log('info', `Debug note saved: ${n.steps.length} step(s), ${seconds} s${got ? '' : ', no audio'}`);
     const base = saved && typeof saved === 'object' ? (saved as Record<string, unknown>) : {};
     return { ...base, id: n.id, seconds, recorded: !!got };
@@ -131,6 +225,9 @@ export function createTrace({ app, recorder, save, where = () => ({}), log = () 
     step,
     get active() {
       return !!note;
+    },
+    get stopping() {
+      return !!stopping;
     },
     get audio() {
       return !!note?.audio;

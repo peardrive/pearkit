@@ -48,6 +48,26 @@ Make `notes` once (module scope, or `useMemo`), not per render: it owns the reco
 - **`describe(el)`** (web) — what a clicked thing IS: `{ text: 'file IMG_5238.MOV', data: { path } }`. Give selectable things stable names (`data-name`, `data-path`, `aria-label`): the trace is only as readable as those.
 - **`onIdleClick`** on the button — open a dialog first (pick a microphone with `recorder.mics()`, show a refusal from `recorder.probe()` before the person talks), then call `notes.trace.start()`.
 
+### Writing the note as it records
+
+Pass a `sink` and nothing lives only in memory: each second of voice and the steps so far go to your store while the note runs, so a crash, a closed window or a button that stops answering loses nothing.
+
+```ts
+createDebugNotes({
+  app: 'my-app',
+  sink: {
+    begin: ({ id, type, meta }) => store.begin(id, type, meta), // type: the recording's MIME type, null without a voice
+    chunk: async (id, blob) => store.append(id, await blob.arrayBuffer()), // in order, about one a second
+    steps: (id, steps) => store.steps(id, steps), // the whole list, every few seconds
+  },
+  save: ({ id, meta, steps, blob, streamed }) => store.finish(id, meta, steps, streamed ? null : blob),
+});
+```
+
+`streamed` is true when every piece reached the sink. If any sink call fails, the trace stops using it and `save` gets the whole recording in `blob`, as it does without a sink. In a folder that pearcore shares, write through PearDrive's write gate (`src/engine/drafts.js`), so the space never sees a half-written file.
+
+Stopping is safe to ask for twice: `trace.stop()` and `recorder.stop()` answer a repeat with the stop already under way, and a recorder that never confirms is given up on after a few seconds, keeping what it recorded. Give the app a second way to stop a note that does not go through the button (a menu item, a shortcut) calling `notes.trace.stop()`.
+
 ### Platforms
 
 - **Web / Electron:** everything. The recorder is `MediaRecorder` (`audio/webm` in Chromium, `audio/mp4` in Safari); the capture listens on `document` in the capture phase, so handlers that stop propagation are still seen. On macOS the Electron app needs the microphone permission (System Settings → Privacy & Security → Microphone); a refusal shows up as `NotAllowedError` in `recorder.error` and `note.noAudio`.

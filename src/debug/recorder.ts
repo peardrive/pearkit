@@ -11,7 +11,7 @@
  * React Native has no MediaRecorder: pass your own `DebugRecorder` (expo-av…)
  * to `createDebugNotes`, or get `createUnavailableRecorder()` and steps only.
  */
-import type { DebugLog, DebugRecorder, MicrophoneInfo, RecordingResult } from './types';
+import type { DebugLog, DebugRecorder, MicrophoneInfo, RecorderStartOptions, RecordingResult } from './types';
 
 export interface WebRecorderOptions {
   /** A live stream the app already holds; its audio tracks are cloned instead of opening the mic again. */
@@ -26,6 +26,9 @@ const describeError = (err: unknown) => {
   return `${e?.name || 'Error'}: ${e?.message || String(err)}`;
 };
 
+/** How long a stop waits for MediaRecorder to hand over its last piece. */
+const STOP_WAIT_MS = 4000;
+
 const media = () => (globalThis as { navigator?: Navigator }).navigator?.mediaDevices;
 
 /** Whether this platform can record a voice with `createWebRecorder()`. */
@@ -36,6 +39,7 @@ export function canRecordAudio(): boolean {
 export function createWebRecorder({ shared = () => null, micId = () => null, log = () => {} }: WebRecorderOptions = {}): DebugRecorder {
   let cur: { rec: MediaRecorder; chunks: Blob[]; stream: MediaStream; own: boolean; t0: number } | null = null;
   let error: string | null = null;
+  let stopping: Promise<RecordingResult | null> | null = null;
   const now = () => (typeof performance !== 'undefined' ? performance.now() : Date.now());
 
   async function own(): Promise<MediaStream | null> {
@@ -62,18 +66,24 @@ export function createWebRecorder({ shared = () => null, micId = () => null, log
     }
   }
 
-  function begin(stream: MediaStream) {
+  function begin(stream: MediaStream, onChunk?: (data: Blob) => void) {
     const chunks: Blob[] = [];
     const rec = new MediaRecorder(stream);
     rec.ondataavailable = (e) => {
-      if (e.data?.size) chunks.push(e.data);
+      if (!e.data?.size) return;
+      chunks.push(e.data);
+      try {
+        onChunk?.(e.data);
+      } catch {
+        /* the listener never breaks the recording */
+      }
     };
     rec.start(1000);
     return { rec, chunks };
   }
 
-  async function start(): Promise<boolean> {
-    if (cur) return false;
+  async function start({ onChunk }: RecorderStartOptions = {}): Promise<boolean> {
+    if (cur || stopping) return false;
     error = null;
     if (typeof MediaRecorder === 'undefined') {
       error = 'no MediaRecorder on this platform';
@@ -86,7 +96,7 @@ export function createWebRecorder({ shared = () => null, micId = () => null, log
     let got: { rec: MediaRecorder; chunks: Blob[] } | null = null;
     if (stream) {
       try {
-        got = begin(stream);
+        got = begin(stream, onChunk);
       } catch (err) {
         log('warn', `Shared mic would not record (${describeError(err)}); opening our own`);
         for (const t of stream.getTracks()) t.stop();
@@ -98,7 +108,7 @@ export function createWebRecorder({ shared = () => null, micId = () => null, log
       if (!stream) return false;
       isOwn = true;
       try {
-        got = begin(stream);
+        got = begin(stream, onChunk);
       } catch (err) {
         for (const t of stream.getTracks()) t.stop();
         error = `MediaRecorder: ${describeError(err)}`;
@@ -118,19 +128,42 @@ export function createWebRecorder({ shared = () => null, micId = () => null, log
     return true;
   }
 
-  async function stop(): Promise<RecordingResult | null> {
-    if (!cur) return null;
+  // A second stop while the first is closing gets the same recording (it used to get null, which the trace read as
+  // "no audio" and saved the note without its voice). And a MediaRecorder that never reports back cannot hold the
+  // note hostage: after a few seconds the pieces already received are the recording.
+  function stop(): Promise<RecordingResult | null> {
+    if (stopping) return stopping;
+    if (!cur) return Promise.resolve(null);
     const c = cur;
-    cur = null;
-    await new Promise<void>((resolve) => {
-      if (c.rec.state === 'inactive') return resolve();
-      c.rec.onstop = () => resolve();
-      c.rec.stop();
-    });
-    for (const t of c.stream.getTracks()) t.stop();
-    const seconds = Math.round(now() - c.t0) / 1000;
-    const type = c.rec.mimeType || 'audio/webm';
-    return c.chunks.length ? { blob: new Blob(c.chunks, { type }), type, seconds } : null;
+    stopping = (async () => {
+      try {
+        await new Promise<void>((resolve) => {
+          if (c.rec.state === 'inactive') return resolve();
+          const giveUp = setTimeout(() => {
+            log('warn', 'The recorder did not confirm the stop; keeping what was recorded');
+            resolve();
+          }, STOP_WAIT_MS);
+          c.rec.onstop = () => {
+            clearTimeout(giveUp);
+            resolve();
+          };
+          try {
+            c.rec.stop();
+          } catch {
+            clearTimeout(giveUp);
+            resolve();
+          }
+        });
+        for (const t of c.stream.getTracks()) t.stop();
+        const seconds = Math.round(now() - c.t0) / 1000;
+        const type = c.rec.mimeType || 'audio/webm';
+        return c.chunks.length ? { blob: new Blob(c.chunks, { type }), type, seconds } : null;
+      } finally {
+        cur = null;
+        stopping = null;
+      }
+    })();
+    return stopping;
   }
 
   async function mics(): Promise<MicrophoneInfo[]> {
@@ -164,6 +197,9 @@ export function createWebRecorder({ shared = () => null, micId = () => null, log
     },
     get stream() {
       return cur?.stream || null;
+    },
+    get type() {
+      return cur ? cur.rec.mimeType || 'audio/webm' : null;
     },
     get error() {
       return error;

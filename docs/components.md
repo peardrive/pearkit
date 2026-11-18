@@ -21,6 +21,7 @@ A map of everything pearkit exports. Storybook has full prop tables, controls an
 | `Tooltip` | Label + shortcut, four placements, hover / long-press, controlled or `defaultOpen`. |
 | `StatusPill`, `StatusDot` | Seven tones; `status` presets via `shareStatusMeta`; dot `glow` and `pulse`. |
 | `CountBadge` | Quiet count or tinted pill, `max`, `hideZero`. |
+| `OrderTile`, `OrderBadge`, `useOrderedSelection` | Choosing in order: a tap gives the next number (1, 2, 3) in place of a check mark, number 1 leads; `max`; the rule alone in `toggleOrder`, `orderNumber`, `sendLast`, `sendFirst`, `inOrder`. |
 | `ProgressBar` | `transfer · brand · solid` gradients, custom `colors`, `height`. |
 | `SearchField` | Shortcut hint, clear button, controlled / uncontrolled. |
 | `Thumbnail` | Image or tinted kind icon (`fileKindMeta`), `fileKindFromName()`. |

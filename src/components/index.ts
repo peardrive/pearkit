@@ -53,17 +53,25 @@ export * from './Scrubber/useTimeRange';
 export * from './Scrubber/timeGlyphs';
 export * from './Scrubber/Glyphs';
 export * from './Scrubber/Scrubber';
+
 export * from './Transport/Transport';
+
 export * from './Waveform/waveformBars';
 export * from './Waveform/Waveform';
+
 export * from './Filmstrip/filmstripCells';
 export * from './Filmstrip/Filmstrip';
 export * from './TrimStrip/TrimStrip';
 
 // Forms & overlays
 export * from './TextField/TextField';
+
 export * from './Dialog/Dialog';
 export { enterPressesMain, type EnterKey } from './Dialog/enterKey';
+
+export * from './Order/OrderBadge';
+export * from './Order/OrderTile';
+export * from './Order/useOrderedSelection';
 
 // Media
 export * from './MediaPlayer';
