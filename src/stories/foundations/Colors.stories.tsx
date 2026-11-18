@@ -14,6 +14,7 @@ const groups: Record<string, ColorToken[]> = {
   Brand: ['primary', 'primary-foreground', 'primary-strong', 'primary-text', 'selected'],
   Status: ['success', 'warning', 'danger', 'danger-foreground', 'neutral', 'info', 'accent', 'favorite'],
   'Window & QR': ['window-close', 'window-minimize', 'window-maximize', 'window-inactive', 'qr-background', 'qr-foreground'],
+  Media: ['playhead'],
 };
 
 function Swatch({ token }: { token: ColorToken }) {

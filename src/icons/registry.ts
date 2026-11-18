@@ -598,6 +598,32 @@ export const iconRegistry = {
       }
     ]
   },
+  "alert-circle": {
+    "set": "pearkit",
+    "paths": [
+      {
+        "d": "M22 12C22 17.52 17.52 22 12 22C6.48 22 2 17.52 2 12C2 6.48 6.48 2 12 2C17.52 2 22 6.48 22 12Z",
+        "stroke": true,
+        "strokeWidth": 1.5,
+        "strokeLinecap": "round",
+        "strokeLinejoin": "round"
+      },
+      {
+        "d": "M12 8V12.5",
+        "stroke": true,
+        "strokeWidth": 1.5,
+        "strokeLinecap": "round",
+        "strokeLinejoin": "round"
+      },
+      {
+        "d": "M12 16H12.01",
+        "stroke": true,
+        "strokeWidth": 1.5,
+        "strokeLinecap": "round",
+        "strokeLinejoin": "round"
+      }
+    ]
+  },
   "chevron-left": {
     "set": "pearkit",
     "paths": [
@@ -745,6 +771,58 @@ export const iconRegistry = {
       }
     ]
   },
+  "microphone-slash": {
+    "set": "pearkit",
+    "paths": [
+      {
+        "d": "M16 6V8.5M16 11.5C16 13.71 14.21 15.5 12 15.5C11.1 15.5 10.27 15.2 9.6 14.7M8 11.5V6C8 3.79 9.79 2 12 2C13.35 2 14.55 2.67 15.27 3.7",
+        "stroke": true,
+        "strokeWidth": 1.5,
+        "strokeLinecap": "round",
+        "strokeLinejoin": "round"
+      },
+      {
+        "d": "M4.35 9.65V11.35C4.35 15.57 7.78 19 12 19C16.22 19 19.65 15.57 19.65 11.35V9.65",
+        "stroke": true,
+        "strokeWidth": 1.5,
+        "strokeLinecap": "round",
+        "strokeLinejoin": "round"
+      },
+      {
+        "d": "M12 19V22M3 3L21 21",
+        "stroke": true,
+        "strokeWidth": 1.5,
+        "strokeLinecap": "round",
+        "strokeLinejoin": "round"
+      }
+    ]
+  },
+  "microphone": {
+    "set": "pearkit",
+    "paths": [
+      {
+        "d": "M12 15.5C14.21 15.5 16 13.71 16 11.5V6C16 3.79 14.21 2 12 2C9.79 2 8 3.79 8 6V11.5C8 13.71 9.79 15.5 12 15.5Z",
+        "stroke": true,
+        "strokeWidth": 1.5,
+        "strokeLinecap": "round",
+        "strokeLinejoin": "round"
+      },
+      {
+        "d": "M4.35 9.65V11.35C4.35 15.57 7.78 19 12 19C16.22 19 19.65 15.57 19.65 11.35V9.65",
+        "stroke": true,
+        "strokeWidth": 1.5,
+        "strokeLinecap": "round",
+        "strokeLinejoin": "round"
+      },
+      {
+        "d": "M12 19V22",
+        "stroke": true,
+        "strokeWidth": 1.5,
+        "strokeLinecap": "round",
+        "strokeLinejoin": "round"
+      }
+    ]
+  },
   "moon": {
     "set": "pearkit",
     "paths": [
@@ -865,9 +943,49 @@ export const iconRegistry = {
         "strokeMiterlimit": 10
       }
     ]
+  },
+  "wifi-slash": {
+    "set": "pearkit",
+    "paths": [
+      {
+        "d": "M12 20H12.01",
+        "stroke": true,
+        "strokeWidth": 1.5,
+        "strokeLinecap": "round",
+        "strokeLinejoin": "round"
+      },
+      {
+        "d": "M8.5 16.43C10.43 14.5 13.57 14.5 15.5 16.43",
+        "stroke": true,
+        "strokeWidth": 1.5,
+        "strokeLinecap": "round",
+        "strokeLinejoin": "round"
+      },
+      {
+        "d": "M5 12.86C6.45 11.5 8.25 10.6 10.17 10.17M19 12.86C18.38 12.27 17.71 11.76 16.99 11.34",
+        "stroke": true,
+        "strokeWidth": 1.5,
+        "strokeLinecap": "round",
+        "strokeLinejoin": "round"
+      },
+      {
+        "d": "M2 8.82C3.27 7.68 4.68 6.79 6.18 6.18M22 8.82C18.72 5.9 14.59 4.63 10.71 5.06",
+        "stroke": true,
+        "strokeWidth": 1.5,
+        "strokeLinecap": "round",
+        "strokeLinejoin": "round"
+      },
+      {
+        "d": "M2 2L22 22",
+        "stroke": true,
+        "strokeWidth": 1.5,
+        "strokeLinecap": "round",
+        "strokeLinejoin": "round"
+      }
+    ]
   }
 } as const satisfies Record<string, IconDefinition>;
 
 export type IconName = keyof typeof iconRegistry;
 
-export const iconNames = ["arrow-down","arrow-up","clock","copy","export","filter","folder-open","folder","grid-1","import","info-circle","more","pause","people","scan-barcode","search-normal","setting-2-bold","sidebar-left","sort","star-bold","star","stop-circle","add","chevron-left","chevron-right","close","document","image","link","menu","moon","music","play","refresh","sun","tick","video"] as IconName[];
+export const iconNames = ["arrow-down","arrow-up","clock","copy","export","filter","folder-open","folder","grid-1","import","info-circle","more","pause","people","scan-barcode","search-normal","setting-2-bold","sidebar-left","sort","star-bold","star","stop-circle","add","alert-circle","chevron-left","chevron-right","close","document","image","link","menu","moon","music","play","refresh","sun","tick","video","wifi-slash"] as IconName[];
