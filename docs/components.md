@@ -24,6 +24,7 @@ A map of everything pearkit exports. Storybook has full prop tables, controls an
 | `ProgressBar` | `transfer · brand · solid` gradients, custom `colors`, `height`. |
 | `SearchField` | Shortcut hint, clear button, controlled / uncontrolled. |
 | `Thumbnail` | Image or tinted kind icon (`fileKindMeta`), `fileKindFromName()`. |
+| `Chip` | Tag / filter token: leading icon, quiet count, selected tint per tone, removable ✕, `sm · md`. |
 | `Avatar`, `PeerChip` | Deterministic gradient avatars; truncated peer keys. |
 | `QRCode` | Real QR generation, one SVG path, themeable colours. |
 | `LinkField` | Copyable recessed field with "copied" feedback. |

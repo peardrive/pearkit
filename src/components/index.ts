@@ -17,6 +17,7 @@ export * from './SearchField/SearchField';
 export * from './Thumbnail/Thumbnail';
 export * from './Avatar/Avatar';
 export * from './PeerChip/PeerChip';
+export * from './Chip/Chip';
 export * from './QRCode/QRCode';
 export * from './LinkField/LinkField';
 export * from './KeyValueList/KeyValueList';
