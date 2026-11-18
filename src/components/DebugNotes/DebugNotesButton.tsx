@@ -10,6 +10,8 @@ import type { DebugNotes, StoppedNote } from '../../debug';
 export interface DebugNotesState {
   /** A note is running. */
   active: boolean;
+  /** The note is being stopped and saved. */
+  stopping: boolean;
   /** The running note records a voice (false: steps only). */
   audio: boolean;
   seconds: number;
@@ -21,7 +23,7 @@ export interface DebugNotesState {
 /** The live state of a `DebugNotes` instance: re-renders on start, stop, every step, and the clock. */
 export function useDebugNotes(notes: DebugNotes): DebugNotesState {
   const read = useCallback(
-    (): DebugNotesState => ({ active: notes.trace.active, audio: notes.trace.audio, seconds: notes.trace.seconds, steps: notes.trace.steps, error: notes.recorder.error }),
+    (): DebugNotesState => ({ active: notes.trace.active, stopping: !!notes.trace.stopping, audio: notes.trace.audio, seconds: notes.trace.seconds, steps: notes.trace.steps, error: notes.recorder.error }),
     [notes],
   );
   const [state, setState] = useState<DebugNotesState>(read);
@@ -133,19 +135,29 @@ export function DebugNotesButton({ notes, variant = 'expanded', label = 'Debug n
   const compact = variant === 'compact';
   const level = useMicLevel(recording ? notes.recorder.stream : null);
   const bars = compact ? COMPACT_BARS.map((i) => level[i]!) : level;
-  const busy = useRef(false);
+  const starting = useRef(0); // when a start was last asked for; a start that never answers frees the button after a while
   const [, bump] = useState(0);
   const [hovered, setHovered] = useState(false); // pearcast: the idle label brightens under the pointer
 
+  // A press on a running note ALWAYS reaches stop(): nothing an earlier press left unfinished can lock the button
+  // (stop() answers a repeat with the stop already under way). Only starting is guarded against a double press.
   const press = useCallback(async () => {
-    if (busy.current) return;
-    busy.current = true;
     try {
-      if (notes.trace.active) onStopped?.(await notes.trace.stop());
-      else if (onIdleClick) await onIdleClick();
-      else await notes.trace.start();
+      if (notes.trace.active) {
+        const first = !notes.trace.stopping;
+        const saved = await notes.trace.stop();
+        if (first) onStopped?.(saved);
+        return;
+      }
+      if (Date.now() - starting.current < 15_000) return;
+      starting.current = Date.now();
+      try {
+        if (onIdleClick) await onIdleClick();
+        else await notes.trace.start();
+      } finally {
+        starting.current = 0;
+      }
     } finally {
-      busy.current = false;
       bump((n) => n + 1);
     }
   }, [notes, onIdleClick, onStopped]);
@@ -161,9 +173,9 @@ export function DebugNotesButton({ notes, variant = 'expanded', label = 'Debug n
   return (
     <Pressable
       accessibilityRole="button"
-      accessibilityLabel={s.active ? `Stop the debug note (${clock(s.seconds)}, ${s.steps} steps)` : 'Start a debug note'}
+      accessibilityLabel={s.stopping ? 'Saving the debug note' : s.active ? `Stop the debug note (${clock(s.seconds)}, ${s.steps} steps)` : 'Start a debug note'}
       accessibilityHint={hint}
-      accessibilityState={{ selected: s.active }}
+      accessibilityState={{ selected: s.active, busy: s.stopping }}
       onPress={press}
       onHoverIn={() => setHovered(true)}
       onHoverOut={() => setHovered(false)}
