@@ -152,3 +152,9 @@ describe('plainText', () => {
     expect(plainText('# Hi **there**\n\n- `a`\n- [b](x)\n\n> *q*\n\n---\n\n```\ncode\n```')).toBe('Hi there\na\nb\nq\ncode');
   });
 });
+
+test('takes a missing text as empty (a message with only an attachment)', () => {
+  expect(parseMarkdown(undefined)).toEqual([]);
+  expect(parseMarkdown(null)).toEqual([]);
+  expect(plainText(undefined)).toBe('');
+});

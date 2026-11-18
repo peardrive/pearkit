@@ -34,7 +34,8 @@ const LINK = /^\[([^\]]*)\]\(([^)\s]+)\)/;
 const PUNCT = /[\\`*_{}[\]()#+\-.!>~|]/;
 
 /** The blocks of a Markdown text, in order. */
-export function parseMarkdown(text: string): Block[] {
+export function parseMarkdown(text: string | null | undefined): Block[] {
+  text = text ?? '' // a message with only an attachment has no text
   const lines = text.replace(/\r\n?/g, '\n').split('\n');
   const blocks: Block[] = [];
   let para: string[] = [];
@@ -212,7 +213,7 @@ function findClosing(text: string, mark: string, from: number): number {
 }
 
 /** The words of a Markdown text with every mark taken off: for a one-line preview, a notification, a search index. */
-export function plainText(text: string): string {
+export function plainText(text: string | null | undefined): string {
   const inlineText = (nodes: Inline[]): string =>
     nodes.map((n) => (n.type === 'text' || n.type === 'code' ? n.text : inlineText(n.children))).join('');
   const blockText = (b: Block): string => {
