@@ -14,6 +14,7 @@ export const textTone: Record<ColorToken, string> = {
   neutral: 'text-neutral', info: 'text-info', accent: 'text-accent', favorite: 'text-favorite',
   'window-close': 'text-window-close', 'window-minimize': 'text-window-minimize', 'window-maximize': 'text-window-maximize',
   'window-inactive': 'text-window-inactive', 'qr-background': 'text-qr-background', 'qr-foreground': 'text-qr-foreground',
+  playhead: 'text-playhead',
 };
 
 /** Semantic status tones shared by StatusPill, StatusDot, CountBadge, SidebarItem… */
