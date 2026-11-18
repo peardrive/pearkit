@@ -8,6 +8,7 @@ import { statusToken } from '../../theme/tones';
 import { Avatar } from '../Avatar/Avatar';
 import { Button } from '../Button/Button';
 import { Text } from '../Text/Text';
+import { MarkdownText } from '../MarkdownText/MarkdownText';
 import { fileKindFromName, fileKindMeta, type FileKind } from '../Thumbnail/Thumbnail';
 import { AgentMark } from './AgentMark';
 import { messageTime } from './chatLogic';
@@ -39,6 +40,8 @@ export interface MessageRowProps {
   onOpenAttachment?: (attachment: ChatAttachment, message: ChatMessage) => void;
   /** Copy the text yourself (React Native has no clipboard of its own). */
   onCopy?: (text: string) => void;
+  /** A link in the text was pressed. Without it the link opens with `Linking.openURL`. */
+  onLinkPress?: (url: string) => void;
   className?: string;
   style?: StyleProp<ViewStyle>;
 }
@@ -65,6 +68,7 @@ export function MessageRow({
   onReply,
   onOpenAttachment,
   onCopy,
+  onLinkPress,
   className,
   style,
 }: MessageRowProps) {
@@ -139,15 +143,14 @@ export function MessageRow({
             </Text>
           </View>
         ))}
-        <Text
-          variant="label"
-          tone={m.redacted ? 'subtle' : 'foreground'}
-          selectable
-          className={cn(m.redacted && 'line-through')}
-          style={{ fontSize: compact ? 13 : 14.5, lineHeight: compact ? 18.5 : 21 }}
-        >
-          {text}
-        </Text>
+        {m.redacted ? (
+          <Text variant={compact ? 'body-sm' : 'body'} tone="subtle" selectable className="line-through" style={{ lineHeight: compact ? 18 : 19 }}>
+            {text}
+          </Text>
+        ) : (
+          // The words as Markdown: bold, code, lists, a fenced block, links. A pending row is lighter as a whole.
+          <MarkdownText text={m.text} variant={compact ? 'body-sm' : 'body'} tone="foreground" selectable onLinkPress={onLinkPress} />
+        )}
       </Pressable>
 
       {m.attachments?.length ? (

@@ -36,8 +36,16 @@ const ROOM: ChatMessage[] = [
   { id: 'r8', author: ANA, text: 'Here is the mock and the recording from the tablet.', ts: earlier + 4 * min, attachments: [{ name: 'drag-bar.png', size: 184_000, url: PIC, kind: 'image' }, { name: 'tablet-run.mov', size: 42_300_000 }] },
   { id: 'r9', author: TOMAS, text: 'never mind, wrong room', ts: earlier + 5 * min, redacted: true },
   { id: 'r10', author: PEAR, text: 'I can keep a summary of this room pinned at the top if that helps. Say "@Pear summarize".', ts: earlier + 6 * min },
+  {
+    id: 'r12',
+    author: PEAR,
+    text: '**So far**\n\n- The new drag bar shipped: `ResizeHandle`, 75% of the gap\n- It vanishes on the light theme; Guy moves it to the *overlay* colour\n\nTo check it:\n\n```sh\nnpm run storybook\n```\n\nMore in [the handle\'s story](https://peardrive.github.io/pearkit).',
+    ts: earlier + 7 * min,
+  },
   { id: 'r11', author: ME, text: '@Pear summarize', ts: now - 5000, pending: true },
 ];
+
+const LINES = ['Makes sense.', 'Can you show it on the phone width too?', 'I like the compact one for sidebars.', 'Replies need to show who is being answered.', 'ok, trying it now', 'That works for me 🍐'];
 
 const meta: Meta<typeof MessageList> = {
   title: 'Components/Chat',
@@ -94,7 +102,14 @@ export const Rows: Story = {
         <View className="w-full">
           <MessageRow message={ROOM[0]!} />
           <MessageRow message={ROOM[9]!} />
-          <MessageRow message={ROOM[11]!} mine />
+          <MessageRow message={ROOM[12]!} mine />
+        </View>
+      </Showcase>
+      <Showcase title="Markdown, in a bubble and flat">
+        <View className="w-full">
+          <MessageRow message={ROOM[11]!} onLinkPress={fn()} />
+          <MessageRow message={{ ...ROOM[11]!, id: 'mine-md', author: ME }} mine onLinkPress={fn()} />
+          <MessageRow message={ROOM[11]!} look="flat" onLinkPress={fn()} />
         </View>
       </Showcase>
       <Showcase title="Attachments">
@@ -145,7 +160,7 @@ export const ComposerStory: Story = {
 export const Conversation: Story = {
   decorators: framed(),
   render: () => {
-    const [messages, setMessages] = useState<ChatMessage[]>(ROOM.slice(0, 11));
+    const [messages, setMessages] = useState<ChatMessage[]>(ROOM.slice(0, 12));
     const [value, setValue] = useState('');
     const [replyTo, setReplyTo] = useState<string | null>(null);
     const quoted = replyTo ? messages.find((m) => m.id === replyTo) : undefined;
@@ -174,11 +189,50 @@ export const Conversation: Story = {
             <Text variant="label" weight="bold" truncate>Pearkit crew · 4 people</Text>
             <Text variant="micro" tone="muted" truncate>A room: people and an agent</Text>
           </View>
-          <Button size="sm" variant="ghost" icon="refresh" accessibilityLabel="Start over" onPress={() => setMessages(ROOM.slice(0, 11))} />
+          <Button size="sm" variant="ghost" icon="refresh" accessibilityLabel="Start over" onPress={() => setMessages(ROOM.slice(0, 12))} />
         </View>
         <MessageList messages={messages} currentUserId="me" onReact={react} onReply={setReplyTo} onOpenAttachment={fn()} />
         <Composer value={value} onChangeText={setValue} onSend={send} onAttach={fn()} replyTo={quoted ? { name: quoted.author.name, text: quoted.text } : null} onCancelReply={() => setReplyTo(null)} placeholder="Message Pearkit crew" />
       </>
+    );
+  },
+};
+
+/** Scroll to the top: a page of twenty older messages is put in front, and the view stays where it was. */
+export const OlderHistory: Story = {
+  name: 'Older history',
+  decorators: framed(),
+  render: () => {
+    const [messages, setMessages] = useState<ChatMessage[]>(ROOM);
+    const [loading, setLoading] = useState(false);
+    const [pages, setPages] = useState(0);
+    const done = pages >= 3;
+    const loadOlder = () => {
+      if (loading || done) return;
+      setLoading(true);
+      setTimeout(() => {
+        setMessages((all) => {
+          const oldest = all[0]!.ts;
+          const older = Array.from({ length: 20 }, (_, i) => ({
+            id: `old-${pages}-${i}`,
+            author: [ANA, TOMAS, ME][i % 3]!,
+            text: `${LINES[i % LINES.length]} (${pages * 20 + 20 - i} back)`,
+            ts: oldest - (20 - i) * 7 * min,
+          }));
+          return [...older, ...all];
+        });
+        setPages((p) => p + 1);
+        setLoading(false);
+      }, 700);
+    };
+    return (
+      <MessageList
+        messages={messages}
+        currentUserId="me"
+        onReachTop={loadOlder}
+        loadingOlder={loading}
+        header={done ? <Text variant="micro" tone="subtle" className="py-2 text-center">The beginning of the room</Text> : null}
+      />
     );
   },
 };

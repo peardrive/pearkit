@@ -1,10 +1,14 @@
-import React, { useEffect, useMemo, useRef, type ReactNode } from 'react';
-import { ScrollView, View, type StyleProp, type ViewStyle } from 'react-native';
+import React, { useEffect, useLayoutEffect, useMemo, useRef, type ReactNode } from 'react';
+import { ActivityIndicator, ScrollView, View, type StyleProp, type ViewStyle } from 'react-native';
 import { cn } from '../../utils/cn';
+import { useTheme } from '../../theme/ThemeProvider';
 import { Text } from '../Text/Text';
 import { dayLabel, placeOf, quotedMessages } from './chatLogic';
 import { MessageRow, type ChatLook } from './MessageRow';
 import type { ChatAttachment, ChatMessage } from './types';
+
+/** How close to the top (px) counts as reaching it. */
+export const REACH_TOP_PX = 80;
 
 export interface MessageListProps {
   messages: ChatMessage[];
@@ -15,7 +19,7 @@ export interface MessageListProps {
   onOpenAttachment?: (attachment: ChatAttachment, message: ChatMessage) => void;
   /** Draw a message yourself; `MessageRow` draws the rest. */
   renderMessage?: (message: ChatMessage) => ReactNode;
-  /** Shown while there are no messages. */
+  /** Shown while there are no messages, filling the pane. */
   emptyState?: ReactNode;
   /** Bubbles (mine on the right), or flat rows like a document. Default `bubbles`. */
   look?: ChatLook;
@@ -27,6 +31,17 @@ export interface MessageListProps {
   showTimes?: boolean;
   /** Copy a message's text yourself (React Native has no clipboard of its own). */
   onCopy?: (text: string) => void;
+  /** A link in a message was pressed. Without it the link opens with `Linking.openURL`. */
+  onLinkPress?: (url: string) => void;
+  /** Above the first message, inside the scroll (the start of the conversation, a "load more" button). */
+  header?: ReactNode;
+  /**
+   * The person scrolled within 80 px of the top: fetch older messages. Called once; it is called again only after
+   * the content has grown, so a page put in front does not ask for the next one by itself.
+   */
+  onReachTop?: () => void;
+  /** Older messages are on their way: a spinner line above the first message. */
+  loadingOlder?: boolean;
   /** Under the messages, inside the scroll (a typing line, say). */
   footer?: ReactNode;
   className?: string;
@@ -36,7 +51,7 @@ export interface MessageListProps {
 /**
  * The messages of a conversation, newest at the bottom. Messages from one author within five minutes share one
  * name and avatar; a line marks each new day. It stays at the newest message as new ones arrive, unless the
- * person scrolled up to read.
+ * person scrolled up to read; and when older messages are put in front, the view stays where it was.
  */
 export function MessageList({
   messages,
@@ -51,15 +66,50 @@ export function MessageList({
   showDays = true,
   showTimes = true,
   onCopy,
+  onLinkPress,
+  header,
+  onReachTop,
+  loadingOlder,
   footer,
   className,
   style,
 }: MessageListProps) {
+  const theme = useTheme();
   const scroller = useRef<React.ComponentRef<typeof ScrollView>>(null);
   const atEnd = useRef(true);
+  const scrollY = useRef(0);
+  const contentHeight = useRef(0);
+  const reachedTop = useRef(false);
+  /** Where we were before older messages were put in front, to go back there once the new height is known. */
+  const prepended = useRef<{ y: number; height: number } | null>(null);
+  const firstId = useRef(messages[0]?.id);
+  /** The loading line appearing grows the content too; that growth must not re-arm `onReachTop`. */
+  const wasLoading = useRef(!!loadingOlder);
+  const growthIsLoadingLine = useRef(false);
   const byId = useMemo(() => new Map(messages.map((m) => [m.id, m])), [messages]);
   const last = messages[messages.length - 1];
   const lastMine = !!last && !!currentUserId && last.author.id === currentUserId;
+
+  // Older messages put in front: the first message changed, and the old first one is still in the list.
+  useLayoutEffect(() => {
+    const first = messages[0]?.id;
+    const was = firstId.current;
+    if (first !== was && was !== undefined && messages.some((m) => m.id === was)) {
+      prepended.current = { y: scrollY.current, height: contentHeight.current };
+    }
+    firstId.current = first;
+  }, [messages]);
+
+  // The loading line coming or going must not move what the person is reading, unless they are at the very top,
+  // where they should see it.
+  useLayoutEffect(() => {
+    const loading = !!loadingOlder;
+    if (loading !== wasLoading.current) {
+      if (loading) growthIsLoadingLine.current = true;
+      if (scrollY.current > 0 && !prepended.current) prepended.current = { y: scrollY.current, height: contentHeight.current };
+    }
+    wasLoading.current = loading;
+  }, [loadingOlder]);
 
   // Stay at the newest message unless the person scrolled up to read; my own always show.
   useEffect(() => {
@@ -74,6 +124,14 @@ export function MessageList({
     return () => clearTimeout(t);
   }, []);
 
+  if (!messages.length && emptyState) {
+    return (
+      <View className={cn('flex-1 items-center justify-center p-6', className)} style={style}>
+        {emptyState}
+      </View>
+    );
+  }
+
   const pad = compact ? 10 : 14;
   return (
     <ScrollView
@@ -84,12 +142,37 @@ export function MessageList({
       scrollEventThrottle={50}
       onScroll={(e) => {
         const n = e.nativeEvent;
+        scrollY.current = n.contentOffset.y;
         atEnd.current = n.contentOffset.y + n.layoutMeasurement.height >= n.contentSize.height - 40;
+        if (onReachTop && n.contentOffset.y <= REACH_TOP_PX && !reachedTop.current) {
+          reachedTop.current = true;
+          onReachTop();
+        }
       }}
-      onContentSizeChange={() => atEnd.current && scroller.current?.scrollToEnd({ animated: false })}
+      onContentSizeChange={(_w, h) => {
+        const grew = h > contentHeight.current;
+        if (prepended.current) {
+          const { y, height } = prepended.current;
+          prepended.current = null;
+          scroller.current?.scrollTo({ y: y + (h - height), animated: false });
+        } else if (atEnd.current) {
+          scroller.current?.scrollToEnd({ animated: false });
+        }
+        if (grew && !growthIsLoadingLine.current) reachedTop.current = false;
+        growthIsLoadingLine.current = false;
+        contentHeight.current = h;
+      }}
       keyboardShouldPersistTaps="handled"
     >
-      {!messages.length && emptyState ? <View className="flex-1 items-center justify-center">{emptyState}</View> : null}
+      {loadingOlder ? (
+        <View className="flex-row items-center justify-center gap-2 py-2" accessibilityLiveRegion="polite" accessibilityLabel="Loading older messages">
+          <ActivityIndicator size="small" color={theme.colors.muted} />
+          <Text variant="micro" tone="muted">
+            Loading older messages…
+          </Text>
+        </View>
+      ) : null}
+      {header}
       {messages.map((m, i) => {
         const { first, last: lastOfGroup, newDay } = placeOf(messages, i);
         return (
@@ -119,6 +202,7 @@ export function MessageList({
                 onReply={onReply}
                 onOpenAttachment={onOpenAttachment}
                 onCopy={onCopy}
+                onLinkPress={onLinkPress}
               />
             )}
           </React.Fragment>
