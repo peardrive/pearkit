@@ -63,6 +63,11 @@ export * from './TrimStrip/TrimStrip';
 // Forms & overlays
 export * from './TextField/TextField';
 export * from './Dialog/Dialog';
+
+export * from './Social/SocialBar';
+export * from './Social/CommentThread';
+export * from './Social/CommentBox';
+
 export * from './Order/OrderBadge';
 export * from './Order/OrderTile';
 export * from './Order/useOrderedSelection';

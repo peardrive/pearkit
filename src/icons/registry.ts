@@ -703,6 +703,31 @@ export const iconRegistry = {
       }
     ]
   },
+  "heart-bold": {
+    "set": "pearkit",
+    "paths": [
+      {
+        "d": "M12 20.5s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.7c0 5.6-7.5 10.2-7.5 10.2Z",
+        "stroke": true,
+        "strokeWidth": 1.5,
+        "strokeLinecap": "round",
+        "strokeLinejoin": "round",
+        "fill": true
+      }
+    ]
+  },
+  "heart": {
+    "set": "pearkit",
+    "paths": [
+      {
+        "d": "M12 20.5s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.7c0 5.6-7.5 10.2-7.5 10.2Z",
+        "stroke": true,
+        "strokeWidth": 1.5,
+        "strokeLinecap": "round",
+        "strokeLinejoin": "round"
+      }
+    ]
+  },
   "image": {
     "set": "pearkit",
     "paths": [
@@ -768,6 +793,18 @@ export const iconRegistry = {
         "stroke": true,
         "strokeWidth": 1.5,
         "strokeLinecap": "round"
+      }
+    ]
+  },
+  "message": {
+    "set": "pearkit",
+    "paths": [
+      {
+        "d": "M12 4.5c-4.7 0-8.5 3.1-8.5 7 0 1.6.6 3 1.7 4.2L4.5 19.5l4.3-1.3c1 .3 2.1.5 3.2.5 4.7 0 8.5-3.1 8.5-7s-3.8-7.2-8.5-7.2Z",
+        "stroke": true,
+        "strokeWidth": 1.5,
+        "strokeLinecap": "round",
+        "strokeLinejoin": "round"
       }
     ]
   },
@@ -893,6 +930,18 @@ export const iconRegistry = {
       }
     ]
   },
+  "share": {
+    "set": "pearkit",
+    "paths": [
+      {
+        "d": "M20 4 4 10.5l7 2.5 2.5 7L20 4Zm-9 9 9-9",
+        "stroke": true,
+        "strokeWidth": 1.5,
+        "strokeLinecap": "round",
+        "strokeLinejoin": "round"
+      }
+    ]
+  },
   "sun": {
     "set": "pearkit",
     "paths": [
@@ -988,4 +1037,4 @@ export const iconRegistry = {
 
 export type IconName = keyof typeof iconRegistry;
 
-export const iconNames = ["arrow-down","arrow-up","clock","copy","export","filter","folder-open","folder","grid-1","import","info-circle","more","pause","people","scan-barcode","search-normal","setting-2-bold","sidebar-left","sort","star-bold","star","stop-circle","add","alert-circle","chevron-left","chevron-right","close","document","image","link","menu","moon","music","play","refresh","sun","tick","video","wifi-slash"] as IconName[];
+export const iconNames = ["arrow-down","arrow-up","clock","copy","export","filter","folder-open","folder","grid-1","import","info-circle","more","pause","people","scan-barcode","search-normal","setting-2-bold","sidebar-left","sort","star-bold","star","stop-circle","add","chevron-left","chevron-right","close","document","heart-bold","heart","image","link","menu","message","moon","music","play","refresh","share","sun","tick","video"] as IconName[];
