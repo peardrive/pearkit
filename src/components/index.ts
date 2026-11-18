@@ -64,6 +64,14 @@ export * from './TrimStrip/TrimStrip';
 export * from './TextField/TextField';
 export * from './Dialog/Dialog';
 
+// Media
+export * from './MediaPlayer';
+
+// Files
+export * from './FileViews';
+
+// Share states: the universal words, colours and progress bar
+export * from './ShareState';
 // In-app tools
 export * from './UpdateNotice/UpdateNotice';
 export * from './DebugNotes/DebugNotesButton';
