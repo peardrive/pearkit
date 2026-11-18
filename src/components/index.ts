@@ -69,6 +69,10 @@ export * from './TextField/TextField';
 export * from './Dialog/Dialog';
 export { enterPressesMain, type EnterKey } from './Dialog/enterKey';
 
+export * from './Social/SocialBar';
+export * from './Social/CommentThread';
+export * from './Social/CommentBox';
+
 export * from './Order/OrderBadge';
 export * from './Order/OrderTile';
 export * from './Order/useOrderedSelection';
