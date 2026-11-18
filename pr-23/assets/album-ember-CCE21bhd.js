@@ -1,1 +1,0 @@
-import{n as e}from"./rolldown-runtime-BCiCTKAo.js";var t;function n(){return(n=e((()=>{t=new URL(`album-ember-j1J_GLR9.jpg`,import.meta.url).href})))()}export{n,t};
