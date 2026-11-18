@@ -65,4 +65,5 @@ export * from './TextField/TextField';
 export * from './Dialog/Dialog';
 
 // In-app tools
+export * from './UpdateNotice/UpdateNotice';
 export * from './DebugNotes/DebugNotesButton';
