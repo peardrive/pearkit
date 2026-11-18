@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { FlatList, Platform, Pressable, View, type FlatListProps, type StyleProp, type ViewStyle } from 'react-native';
 import { cn } from '../../utils/cn';
-import { commentTree, formatAgo, formatClock, formatCount, type CommentData, type CommentRowData } from '../../utils/social';
+import { commentTree, formatAgo, formatClock, formatCount, type CommentData, type CommentRowData } from '../../utils';
 import { Icon } from '../../icons';
 import { useTheme } from '../../theme/ThemeProvider';
 import { Avatar } from '../Avatar/Avatar';
