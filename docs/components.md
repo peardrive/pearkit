@@ -38,7 +38,8 @@ A map of everything pearkit exports. Storybook has full prop tables, controls an
 | Component | Highlights |
 | --- | --- |
 | `WindowControls`, `useWindowControls`, `DragRegion` | In-app macOS traffic lights wired to Electron via `pearkit/electron`. |
-| `Sidebar` (+ `SidebarHeader`, `SidebarToggle`, `SidebarContent`, `SidebarSection`, `SidebarItem`, `SidebarFooter`, `SidebarSpacer`, `useSidebar`) | Optional mouse/touch/keyboard resizing, collapsible icon rail, controlled or uncontrolled. |
+| `Sidebar` (+ `SidebarHeader`, `SidebarToggle`, `SidebarContent`, `SidebarSection`, `SidebarItem`, `SidebarFooter`, `SidebarSpacer`, `useSidebar`) | Optional mouse/touch/keyboard resizing through `ResizeHandle` (with an optional `gutter`), collapsible icon rail, controlled or uncontrolled. |
+| `ResizeHandle` | The grab bar between two panes: vertical or horizontal, a wide hit area with a short bar in its middle, faint at rest and lit on hover and drag; reports the drag, double-click to reset, arrow keys to step. |
 | `Toolbar`, `ToolbarButton`, `ToolbarSeparator`, `ToolbarSpacer` | 52px action bar with tooltips. |
 | `PaneHeader` | Title, subtitle, data-driven actions, `leading` slot. |
 | `AppWindow`, `Pane`, `PaneBody` | Layout skeleton: panes, surfaces, glow, scrolling. |

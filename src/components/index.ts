@@ -22,6 +22,7 @@ export * from './LinkField/LinkField';
 export * from './KeyValueList/KeyValueList';
 export * from './EmptyState/EmptyState';
 export * from './Gradient/LinearGradient';
+export * from './ResizeHandle/ResizeHandle';
 
 // App chrome & navigation
 export * from './WindowControls/WindowControls';
