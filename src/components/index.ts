@@ -42,3 +42,6 @@ export * from './DangerZone/DangerZone';
 // Forms & overlays
 export * from './TextField/TextField';
 export * from './Dialog/Dialog';
+export * from './Order/OrderBadge';
+export * from './Order/OrderTile';
+export * from './Order/useOrderedSelection';
