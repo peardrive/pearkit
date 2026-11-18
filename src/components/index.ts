@@ -42,6 +42,10 @@ export * from './FileHeader/FileHeader';
 export * from './ShareLink/ShareLinkCard';
 export * from './DangerZone/DangerZone';
 
+// Media browse
+export * from './Masonry/masonryColumns';
+export * from './Masonry/Masonry';
+export * from './MediaTile/MediaTile';
 // Media time
 export * from './Scrubber/timeRange';
 export * from './Scrubber/useTimeRange';
