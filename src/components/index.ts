@@ -1,5 +1,6 @@
 // Primitives
 export * from './Text/Text';
+export * from './MarkdownText/MarkdownText';
 export * from './Button/Button';
 export * from './IconButton/IconButton';
 export * from './Tooltip/Tooltip';
@@ -63,6 +64,14 @@ export * from './TrimStrip/TrimStrip';
 // Forms & overlays
 export * from './TextField/TextField';
 export * from './Dialog/Dialog';
+export * from './Toggle/Toggle';
+export * from './SegmentedControl/SegmentedControl';
+export * from './Menu/Menu';
+export * from './Toast/Toast';
+export * from './DropZone/DropZone';
+
+// Chat: the message list and the composer every app shares
+export * from './Chat/Chat';
 
 export * from './Social/SocialBar';
 export * from './Social/CommentThread';

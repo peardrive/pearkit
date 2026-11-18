@@ -37,6 +37,24 @@ A map of everything pearkit exports. Storybook has full prop tables, controls an
 | `Card`, `Divider`, `Kbd`, `SectionLabel`, `Spacer` | Small building blocks. |
 | `TextField` | Label, hint / error, icons, trailing slot, password reveal, monospace and multiline modes. |
 | `Dialog` | Modal on RN `Modal` (portalled on web with the theme re-applied), icon + title + description, footer actions, Escape / backdrop to close. |
+| `Menu`, `MenuButton` | A list of actions over everything else (RN `Modal`, portalled on web): `items` with icon, shortcut, `danger`, `disabled`, separators; anchored to a point (`anchor`, `align`) or, with `MenuButton`, hung from its own icon or label button; Escape and a press outside close it; `menuPlace()` keeps it on the screen. |
+| `ToastProvider`, `useToast`, `Toast` | Short notices stacked at the bottom centre: `toast({ title, description, tone, duration, action })` returns an id for `dismiss`; 4 s by default, held while hovered (web), `0` stays. |
+| `DropZone` | A place files can be dropped (web): `onDrop(items)` with each a `file` or a `directory` (`webkitGetAsEntry`), `onDragActiveChange`, an `overlay` while a drag is over it; draws only its children on a phone. `droppedItemsFrom()` reads a `DataTransfer`. |
+| `Toggle` | An on/off switch from Views, primary when on; `label` and `description` make it a whole row; `sm · md`; `accessibilityRole="switch"`. |
+| `SegmentedControl` | One choice among a few in a pill, the chosen one raised: label, icon or both per segment, `sm · md`, `fullWidth`. |
+| `MarkdownText` | Markdown as nested `Text`/`View`, no dependency: paragraphs, `#`..`###`, bold, italic, `code`, fenced code, `-`/`1.` lists, `>` quotes, links (`onLinkPress`), rules; `body · body-sm`. Parser alone: `parseMarkdown`, `parseInline`, `plainText`. |
+
+## Chat
+
+One message shape and one set of pieces for every app that talks: a sidebar chat with an agent (Pearkit Studio, Pearcast) and a room of people (rKeyChat) differ only in where the messages come from. The pieces hold no messages and talk to no network.
+
+| Component | Highlights |
+| --- | --- |
+| `MessageList` | Messages newest at the bottom, grouped by author within five minutes (`GROUP_GAP_MS`), a line per day, `emptyState`, `renderMessage` to draw one yourself; stays at the newest message unless you scrolled up. `look: bubbles · flat`, `compact`, `showDays`, `showTimes`, `footer`. |
+| `MessageRow` | One message: avatar or `AgentMark`, name, quotes (`re`), the text, attachment tiles (`onOpenAttachment`), reaction pills (`onReact`), a press opens quick reactions + Reply + Copy; `system` as a muted line, `redacted` struck, `pending` lighter. |
+| `Composer` | Controlled field in a pill that grows to `maxLines`; Enter sends and Shift+Enter is a new line on a keyboard; `replyTo` banner with `onCancelReply`; paperclip with `onAttach`; `leading` / `trailing` slots; `sending`, `disabled`, `compact`. |
+| `AgentMark` | The agent's mark where a person would have an avatar. |
+| `ChatMessage`, `placeOf`, `groupsWith`, `dayLabel`, `messageTime`, `quotedMessages`, `QUICK_REACTIONS` | The message shape and the list's rules, for hosts that draw their own list. |
 
 ## Media browse
 
