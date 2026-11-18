@@ -1,5 +1,0 @@
-import{n as e}from"./rolldown-runtime-BCiCTKAo.js";import{a as t}from"./iframe-CmcEqaQC.js";import{n,t as r}from"./Kbd-C1ro63GX.js";import{i,n as a}from"./helpers-DlFGh-SZ.js";var o,s,c,l,u;function d(){return(d=e((()=>{n(),i(),o=t(),s={title:`Components/Kbd`,component:r,parameters:{docs:{description:{component:"Keyboard shortcut hint, used inside `SearchField` (⌘F) and tooltips."}}},args:{children:`⌘F`}},c={},l={render:()=>(0,o.jsx)(a,{children:[`⌘F`,`⌘C`,`⌘⇧N`,`Esc`,`Ctrl K`].map(e=>(0,o.jsx)(r,{children:e},e))})},u=[`Playground`,`Shortcuts`],c.parameters={...c.parameters,docs:{...c.parameters?.docs,source:{originalSource:`{}`,...c.parameters?.docs?.source}}},l.parameters={...l.parameters,docs:{...l.parameters?.docs,source:{originalSource:`{
-  render: () => <Showcase>
-      {['⌘F', '⌘C', '⌘⇧N', 'Esc', 'Ctrl K'].map(k => <Kbd key={k}>{k}</Kbd>)}
-    </Showcase>
-}`,...l.parameters?.docs?.source}}}})))()}d();export{c as Playground,l as Shortcuts,u as __namedExportsOrder,s as default};
