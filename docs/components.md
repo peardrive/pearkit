@@ -33,6 +33,20 @@ A map of everything pearkit exports. Storybook has full prop tables, controls an
 | `TextField` | Label, hint / error, icons, trailing slot, password reveal, monospace and multiline modes. |
 | `Dialog` | Modal on RN `Modal` (portalled on web with the theme re-applied), icon + title + description, footer actions, Escape / backdrop to close. |
 
+## Media time
+
+One in/out, one playhead, one waveform, one filmstrip — for every media app, on desktop and on the phone. The geometry lives in pure modules next to each component and is also exported as canvas painters, so a timeline drawn on a canvas uses the same shapes and bars.
+
+| Component | Highlights |
+| --- | --- |
+| `Scrubber` | The time bar: track, `Playhead`, scrub by press/drag (`onSeek`), and with `range` the chosen part with an `InOutPin` at each end (`onRange`, `minGap`); `sm` / `md` or an exact `height`; `dimOutside`, `frame`, content as children; ← → I O Home End on the web. |
+| `Transport` | Play/pause + `Scrubber` + times; with `range` it trims and shows `in – out · length` and a whole-clip button. |
+| `Waveform` | Peaks → bars, `center` or `bottom`, any token, a `window` of time; `waveformBars()` and `paintWaveform()` for canvases. |
+| `Filmstrip` | Frames edge to edge, empty cells while frames arrive; `filmstripCells()`, `filmstripFrameTime()`, `paintFilmstrip()`. |
+| `TrimStrip` | A clip miniaturised: frames with the sound along the bottom (or all waveform), the chosen part lit and framed, the rest dimmed, pins and playhead; `compact` for an inspector line. |
+| `Playhead`, `InOutPin` | The two glyphs as components; `paintPlayhead()`, `paintInOutPin()` for canvases; `PLAYHEAD`, `PIN`, `PIN_PAD` numbers. |
+| `useTimeRange` | The in/out rules as a hook: clamp, `minGap`, drag with one `done`, nudge, reset; `clampRange`, `moveEdge`, `nudgeEdge`, `wholeRange`, `isWholeRange`. |
+
 ## App chrome
 
 | Component | Highlights |
@@ -56,7 +70,7 @@ A map of everything pearkit exports. Storybook has full prop tables, controls an
 
 ## Utilities
 
-`cn`, `formatBytes`, `formatSpeed`, `formatEta`, `truncateMiddle`, `clamp`, `copyToClipboard`.
+`cn`, `formatBytes`, `formatSpeed`, `formatEta`, `formatClock`, `truncateMiddle`, `clamp`, `copyToClipboard`.
 
 ## Subpath exports
 

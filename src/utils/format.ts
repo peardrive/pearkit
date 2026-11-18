@@ -35,3 +35,16 @@ export function truncateMiddle(value: string, head = 4, tail = 4, separator = 'â
 export function clamp(value: number, min: number, max: number): number {
   return Math.min(max, Math.max(min, value));
 }
+
+/**
+ * Seconds â†’ a clock: `"0:07"`, `"1:02:03"`; with `fractionDigits`, `"0:07.3"`.
+ * Negative and non-finite values show as `"0:00"`.
+ */
+export function formatClock(seconds: number, fractionDigits = 0): string {
+  const s = Number.isFinite(seconds) && seconds > 0 ? seconds : 0;
+  const whole = Math.floor(s);
+  const h = Math.floor(whole / 3600), m = Math.floor((whole % 3600) / 60), sec = whole % 60;
+  const frac = fractionDigits > 0 ? `.${String(Math.floor((s - whole) * 10 ** fractionDigits)).padStart(fractionDigits, '0')}` : '';
+  const mm = h ? String(m).padStart(2, '0') : String(m);
+  return `${h ? `${h}:` : ''}${mm}:${String(sec).padStart(2, '0')}${frac}`;
+}
