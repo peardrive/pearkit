@@ -45,14 +45,6 @@ export function formatCount(n: number | null | undefined): string {
   return `${Math.floor(v / 100000) / 10}M`;
 }
 
-/** A moment in a video or a song: `1:05`, `1:02:09`. */
-export function formatClock(seconds: number | null | undefined): string {
-  const s = Math.max(0, Math.floor(Number(seconds) || 0));
-  const m = Math.floor(s / 60) % 60;
-  const h = Math.floor(s / 3600);
-  return `${h ? `${h}:${String(m).padStart(2, '0')}` : m}:${String(s % 60).padStart(2, '0')}`;
-}
-
 /** How long ago: `just now`, `5m ago`, `3h ago`, `2d ago`, then the date. */
 export function formatAgo(at: number | null | undefined, now: number = Date.now()): string {
   if (!at) return '';
