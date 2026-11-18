@@ -42,3 +42,6 @@ export * from './DangerZone/DangerZone';
 // Forms & overlays
 export * from './TextField/TextField';
 export * from './Dialog/Dialog';
+export * from './Social/SocialBar';
+export * from './Social/CommentThread';
+export * from './Social/CommentBox';

@@ -25,6 +25,8 @@ A map of everything pearkit exports. Storybook has full prop tables, controls an
 | `SearchField` | Shortcut hint, clear button, controlled / uncontrolled. |
 | `Thumbnail` | Image or tinted kind icon (`fileKindMeta`), `fileKindFromName()`. |
 | `Avatar`, `PeerChip` | Deterministic gradient avatars; truncated peer keys. |
+| `SocialBar` | Like, comment, share with their numbers; `vertical` rail over a picture; `counts` null hides like and comment. |
+| `CommentThread`, `CommentRow`, `CommentBox` | A thread with answers under their comment, a heart and Reply on each; the growing box that writes one. Rules alone: `commentTree`, `formatCount`, `formatClock`, `formatAgo`, `formatLikers`, `toggleLiked`. |
 | `QRCode` | Real QR generation, one SVG path, themeable colours. |
 | `LinkField` | Copyable recessed field with "copied" feedback. |
 | `KeyValueList`, `KeyValueRow` | Metadata lists, data-driven or composed. |
