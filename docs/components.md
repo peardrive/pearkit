@@ -50,8 +50,8 @@ One message shape and one set of pieces for every app that talks: a sidebar chat
 
 | Component | Highlights |
 | --- | --- |
-| `MessageList` | Messages newest at the bottom, grouped by author within five minutes (`GROUP_GAP_MS`), a line per day, `emptyState`, `renderMessage` to draw one yourself; stays at the newest message unless you scrolled up. `look: bubbles · flat`, `compact`, `showDays`, `showTimes`, `footer`. |
-| `MessageRow` | One message: avatar or `AgentMark`, name, quotes (`re`), the text, attachment tiles (`onOpenAttachment`), reaction pills (`onReact`), a press opens quick reactions + Reply + Copy; `system` as a muted line, `redacted` struck, `pending` lighter. |
+| `MessageList` | Messages newest at the bottom, grouped by author within five minutes (`GROUP_GAP_MS`), a line per day, `emptyState`, `renderMessage` to draw one yourself; stays at the newest message unless you scrolled up. Older history: `onReachTop` (once within 80 px of the top, re-armed once the content has grown), `loadingOlder` spinner line, `header` above the first message; the view stays put when older messages are put in front. `look: bubbles · flat`, `compact`, `showDays`, `showTimes`, `onLinkPress`, `footer`. |
+| `MessageRow` | One message: avatar or `AgentMark`, name, quotes (`re`), the text as Markdown (`MarkdownText`, `onLinkPress`), attachment tiles (`onOpenAttachment`), reaction pills (`onReact`), a press opens quick reactions + Reply + Copy; `system` as a muted line, `redacted` struck, `pending` lighter. |
 | `Composer` | Controlled field in a pill that grows to `maxLines`; Enter sends and Shift+Enter is a new line on a keyboard; `replyTo` banner with `onCancelReply`; paperclip with `onAttach`; `leading` / `trailing` slots; `sending`, `disabled`, `compact`. |
 | `AgentMark` | The agent's mark where a person would have an avatar. |
 | `ChatMessage`, `placeOf`, `groupsWith`, `dayLabel`, `messageTime`, `quotedMessages`, `QUICK_REACTIONS` | The message shape and the list's rules, for hosts that draw their own list. |
