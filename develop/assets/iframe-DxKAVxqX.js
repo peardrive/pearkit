@@ -1,0 +1,1 @@
+import{t as e}from"./iframe-BsMCK_oy.js";e();
