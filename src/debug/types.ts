@@ -63,6 +63,30 @@ export interface SaveNoteInput {
   uri?: string;
   /** The recording's MIME type, when known. */
   type?: string;
+  /**
+   * True when every piece of the recording reached the `sink` while it ran: the audio is already stored, and
+   * `save` only has to finish the note. `blob` is still handed over, for a store that wants to check or keep it.
+   */
+  streamed?: boolean;
+}
+
+/**
+ * Where a note goes WHILE it records, so the recording never lives only in memory (pearkit-studio, 2026-11-16: a
+ * 36-minute note was one stuck button away from lost). The app writes each piece to disk as it arrives. If any call
+ * fails the trace stops using the sink and `save` gets the whole recording as before (`streamed: false`).
+ */
+export interface NoteSink {
+  /** A note started. `type` is the recording's MIME type, or null when there is no voice. */
+  begin(note: { id: string; type: string | null; meta: Record<string, unknown> }): Promise<unknown> | unknown;
+  /** The next piece of the recording, in order (about one a second). */
+  chunk?(id: string, data: Blob): Promise<unknown> | unknown;
+  /** The steps so far: the whole list each time, since a repeated step updates the one before it. */
+  steps?(id: string, steps: Step[]): Promise<unknown> | unknown;
+}
+
+export interface RecorderStartOptions {
+  /** Called with each piece of the recording as it is produced, in order. */
+  onChunk?: (data: Blob) => void;
 }
 
 /** The app's store: write the three files wherever this app keeps notes. Whatever it returns is handed back from `trace.stop()`. */
@@ -87,9 +111,11 @@ export interface MicrophoneInfo {
  */
 export interface DebugRecorder {
   /** → true when the voice is being recorded; false (with `error` set) when it is not. */
-  start(): Promise<boolean>;
-  /** → the recording, or null when nothing was captured. */
+  start(opts?: RecorderStartOptions): Promise<boolean>;
+  /** → the recording, or null when nothing was captured. Asked twice, it answers both with the same recording. */
   stop(): Promise<RecordingResult | null>;
+  /** The MIME type of the running recording, when known. */
+  readonly type?: string | null;
   /** The microphones available (labels appear once the mic was allowed). */
   mics?(): Promise<MicrophoneInfo[]>;
   /** Ask for the mic once and let go, so a refusal is known BEFORE a note starts. → null, or the refusal. */
@@ -122,11 +148,16 @@ export interface StoppedNote {
 export interface DebugTrace {
   /** Start a note: opens the recorder, stamps the first step. → false when a note was already running. */
   start(): Promise<boolean>;
-  /** Stop and save. `extra` is merged into `note.json`. → what `save` returned plus id/seconds/recorded, or null when no note was running. */
+  /**
+   * Stop and save. `extra` is merged into `note.json`. → what `save` returned plus id/seconds/recorded, or null when
+   * no note was running. Safe to call again while a stop is under way: every caller gets the same answer.
+   */
   stop(extra?: Record<string, unknown>): Promise<StoppedNote | null>;
   /** Write a step on the note's clock. Ignored when no note is running. */
   step(kind: StepKind, text: string, data?: unknown, opts?: TraceStepOptions): void;
   readonly active: boolean;
+  /** A stop is under way (the recording is closing, or being saved). */
+  readonly stopping: boolean;
   /** Whether the running note is recording a voice. */
   readonly audio: boolean;
   readonly seconds: number;
