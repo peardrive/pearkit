@@ -33,7 +33,7 @@ A map of everything pearkit exports. Storybook has full prop tables, controls an
 | `MediaNotice` | Over a player that cannot play: `offline` / `unplayable` presets or custom copy, theme scrim, retry button, inline mode. |
 | `Card`, `Divider`, `Kbd`, `SectionLabel`, `Spacer` | Small building blocks. |
 | `TextField` | Label, hint / error, icons, trailing slot, password reveal, monospace and multiline modes. |
-| `Dialog` | Modal on RN `Modal` (portalled on web with the theme re-applied), icon + title + description, footer actions, Escape / backdrop to close. |
+| `Dialog` | Modal on RN `Modal` (portalled on web with the theme re-applied), icon + title + description, footer actions, Escape / backdrop to close. `onSubmit` names the one main action: Enter presses it (web / Electron), and so does the return key of a single-line `TextField` inside (phone); never with `destructive`, never while `submitDisabled`. |
 
 ## Media browse
 

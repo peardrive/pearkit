@@ -63,6 +63,7 @@ export * from './TrimStrip/TrimStrip';
 // Forms & overlays
 export * from './TextField/TextField';
 export * from './Dialog/Dialog';
+export { enterPressesMain, type EnterKey } from './Dialog/enterKey';
 
 // Media
 export * from './MediaPlayer';
