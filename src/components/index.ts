@@ -34,6 +34,7 @@ export * from './Toolbar/Toolbar';
 export * from './PaneHeader/PaneHeader';
 export * from './Layout/AppWindow';
 export * from './FolderTabs/FolderTabs';
+export * from './GlassBar/GlassBar';
 
 // PearDrop patterns
 export * from './NetworkStatus/NetworkStatusCard';
@@ -67,11 +68,17 @@ export * from './Dialog/Dialog';
 export * from './Toggle/Toggle';
 export * from './SegmentedControl/SegmentedControl';
 export * from './Menu/Menu';
+export * from './EmojiPicker/EmojiPicker';
 export * from './Toast/Toast';
 export * from './DropZone/DropZone';
 
 // Chat: the message list and the composer every app shares
 export * from './Chat/Chat';
+
+// Feed, settings and profiles
+export * from './ActivityFeed/ActivityFeed';
+export * from './SettingsBlock/SettingsBlock';
+export * from './ProfileCard/ProfileCard';
 
 export * from './Social/SocialBar';
 export * from './Social/CommentThread';

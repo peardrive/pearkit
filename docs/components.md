@@ -42,6 +42,7 @@ A map of everything pearkit exports. Storybook has full prop tables, controls an
 | `DropZone` | A place files can be dropped (web): `onDrop(items)` with each a `file` or a `directory` (`webkitGetAsEntry`), `onDragActiveChange`, an `overlay` while a drag is over it; draws only its children on a phone. `droppedItemsFrom()` reads a `DataTransfer`. |
 | `Toggle` | An on/off switch from Views, primary when on; `label` and `description` make it a whole row; `sm · md`; `accessibilityRole="switch"`. |
 | `SegmentedControl` | One choice among a few in a pill, the chosen one raised: label, icon or both per segment, `sm · md`, `fullWidth`. |
+| `EmojiPicker`, `EmojiBar` | The full emoji list in a pop-up (search, recent first, categories, 8 × 44 px cells; `anchor`, `align`), and the quick row with a + for the rest. Pure list and search: `EMOJI_CATEGORIES`, `searchEmoji`, `emojiEntry`, `pushRecent`, `DEFAULT_QUICK_EMOJI`. |
 | `MarkdownText` | Markdown as nested `Text`/`View`, no dependency: paragraphs, `#`..`###`, bold, italic, `code`, fenced code, `-`/`1.` lists, `>` quotes, links (`onLinkPress`), rules; `body · body-sm`. Parser alone: `parseMarkdown`, `parseInline`, `plainText`. |
 
 ## Chat
@@ -51,7 +52,7 @@ One message shape and one set of pieces for every app that talks: a sidebar chat
 | Component | Highlights |
 | --- | --- |
 | `MessageList` | Messages newest at the bottom, grouped by author within five minutes (`GROUP_GAP_MS`), a line per day, `emptyState`, `renderMessage` to draw one yourself; stays at the newest message unless you scrolled up. Older history: `onReachTop` (once within 80 px of the top, re-armed once the content has grown), `loadingOlder` spinner line, `header` above the first message; the view stays put when older messages are put in front. `look: bubbles · flat`, `compact`, `showDays`, `showTimes`, `onLinkPress`, `footer`. |
-| `MessageRow` | One message: avatar or `AgentMark`, name, quotes (`re`), the text as Markdown (`MarkdownText`, `onLinkPress`), attachment tiles (`onOpenAttachment`), reaction pills (`onReact`), a press opens quick reactions + Reply + Copy; `system` as a muted line, `redacted` struck, `pending` lighter. |
+| `MessageRow` | One message: avatar or `AgentMark`, name, quotes (`re`), the text as Markdown (`MarkdownText`, `onLinkPress`), attachment tiles (`onOpenAttachment`), reaction pills (`onReact`), a press opens the icons-only action row (`quickReactions`, + via `onMore`, reply, copy); on the web, selected words offer "Reply to this" (`onReplyToSelection`); `system` as a muted line, `redacted` struck, `pending` lighter. |
 | `Composer` | Controlled field in a pill that grows to `maxLines`; Enter sends and Shift+Enter is a new line on a keyboard; `replyTo` banner with `onCancelReply`; paperclip with `onAttach`; `leading` / `trailing` slots; `sending`, `disabled`, `compact`. |
 | `AgentMark` | The agent's mark where a person would have an avatar. |
 | `ChatMessage`, `placeOf`, `groupsWith`, `dayLabel`, `messageTime`, `quotedMessages`, `QUICK_REACTIONS` | The message shape and the list's rules, for hosts that draw their own list. |
@@ -86,6 +87,7 @@ One in/out, one playhead, one waveform, one filmstrip — for every media app, o
 | `Toolbar`, `ToolbarButton`, `ToolbarSeparator`, `ToolbarSpacer` | 52px action bar with tooltips. |
 | `PaneHeader` | Title, subtitle, data-driven actions, `leading` slot. |
 | `AppWindow`, `Pane`, `PaneBody` | Layout skeleton: panes, surfaces, glow, scrolling. |
+| `GlassBar`, `GlassBarButton` | A floating translucent bar over content at the `top` or `bottom` (blurred on the web, a tint on a phone), `inset` for the safe area; glass-circle buttons with a label under, `active`, `badge`. |
 | `FolderTabs`, `FolderTabPage` | Tabs that open into their page: the open tab lit, the page edge running on from it across the top and fading down the sides; tabs scroll when they outgrow the row; `trailing` slot. `FolderTabPage` is the framed page on its own. |
 
 ## PearDrop patterns
@@ -98,6 +100,14 @@ One in/out, one playhead, one waveform, one filmstrip — for every media app, o
 | `ShareLinkCard` | QR + link + actions, fully relabelable. |
 | `NetworkStatusCard` | Connection state, peers, rates, pause/resume, `compact` rail mode. |
 | `DangerZone` | Destructive action with its consequence. |
+
+## Feed, settings and profiles
+
+| Component | Highlights |
+| --- | --- |
+| `ActivityFeed`, `ActivityRow` | What needs you and what happened, one line each, newest first, in PearDrive's feed style: a tinted kind icon (`mention · approval · done · file · member · conversation · error · note`), who, title, the `where` breadcrumb, time at the right, an unread dot, an inline `action`; days labelled (`groupByDay`), `compact`, `emptyState`. Rules alone: `groupByDay`, `whenLabel`, `whereLabel`, `activityKindMeta`, `unreadCount`. |
+| `SettingsBlock`, `SettingsRow` | PearDrive's settings look: a card per block with icon, title and blurb; rows with label, hint, icon, a `control` at the right (or a chevron when `onPress`), `destructive`. |
+| `ProfileCard` | A bot or a person: name and picture (URL, seed or the agent's mark), `badges` chips, `sections` as settings blocks, `actions`; `editable` with `onEditName` / `onPickAvatar`. |
 
 ## In-app tools
 
