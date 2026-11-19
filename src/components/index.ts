@@ -35,6 +35,8 @@ export * from './PaneHeader/PaneHeader';
 export * from './Layout/AppWindow';
 export * from './FolderTabs/FolderTabs';
 export * from './GlassBar/GlassBar';
+export * from './Dock/Dock';
+export * from './OrgTabs/OrgTabs';
 
 // PearDrop patterns
 export * from './NetworkStatus/NetworkStatusCard';
@@ -79,6 +81,7 @@ export * from './Chat/Chat';
 export * from './ActivityFeed/ActivityFeed';
 export * from './SettingsBlock/SettingsBlock';
 export * from './ProfileCard/ProfileCard';
+export * from './HomeBlock/HomeBlock';
 
 export * from './Social/SocialBar';
 export * from './Social/CommentThread';

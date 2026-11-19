@@ -87,6 +87,8 @@ One in/out, one playhead, one waveform, one filmstrip — for every media app, o
 | `Toolbar`, `ToolbarButton`, `ToolbarSeparator`, `ToolbarSpacer` | 52px action bar with tooltips. |
 | `PaneHeader` | Title, subtitle, data-driven actions, `leading` slot. |
 | `AppWindow`, `Pane`, `PaneBody` | Layout skeleton: panes, surfaces, glow, scrolling. |
+| `Dock`, `DockButton` | The floating dock at the bottom: one wide glass pill (blurred on the web) with the places of the app, the chosen one embossed and its icon in the primary, badges, `inset` for the safe area. |
+| `OrgTabs` | The organizations as round avatar tabs with names under, "All" first (`ALL_ORGS`), a + last (`onAdd`), the chosen one ringed; scrolls sideways and snaps; `sm · md`. |
 | `GlassBar`, `GlassBarButton` | A floating translucent bar over content at the `top` or `bottom` (blurred on the web, a tint on a phone), `inset` for the safe area; glass-circle buttons with a label under, `active`, `badge`. |
 | `FolderTabs`, `FolderTabPage` | Tabs that open into their page: the open tab lit, the page edge running on from it across the top and fading down the sides; tabs scroll when they outgrow the row; `trailing` slot. `FolderTabPage` is the framed page on its own. |
 
@@ -107,6 +109,7 @@ One in/out, one playhead, one waveform, one filmstrip — for every media app, o
 | --- | --- |
 | `ActivityFeed`, `ActivityRow` | What needs you and what happened, one line each, newest first, in PearDrive's feed style: a tinted kind icon (`mention · approval · done · file · member · conversation · error · note`), who, title, the `where` breadcrumb, time at the right, an unread dot, an inline `action`; days labelled (`groupByDay`), `compact`, `emptyState`. Rules alone: `groupByDay`, `whenLabel`, `whereLabel`, `activityKindMeta`, `unreadCount`. |
 | `SettingsBlock`, `SettingsRow` | PearDrive's settings look: a card per block with icon, title and blurb; rows with label, hint, icon, a `control` at the right (or a chevron when `onPress`), `destructive`. |
+| `HomeBlock`, `HomeGrid`, `PresenceRow` | PearDrive's block: a card with icon, title, count and an action, `compact · wide · full`; the grid lays them two up from 720 px and one up on a phone; who is around as small avatars with online dots and "+N". |
 | `ProfileCard` | A bot or a person: name and picture (URL, seed or the agent's mark), `badges` chips, `sections` as settings blocks, `actions`; `editable` with `onEditName` / `onPickAvatar`. |
 
 ## In-app tools
