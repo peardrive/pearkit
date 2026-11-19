@@ -19,7 +19,7 @@ import type { TimeRange, TimeRangeEdge } from './timeRange';
 export type ScrubberSize = 'sm' | 'md' | 'lg';
 
 /** `sm` is the bar under a player: thin, so the play button beside it is its centre. */
-const SIZES: Record<ScrubberSize, number> = { sm: 8, md: 14, lg: 26 };
+const SIZES: Record<ScrubberSize, number> = { sm: 10, md: 14, lg: 26 };
 
 /** How the chosen part is drawn: the clip frame (a timeline's selected clip) or the older in/out pins. */
 export type ScrubberLook = 'clip' | 'pins';
@@ -42,7 +42,7 @@ export interface ScrubberProps {
   minGap?: number;
   /** Seconds one arrow key moves the head (shift: ×10). Default 0.05. */
   step?: number;
-  /** Bar height: `sm` 8px, `md` 14px, `lg` 26px. Default `sm`. */
+  /** Bar height: `sm` 10px, `md` 14px, `lg` 26px. Default `sm`. */
   size?: ScrubberSize;
   /**
    * How the chosen part is drawn. `clip` (default): outlined as a timeline outlines a selected clip — a 2px rounded

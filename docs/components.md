@@ -39,7 +39,7 @@ One in/out, one playhead, one waveform, one filmstrip — for every media app, o
 
 | Component | Highlights |
 | --- | --- |
-| `Scrubber` | The time bar: a raised track, `Playhead`, scrub by press/drag (`onSeek`), and with `range` the chosen part in the `ClipFrame` a timeline gives a selected clip, its ends the trim handles (`onRange`, `minGap`; `look="pins"` for the older `InOutPin`s); `sm` 8 / `md` 14 / `lg` 26 or an exact `height`; `dimOutside`, `emboss`, content as children; ← → I O Home End on the web. |
+| `Scrubber` | The time bar: a raised track, `Playhead`, scrub by press/drag (`onSeek`), and with `range` the chosen part in the `ClipFrame` a timeline gives a selected clip, its ends the trim handles (`onRange`, `minGap`; `look="pins"` for the older `InOutPin`s); `sm` 10 / `md` 14 / `lg` 26 or an exact `height`; `dimOutside`, `emboss`, content as children; ← → I O Home End on the web. |
 | `Transport` | Play/pause + `Scrubber` + times; with `range` it trims and shows `in – out · length` and a whole-clip button. |
 | `Waveform` | Peaks → bars, `center` or `bottom`, any token, a `window` of time; `waveformBars()` and `paintWaveform()` for canvases. |
 | `Filmstrip` | Frames edge to edge, empty cells while frames arrive; `filmstripCells()`, `filmstripFrameTime()`, `paintFilmstrip()`. |
