@@ -624,6 +624,31 @@ export const iconRegistry = {
       }
     ]
   },
+  "bell": {
+    "set": "pearkit",
+    "paths": [
+      {
+        "d": "M12 6.44V9.77",
+        "stroke": true,
+        "strokeWidth": 1.5,
+        "strokeLinecap": "round",
+        "strokeMiterlimit": 10
+      },
+      {
+        "d": "M12.02 2C8.34 2 5.36 4.98 5.36 8.66V10.76C5.36 11.44 5.08 12.46 4.73 13.04L3.46 15.16C2.68 16.47 3.22 17.93 4.66 18.41C9.44 20 14.61 20 19.39 18.41C20.74 17.96 21.32 16.38 20.59 15.16L19.32 13.04C18.97 12.46 18.69 11.43 18.69 10.76V8.66C18.68 5 15.68 2 12.02 2Z",
+        "stroke": true,
+        "strokeWidth": 1.5,
+        "strokeLinecap": "round",
+        "strokeMiterlimit": 10
+      },
+      {
+        "d": "M15.33 18.82C15.33 20.65 13.83 22.15 12 22.15C11.09 22.15 10.25 21.77 9.65 21.17C9.05 20.57 8.67 19.73 8.67 18.82",
+        "stroke": true,
+        "strokeWidth": 1.5,
+        "strokeMiterlimit": 10
+      }
+    ]
+  },
   "chevron-down": {
     "set": "pearkit",
     "paths": [
@@ -709,6 +734,32 @@ export const iconRegistry = {
       },
       {
         "d": "M8 17H16",
+        "stroke": true,
+        "strokeWidth": 1.5,
+        "strokeLinecap": "round",
+        "strokeLinejoin": "round"
+      }
+    ]
+  },
+  "edit": {
+    "set": "pearkit",
+    "paths": [
+      {
+        "d": "M13.26 3.6L5.05 12.29C4.74 12.62 4.44 13.27 4.38 13.72L4.01 16.96C3.88 18.13 4.72 18.93 5.88 18.73L9.1 18.18C9.55 18.1 10.18 17.77 10.49 17.43L18.7 8.74C20.12 7.24 20.76 5.53 18.55 3.44C16.35 1.37 14.68 2.1 13.26 3.6Z",
+        "stroke": true,
+        "strokeWidth": 1.5,
+        "strokeLinecap": "round",
+        "strokeLinejoin": "round"
+      },
+      {
+        "d": "M11.89 5.05C12.32 7.81 14.56 9.92 17.34 10.2",
+        "stroke": true,
+        "strokeWidth": 1.5,
+        "strokeLinecap": "round",
+        "strokeLinejoin": "round"
+      },
+      {
+        "d": "M3 22H21",
         "stroke": true,
         "strokeWidth": 1.5,
         "strokeLinecap": "round",
@@ -955,6 +1006,25 @@ export const iconRegistry = {
       }
     ]
   },
+  "reply": {
+    "set": "pearkit",
+    "paths": [
+      {
+        "d": "M9.5 6L3.5 11L9.5 16",
+        "stroke": true,
+        "strokeWidth": 1.5,
+        "strokeLinecap": "round",
+        "strokeLinejoin": "round"
+      },
+      {
+        "d": "M3.5 11H14C17.6 11 20.5 13.9 20.5 17.5V19",
+        "stroke": true,
+        "strokeWidth": 1.5,
+        "strokeLinecap": "round",
+        "strokeLinejoin": "round"
+      }
+    ]
+  },
   "robot": {
     "set": "pearkit",
     "paths": [
@@ -1116,4 +1186,4 @@ export const iconRegistry = {
 
 export type IconName = keyof typeof iconRegistry;
 
-export const iconNames = ["arrow-down","arrow-up","clock","copy","export","filter","folder-open","folder","grid-1","import","info-circle","more","pause","people","scan-barcode","search-normal","setting-2-bold","sidebar-left","sort","star-bold","star","stop-circle","add","alert-circle","chevron-down","chevron-left","chevron-right","close","document","heart-bold","heart","image","link","menu","message","microphone-slash","microphone","moon","music","paperclip","play","refresh","robot","share","sun","tick","video","wifi-slash"] as IconName[];
+export const iconNames = ["arrow-down","arrow-up","clock","copy","export","filter","folder-open","folder","grid-1","import","info-circle","more","pause","people","scan-barcode","search-normal","setting-2-bold","sidebar-left","sort","star-bold","star","stop-circle","add","alert-circle","bell","chevron-down","chevron-left","chevron-right","close","document","edit","heart-bold","heart","image","link","menu","message","microphone-slash","microphone","moon","music","paperclip","play","refresh","reply","robot","share","sun","tick","video","wifi-slash"] as IconName[];
