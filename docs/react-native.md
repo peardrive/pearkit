@@ -53,13 +53,19 @@ Using other names or another font? Set `theme.fonts.native` — see [Theming →
 
 ## 3. Clipboard
 
-React Native has no built-in clipboard. Components that copy (`LinkField`, `ShareLinkCard`) take an `onCopy` prop:
+React Native has no built-in clipboard. Register the app's own once, at start-up; every component that copies
+(`LinkField`, `ShareLinkCard`, the chat's `MessageRow`) then uses it:
 
 ```tsx
 import * as Clipboard from 'expo-clipboard';
+import { setClipboardWriter } from 'pearkit';
 
-<ShareLinkCard link={link} onCopy={(l) => Clipboard.setStringAsync(l)} />
+setClipboardWriter((text) => Clipboard.setStringAsync(text));
 ```
+
+Their `onCopy(text, ok)` prop is only a notification after the copy (show a toast, count it); it never replaces
+the copy. On the web nothing needs registering: the browser clipboard is used, with an `execCommand` fallback for
+WebViews over plain http.
 
 ## 4. What's different on native
 

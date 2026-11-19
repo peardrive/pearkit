@@ -16,8 +16,11 @@ export interface ShareLinkCardProps {
   qrValue?: string;
   title?: string;
   description?: string;
-  /** Called on copy. Without it the web clipboard is used. */
-  onCopy?: (link: string) => void | Promise<void>;
+  /**
+   * Told after a copy (from the field or the button), with the link and whether it reached the clipboard. The copy
+   * itself is always `copyToClipboard`: an app with its own clipboard registers it once with `setClipboardWriter`.
+   */
+  onCopy?: (link: string, ok: boolean) => void;
   /** "Save QR" handler. Hide the button by passing `null` to `secondaryAction`. */
   onSaveQr?: () => void;
   copyLabel?: string;
@@ -47,7 +50,10 @@ export function ShareLinkCard({
   className,
   style,
 }: ShareLinkCardProps) {
-  const copy = () => (onCopy ? onCopy(link) : copyToClipboard(link));
+  const copy = async () => {
+    const ok = await copyToClipboard(link);
+    onCopy?.(link, ok);
+  };
   const secondary = secondaryAction === undefined ? { label: 'Save QR', icon: 'import' as IconSource, onPress: onSaveQr } : secondaryAction;
   const vertical = layout === 'vertical';
 

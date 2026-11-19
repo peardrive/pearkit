@@ -11,8 +11,11 @@ export interface LinkFieldProps {
   value: string;
   /** What to show. Defaults to a middle-truncated `value`. */
   displayValue?: string;
-  /** Called with the value. Without it the web clipboard is used. */
-  onCopy?: (value: string) => void | Promise<void>;
+  /**
+   * Told after the copy, with the value and whether it reached the clipboard (a toast, say). The copy itself is
+   * always `copyToClipboard`: an app with its own clipboard registers it once with `setClipboardWriter`.
+   */
+  onCopy?: (value: string, ok: boolean) => void;
   /** ms to show the "copied" tick. Default 1500. */
   feedbackDuration?: number;
   className?: string;
@@ -26,8 +29,8 @@ export function LinkField({ value, displayValue, onCopy, feedbackDuration = 1500
   useEffect(() => () => { if (timer.current) clearTimeout(timer.current); }, []);
 
   const copy = async () => {
-    if (onCopy) await onCopy(value);
-    else await copyToClipboard(value);
+    const ok = await copyToClipboard(value);
+    onCopy?.(value, ok);
     setCopied(true);
     if (timer.current) clearTimeout(timer.current);
     timer.current = setTimeout(() => setCopied(false), feedbackDuration);

@@ -40,8 +40,11 @@ export interface MessageRowProps {
   onReply?: (id: string) => void;
   /** A tile under the message was pressed. */
   onOpenAttachment?: (attachment: ChatAttachment, message: ChatMessage) => void;
-  /** Copy the text yourself (React Native has no clipboard of its own). */
-  onCopy?: (text: string) => void;
+  /**
+   * Told after Copy, with the text and whether it reached the clipboard (a toast, say). The copy itself is always
+   * `copyToClipboard`: an app with its own clipboard registers it once with `setClipboardWriter`.
+   */
+  onCopy?: (text: string, ok: boolean) => void;
   /** A link in the text was pressed. Without it the link opens with `Linking.openURL`. */
   onLinkPress?: (url: string) => void;
   /** The emoji on the action row, the person's most-used six as a rule. Default `QUICK_REACTIONS`. */
@@ -105,9 +108,9 @@ export function MessageRow({
   const reactions = (m.reactions ?? []).filter((r) => r.count > 0);
   const text = m.redacted && !m.text ? 'Message removed' : m.text;
 
-  const copy = () => {
-    if (onCopy) onCopy(m.text);
-    else void copyToClipboard(m.text);
+  const copy = async () => {
+    const ok = await copyToClipboard(m.text);
+    onCopy?.(m.text, ok);
     setCopied(true);
     setTimeout(() => setCopied(false), 1200);
   };

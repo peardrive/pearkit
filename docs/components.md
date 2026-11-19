@@ -30,7 +30,7 @@ A map of everything pearkit exports. Storybook has full prop tables, controls an
 | `SocialBar` | Like, comment, share with their numbers; `vertical` rail over a picture; `counts` null hides like and comment. |
 | `CommentThread`, `CommentRow`, `CommentBox` | A thread with answers under their comment, a heart and Reply on each; the growing box that writes one. Rules alone: `commentTree`, `formatCount`, `formatClock`, `formatAgo`, `formatLikers`, `toggleLiked`. |
 | `QRCode` | Real QR generation, one SVG path, themeable colours. |
-| `LinkField` | Copyable recessed field with "copied" feedback. |
+| `LinkField` | Copyable recessed field with "copied" feedback; copies with `copyToClipboard` (see `setClipboardWriter`), `onCopy(value, ok)` told afterwards. |
 | `KeyValueList`, `KeyValueRow` | Metadata lists, data-driven or composed. |
 | `EmptyState` | Icon, title, description, actions. |
 | `MediaNotice` | Over a player that cannot play: `offline` / `unplayable` presets or custom copy, theme scrim, retry button, inline mode. |
@@ -97,7 +97,7 @@ One in/out, one playhead, one waveform, one filmstrip — for every media app, o
 | `ShareRow` | Figma "Share Row": thumbnail, name, favourite, meta, progress, status, timestamp or action. |
 | `FileHeader` | Detail hero, horizontal or vertical. |
 | `TransferCard`, `TransferRate` | Live transfer stats and peers; raw numbers are formatted for you. |
-| `ShareLinkCard` | QR + link + actions, fully relabelable. |
+| `ShareLinkCard` | QR + link + actions, fully relabelable; copies with `copyToClipboard`, `onCopy(link, ok)` told afterwards. |
 | `NetworkStatusCard` | Connection state, peers, rates, pause/resume, `compact` rail mode. |
 | `DangerZone` | Destructive action with its consequence. |
 
@@ -118,7 +118,7 @@ One in/out, one playhead, one waveform, one filmstrip — for every media app, o
 
 ## Utilities
 
-`cn`, `formatBytes`, `formatSpeed`, `formatEta`, `formatClock`, `truncateMiddle`, `clamp`, `copyToClipboard`.
+`cn`, `formatBytes`, `formatSpeed`, `formatEta`, `formatClock`, `truncateMiddle`, `clamp`, `copyToClipboard`, `setClipboardWriter` (register the app's own clipboard once; every component that copies uses it, and its `onCopy(text, ok)` is only a notification).
 
 ## Subpath exports
 

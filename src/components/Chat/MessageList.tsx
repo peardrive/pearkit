@@ -29,8 +29,8 @@ export interface MessageListProps {
   showDays?: boolean;
   /** The time under the last message of a group. Default true. */
   showTimes?: boolean;
-  /** Copy a message's text yourself (React Native has no clipboard of its own). */
-  onCopy?: (text: string) => void;
+  /** Told after a message's text was copied, with the text and whether it reached the clipboard. See `setClipboardWriter`. */
+  onCopy?: (text: string, ok: boolean) => void;
   /** A link in a message was pressed. Without it the link opens with `Linking.openURL`. */
   onLinkPress?: (url: string) => void;
   /** The emoji on each message's action row, the person's most-used six as a rule. Default `QUICK_REACTIONS`. */

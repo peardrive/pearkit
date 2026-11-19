@@ -6,7 +6,7 @@ import { LinkField } from './LinkField';
 const meta: Meta<typeof LinkField> = {
   title: 'Components/LinkField',
   component: LinkField,
-  parameters: { docs: { description: { component: 'Read-only recessed field for a share link. Tap anywhere to copy — shows a tick for a moment. Uses the web clipboard unless you pass `onCopy` (e.g. `expo-clipboard` on native).' } } },
+  parameters: { docs: { description: { component: 'Read-only recessed field for a share link. Tap anywhere to copy — shows a tick for a moment. Always copies with `copyToClipboard` (register a native clipboard once with `setClipboardWriter`); `onCopy(value, ok)` is told afterwards, for a toast.' } } },
   args: { value: 'peardrop://1de0909835728b6e0f3a4c19d2e7b8a5c6f71d0e9f684cb145a28', onCopy: fn() },
   decorators: [(Story) => <View style={{ width: 340 }}><Story /></View>],
 };

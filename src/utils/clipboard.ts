@@ -7,7 +7,8 @@ import { Platform } from 'react-native';
  * 2. the browser clipboard (`navigator.clipboard`), which needs a secure context and a user gesture;
  * 3. on the web, the old `document.execCommand('copy')` on a hidden field, which still works in WebViews over
  *    plain http (an app serving its page from 127.0.0.1 inside a phone app, for instance).
- * Components that copy (`LinkField`, the message row…) call this; pass `onCopy` to override per component.
+ * Components that copy (`LinkField`, `ShareLinkCard`, the message row…) always call this; their `onCopy` is only
+ * told afterwards, with whether it worked. An app with its own clipboard registers it here, once.
  */
 export type ClipboardWriter = (text: string) => boolean | Promise<boolean | void> | void;
 
@@ -28,7 +29,7 @@ export async function copyToClipboard(text: string): Promise<boolean> {
     }
   }
   if (Platform.OS !== 'web') {
-    if (__DEV__) console.warn('[pearkit] No clipboard available on this platform — register one with setClipboardWriter or pass `onCopy`.');
+    if (__DEV__) console.warn('[pearkit] No clipboard available on this platform — register one with setClipboardWriter.');
     return false;
   }
   if (typeof navigator !== 'undefined' && navigator.clipboard) {
