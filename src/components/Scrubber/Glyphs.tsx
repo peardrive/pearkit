@@ -4,7 +4,7 @@ import Svg, { Path } from 'react-native-svg';
 import { cn } from '../../utils/cn';
 import { useTheme } from '../../theme/ThemeProvider';
 import type { ColorToken } from '../../theme/tokens';
-import { PIN, PLAYHEAD, pinBallCenterY, playheadCapPath } from './timeGlyphs';
+import { CLIP, PIN, PLAYHEAD, clipBarHeight, pinBallCenterY, playheadCapPath } from './timeGlyphs';
 
 export interface PlayheadProps {
   /** Horizontal position in the parent, px. */
@@ -37,6 +37,68 @@ export function Playhead({ x, height, tone = 'playhead', color, className, style
       <Svg width={w} height={PLAYHEAD.capHeight} style={{ position: 'absolute', top: 0, left: 0 }}>
         <Path d={playheadCapPath(w / 2, 0)} fill={c} />
       </Svg>
+    </View>
+  );
+}
+
+export interface ClipFrameProps {
+  /** Left edge of the chosen part in the parent, px. */
+  x: number;
+  /** Width of the chosen part, px. */
+  width: number;
+  /** Height of the strip the frame fills. */
+  height: number;
+  /** Hovered or held at one end: that end's bar brightens. */
+  lit?: 'in' | 'out' | null;
+  /** Colour token of the frame and bars. Default `selection`. */
+  tone?: ColorToken;
+  /** Any colour; wins over `tone`. */
+  color?: string;
+  className?: string;
+  style?: StyleProp<ViewStyle>;
+}
+
+/**
+ * The clip frame: the chosen part outlined as a timeline outlines a selected clip — a 2px rounded
+ * frame in the selection colour, a short bar inside each end. Absolutely positioned, drawn only; the
+ * `Scrubber` owns the gesture (its ends are the trim handles).
+ */
+export function ClipFrame({ x, width, height, lit, tone = 'selection', color, className, style }: ClipFrameProps) {
+  const theme = useTheme();
+  const c = color ?? theme.colors[tone];
+  const w = Math.max(CLIP.lineWidth * 2, width);
+  const bars = w >= CLIP.minWidthForBars;
+  const bh = clipBarHeight(height), by = height / 2 - bh / 2;
+  const bar = (left: number, on: boolean) => (
+    <View
+      style={{
+        position: 'absolute',
+        left,
+        top: by,
+        width: CLIP.barWidth,
+        height: bh,
+        borderRadius: CLIP.barWidth / 2,
+        backgroundColor: c,
+        opacity: lit && !on ? 0.75 : 1,
+      }}
+    />
+  );
+  return (
+    <View pointerEvents="none" className={cn('absolute top-0', className)} style={[{ left: x, width: w, height }, style]}>
+      <View
+        style={{
+          position: 'absolute',
+          left: 0,
+          top: 0,
+          width: w,
+          height,
+          borderWidth: CLIP.lineWidth,
+          borderColor: c,
+          borderRadius: Math.min(CLIP.radius, height / 2),
+        }}
+      />
+      {bars ? bar(CLIP.barInset, lit === 'in') : null}
+      {bars ? bar(w - CLIP.barInset - CLIP.barWidth, lit === 'out') : null}
     </View>
   );
 }

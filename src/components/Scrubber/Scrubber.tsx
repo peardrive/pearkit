@@ -11,16 +11,20 @@ import {
 import { cn } from '../../utils/cn';
 import { clamp } from '../../utils/format';
 import { useTheme } from '../../theme/ThemeProvider';
-import { InOutPin, Playhead } from './Glyphs';
+import { ClipFrame, InOutPin, Playhead } from './Glyphs';
 import { PIN, PIN_PAD } from './timeGlyphs';
 import { useTimeRange } from './useTimeRange';
 import type { TimeRange, TimeRangeEdge } from './timeRange';
 
-export type ScrubberSize = 'sm' | 'md';
+export type ScrubberSize = 'sm' | 'md' | 'lg';
 
-const SIZES: Record<ScrubberSize, number> = { sm: 12, md: 26 };
+/** `sm` is the bar under a player: thin, so the play button beside it is its centre. */
+const SIZES: Record<ScrubberSize, number> = { sm: 8, md: 14, lg: 26 };
 
-/** How close (px) to a pin a press counts as grabbing it. */
+/** How the chosen part is drawn: the clip frame (a timeline's selected clip) or the older in/out pins. */
+export type ScrubberLook = 'clip' | 'pins';
+
+/** How close (px) to an end of the chosen part a press counts as grabbing it. */
 const GRAB = 8;
 
 export interface ScrubberProps {
@@ -38,15 +42,23 @@ export interface ScrubberProps {
   minGap?: number;
   /** Seconds one arrow key moves the head (shift: ×10). Default 0.05. */
   step?: number;
-  /** Bar height: `sm` 12px, `md` 26px. Default `sm`. */
+  /** Bar height: `sm` 8px, `md` 14px, `lg` 26px. Default `sm`. */
   size?: ScrubberSize;
+  /**
+   * How the chosen part is drawn. `clip` (default): outlined as a timeline outlines a selected clip — a 2px rounded
+   * frame in the selection colour with a short bar inside each end; its ends are the trim handles, nothing hangs
+   * below the bar. `pins`: a line with a ball under the strip at each end (the ball is what you grab).
+   */
+  look?: ScrubberLook;
+  /** A raised track: a light edge along the top, a shadow along the bottom. Default: when there is no content inside. */
+  emboss?: boolean;
   /** Exact bar height in px; wins over `size`. */
   height?: number;
-  /** Draw the pins. Default: when `range` is given. */
+  /** Draw the chosen part's glyphs (frame or pins). Default: when `range` is given. */
   pins?: boolean;
   /** Dim everything outside `range` instead of lighting the range (the trim strip's look). */
   dimOutside?: boolean;
-  /** A thin light edge around the chosen part (the trim strip's look). */
+  /** `pins` look only: a thin light edge around the chosen part. The `clip` look is always framed. */
   frame?: boolean;
   /** Classes for the bar itself, e.g. a darker track behind a filmstrip. */
   trackClassName?: string;
@@ -60,11 +72,12 @@ export interface ScrubberProps {
 
 /**
  * The time bar: a track with the playhead, scrubbed by pressing or dragging, and when a range is
- * given the chosen part with an in and an out pin at its ends — drag a pin's ball to trim.
+ * given the chosen part framed the way a timeline frames a selected clip — drag either end to trim.
  *
  * The same bar sits under a video, in an export dialog and, with a waveform or frames inside it, as
- * the trim strip (`TrimStrip`). Keyboard on the web: ← → move the head, `I` / `O` set the in / out
- * at the head, Home / End jump.
+ * the trim strip (`TrimStrip`), and the frame is the one a canvas timeline paints (`paintClipFrame`):
+ * one trim look wherever a clip is chosen or stretched. Keyboard on the web: ← → move the head,
+ * `I` / `O` set the in / out at the head, Home / End jump.
  */
 export function Scrubber({
   duration,
@@ -77,6 +90,8 @@ export function Scrubber({
   size = 'sm',
   height,
   pins,
+  look = 'clip',
+  emboss,
   dimOutside = false,
   frame = false,
   trackClassName,
@@ -94,6 +109,8 @@ export function Scrubber({
   const dur = Math.max(0, Number.isFinite(duration) ? duration : 0);
   const tr = useTimeRange(range, { min: 0, max: dur, minGap, onChange: onRange });
   const showPins = (pins ?? !!range) && !!range;
+  const clip = look === 'clip';
+  const raised = emboss ?? !children;
   const canTrim = showPins && !!onRange && !disabled;
   const canSeek = !!onSeek && !disabled;
 
@@ -208,23 +225,29 @@ export function Scrubber({
       onLayout={onLayout}
       {...(Platform.OS === 'web' ? ({ onMouseMove, onMouseLeave: () => setHoverPin(null) } as object) : null)}
       className={cn('relative w-full select-none', cursor, disabled && 'opacity-50', className)}
-      style={[{ height: h + (showPins ? PIN_PAD : 0) }, style]}
+      style={[{ height: h + (showPins && !clip ? PIN_PAD : 0) }, style]}
     >
       <View
         pointerEvents="none"
-        className={cn('absolute left-0 right-0 top-0 overflow-hidden rounded-md', !children && 'bg-overlay/[0.06]', trackClassName)}
-        style={{ height: h }}
+        className={cn('absolute left-0 right-0 top-0 overflow-hidden', !children && (raised ? 'bg-inset/[0.55]' : 'bg-overlay/[0.06]'), trackClassName)}
+        style={{ height: h, borderRadius: Math.min(6, h / 2) }}
       >
         {children}
+        {raised ? (
+          <>
+            <View className="absolute left-0 right-0 top-0 bg-overlay/[0.1]" style={{ height: 1 }} />
+            <View className="absolute left-0 right-0 bottom-0 bg-black/[0.35]" style={{ height: 1 }} />
+          </>
+        ) : null}
         {range && dimOutside ? (
           <>
             <View className="absolute top-0 bottom-0 left-0 bg-inset/[0.6]" style={{ width: xIn }} />
             <View className="absolute top-0 bottom-0 right-0 bg-inset/[0.6]" style={{ width: Math.max(0, width - xOut) }} />
           </>
         ) : range ? (
-          <View className="absolute top-0 bottom-0 bg-overlay/[0.14]" style={{ left: xIn, width: Math.max(0, xOut - xIn) }} />
+          <View className={cn('absolute top-0 bottom-0', clip ? 'bg-overlay/[0.08]' : 'bg-overlay/[0.14]')} style={{ left: xIn, width: Math.max(0, xOut - xIn) }} />
         ) : null}
-        {range && frame ? (
+        {range && frame && !clip ? (
           <View
             className="absolute top-0 bottom-0 border-overlay/[0.92]"
             style={{ left: xIn, width: Math.max(2, xOut - xIn), borderWidth: PIN.lineWidth, borderRadius: 4 }}
@@ -233,8 +256,9 @@ export function Scrubber({
         {scrubbing && canSeek && time != null ? (
           <View className="absolute top-0 bottom-0 bg-overlay/[0.06]" style={{ left: 0, width: xOf(time) }} />
         ) : null}
+        {showPins && clip ? <ClipFrame x={xIn} width={xOut - xIn} height={h} lit={litEdge} /> : null}
       </View>
-      {showPins ? (
+      {showPins && !clip ? (
         <>
           <InOutPin x={xIn} height={h} lit={litEdge === 'in'} />
           <InOutPin x={xOut} height={h} lit={litEdge === 'out'} />

@@ -2,10 +2,14 @@
  * The two time glyphs, as numbers and as canvas painters.
  *
  *  - the playhead: a line with a little house on top ("the universal playhead")
- *  - the in/out pin: a line with a ball under the strip — the ball is what you grab
+ *  - the clip frame: the chosen part outlined the way a timeline outlines a selected clip — a 2px
+ *    rounded frame in the selection colour with a short bar inside each end; the ends are what you
+ *    drag to trim (the one trim look, everywhere a clip is chosen or stretched)
+ *  - the in/out pin: a line with a ball under the strip — the older look, kept for bars that want it
  *
- * `<Playhead/>` and `<InOutPin/>` (Glyphs.tsx) draw these with React Native views; a canvas surface
- * such as a timeline calls `paintPlayhead` / `paintInOutPin` and gets the exact same shape.
+ * `<Playhead/>`, `<ClipFrame/>` and `<InOutPin/>` (Glyphs.tsx) draw these with React Native views; a
+ * canvas surface such as a timeline calls `paintPlayhead` / `paintClipFrame` / `paintInOutPin` and gets
+ * the exact same shape.
  */
 
 /** The subset of a 2D canvas context the painters use; a `CanvasRenderingContext2D` satisfies it. */
@@ -53,6 +57,24 @@ export const PIN = {
 
 /** Space to leave under a strip so the pins' balls have room. */
 export const PIN_PAD = 8;
+
+export const CLIP = {
+  /** Width of the frame's line. */
+  lineWidth: 2,
+  /** Corner radius of the frame (a clip's corners); smaller strips round to half their height. */
+  radius: 7,
+  /** The bar inside each end: its width … */
+  barWidth: 3,
+  /** … its height on a tall strip (shorter strips shrink it to fit) … */
+  barHeight: 22,
+  /** … and how far in from the frame's edge it stands. */
+  barInset: 3,
+  /** A strip narrower than this shows the frame without its bars. */
+  minWidthForBars: 24,
+} as const;
+
+/** The bar's height for a strip of this height: the full bar when there is room, else what fits. */
+export const clipBarHeight = (height: number) => Math.max(4, Math.min(CLIP.barHeight, height - 6));
 
 /** The house's size: its width, its full height, and where its walls end and its point begins. */
 export interface PlayheadCap {
@@ -132,6 +154,38 @@ export function paintInOutPin(ctx: Canvas2D, { x, top, height, color, outline, l
     ctx.strokeStyle = outline;
     ctx.lineWidth = 1;
     ctx.stroke();
+  }
+}
+
+export interface PaintClipFrameOptions {
+  /** Left edge of the chosen part. */
+  x: number;
+  /** Top of the strip. */
+  top: number;
+  /** Width of the chosen part. */
+  width: number;
+  /** Height of the strip. */
+  height: number;
+  color: string;
+  /** Width of the frame's line. Default 2. */
+  lineWidth?: number;
+  /** Draw the two bars. Default true (left out on a strip too narrow for them). */
+  bars?: boolean;
+}
+
+/** Draw the clip frame on a canvas: the rounded outline half a pixel in, and the bar inside each end. */
+export function paintClipFrame(ctx: Canvas2D, { x, top, width, height, color, lineWidth = CLIP.lineWidth, bars = true }: PaintClipFrameOptions): void {
+  const w = Math.max(lineWidth * 2, width);
+  roundRectPath(ctx, x + lineWidth / 2, top + lineWidth / 2, w - lineWidth, height - lineWidth, CLIP.radius);
+  ctx.strokeStyle = color;
+  ctx.lineWidth = lineWidth;
+  ctx.stroke();
+  if (!bars || w < CLIP.minWidthForBars) return;
+  const bh = clipBarHeight(height), y = top + height / 2 - bh / 2;
+  ctx.fillStyle = color;
+  for (const bx of [x + CLIP.barInset, x + w - CLIP.barInset - CLIP.barWidth]) {
+    roundRectPath(ctx, bx, y, CLIP.barWidth, bh, CLIP.barWidth / 2);
+    ctx.fill();
   }
 }
 

@@ -54,7 +54,8 @@ export const darkTheme: Theme = {
     'qr-background': '#ffffff',
     'qr-foreground': '#0b0b0c',
 
-    playhead: '#ffd60a',
+    playhead: '#f4f4f7',
+    selection: '#ffd60a',
   },
 };
 
@@ -102,7 +103,8 @@ export const lightTheme: Theme = {
     'qr-background': '#ffffff',
     'qr-foreground': '#0b0b0c',
 
-    playhead: '#d9a400',
+    playhead: '#1d1d1f',
+    selection: '#d9a400',
   },
 };
 

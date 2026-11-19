@@ -4,7 +4,7 @@ import { cn } from '../../utils/cn';
 import { formatClock } from '../../utils/format';
 import { IconButton } from '../IconButton/IconButton';
 import { Text } from '../Text/Text';
-import { Scrubber, type ScrubberSize } from '../Scrubber/Scrubber';
+import { Scrubber, type ScrubberLook, type ScrubberSize } from '../Scrubber/Scrubber';
 import { isWholeRange, type TimeRange } from '../Scrubber/timeRange';
 
 export interface TransportProps {
@@ -25,8 +25,10 @@ export interface TransportProps {
   onWhole?: () => void;
   /** The shortest allowed range, seconds. Default 0.1. */
   minGap?: number;
-  /** Bar size. Default `sm`. */
+  /** Bar size. Default `sm`: thin, raised, centred on the play button. */
   size?: ScrubberSize;
+  /** How the chosen part is drawn: the clip frame (default) or the older in/out pins. */
+  look?: ScrubberLook;
   /** Show the times after the bar. Default true. */
   times?: boolean;
   /** Decimals in the times. Default 1 (`0:07.3`). */
@@ -40,7 +42,8 @@ export interface TransportProps {
 
 /**
  * The one video control: play / pause, the `Scrubber`, the times. Under a clip on a stage, in a quick
- * look, in an export dialog — only size and placement differ. With `range` it also trims.
+ * look, in an export dialog — only size and placement differ. With `range` it also trims, and the
+ * chosen part wears the clip frame a timeline gives a selected clip.
  */
 export function Transport({
   playing,
@@ -53,6 +56,7 @@ export function Transport({
   onWhole,
   minGap,
   size = 'sm',
+  look = 'clip',
   times = true,
   fractionDigits = 1,
   children,
@@ -83,6 +87,7 @@ export function Transport({
         onRange={onRange}
         minGap={minGap}
         size={size}
+        look={look}
         disabled={disabled}
         className="flex-1"
         accessibilityLabel="Position"

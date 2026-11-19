@@ -17,7 +17,7 @@ const meta: Meta<typeof TrimStrip> = {
     docs: {
       description: {
         component:
-          'A clip, miniaturised: its frames edge to edge with the sound along the bottom third (or the whole height of waveform for audio), the chosen part lit with a light edge and a pin at each end, everything outside it dimmed, the playhead over it. Drag a pin\'s ball to trim, drag anywhere else to scrub. `compact` is the single-line Inspector form. The same strip trims a video on a stage, a sound on an audio tab and a clip in an inspector — and on the phone.',
+          'A clip, miniaturised: its frames edge to edge with the sound along the bottom third (or the whole height of waveform for audio), the chosen part framed as a timeline frames a selected clip (the selection colour, a bar inside each end), everything outside it dimmed, the playhead over it. Drag either end of the frame to trim, drag anywhere else to scrub. `compact` is the single-line Inspector form. The same strip trims a video on a stage, a sound on an audio tab and a clip in an inspector — and on the phone.',
       },
     },
   },
@@ -53,7 +53,8 @@ export const Variants: Story = {
       <Live duration={92} time={31} range={{ in: 12, out: 64 }} waveform={peaks} frames={frames} label="video: frames with the sound along the bottom" />
       <Live duration={92} time={31} range={{ in: 12, out: 64 }} waveform={peaks} label="audio: the whole height is waveform" />
       <Live duration={92} time={31} range={{ in: 12, out: 64 }} waveform={peaks} frames={frames} compact label="compact: the Inspector's single line (no frames)" />
-      <Live duration={92} time={31} range={null} waveform={peaks} frames={frames} label="the whole clip (range null): pins at the ends" />
+      <Live duration={92} time={31} range={null} waveform={peaks} frames={frames} label="the whole clip (range null): the frame at the ends" />
+      <Live duration={92} time={31} range={{ in: 12, out: 64 }} waveform={peaks} frames={frames} look="pins" label="look=pins · the older in/out pins" />
       <Live duration={92} time={31} range={{ in: 12, out: 64 }} frames={demoFrames(12, [4, 5, 9])} label="frames still arriving, no sound yet" />
       <Live duration={92} time={null} range={{ in: 12, out: 64 }} waveform={peaks} frames={frames} disabled label="disabled, no playhead" />
     </View>

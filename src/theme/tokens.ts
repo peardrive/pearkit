@@ -51,6 +51,7 @@ export const colorTokenNames = [
   'qr-foreground',
   // Media
   'playhead', // the playhead over a scrubber, a trim strip, a timeline
+  'selection', // the chosen clip's frame and its two bars on a scrubber, a trim strip, a timeline (Final Cut yellow)
 ] as const;
 
 export type ColorToken = (typeof colorTokenNames)[number];
