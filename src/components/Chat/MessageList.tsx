@@ -33,6 +33,12 @@ export interface MessageListProps {
   onCopy?: (text: string) => void;
   /** A link in a message was pressed. Without it the link opens with `Linking.openURL`. */
   onLinkPress?: (url: string) => void;
+  /** The emoji on each message's action row, the person's most-used six as a rule. Default `QUICK_REACTIONS`. */
+  quickReactions?: string[];
+  /** The + on a message's action row: open the full emoji list for it. */
+  onMore?: (message: ChatMessage) => void;
+  /** Words were selected inside a message and "Reply to this" pressed (web): answer quoting only those words. */
+  onReplyToSelection?: (message: ChatMessage, text: string) => void;
   /** Above the first message, inside the scroll (the start of the conversation, a "load more" button). */
   header?: ReactNode;
   /**
@@ -67,6 +73,9 @@ export function MessageList({
   showTimes = true,
   onCopy,
   onLinkPress,
+  quickReactions,
+  onMore,
+  onReplyToSelection,
   header,
   onReachTop,
   loadingOlder,
@@ -203,6 +212,9 @@ export function MessageList({
                 onOpenAttachment={onOpenAttachment}
                 onCopy={onCopy}
                 onLinkPress={onLinkPress}
+                quickReactions={quickReactions}
+                onMore={onMore}
+                onReplyToSelection={onReplyToSelection}
               />
             )}
           </React.Fragment>

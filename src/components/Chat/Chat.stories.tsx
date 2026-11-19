@@ -7,6 +7,7 @@ import { MessageList } from './MessageList';
 import { MessageRow } from './MessageRow';
 import type { ChatAuthor, ChatMessage } from './types';
 import { Button } from '../Button/Button';
+import { EmojiPicker, pushRecent } from '../EmojiPicker/EmojiPicker';
 import { EmptyState } from '../EmptyState/EmptyState';
 import { Text } from '../Text/Text';
 import { Column, Showcase } from '../../stories/helpers';
@@ -156,19 +157,28 @@ export const ComposerStory: Story = {
   ),
 };
 
-/** The list and the composer together, with the messages owned by the page around them. */
+/**
+ * A mixed conversation in bubbles, the list and the composer together, with the messages owned by the page around
+ * them. Press a message for its action row (the quick emoji, + for the full list, reply, copy); on the web, select
+ * words inside a message for "Reply to this".
+ */
 export const Conversation: Story = {
+  name: 'Mixed conversation, bubbles',
   decorators: framed(),
   render: () => {
     const [messages, setMessages] = useState<ChatMessage[]>(ROOM.slice(0, 12));
     const [value, setValue] = useState('');
     const [replyTo, setReplyTo] = useState<string | null>(null);
+    const [quoteText, setQuoteText] = useState<string | null>(null);
+    const [more, setMore] = useState<ChatMessage | null>(null);
+    const [recent, setRecent] = useState<string[]>(['🍐', '✅']);
     const quoted = replyTo ? messages.find((m) => m.id === replyTo) : undefined;
     const send = () => {
       const id = `m${Date.now()}`;
-      setMessages((all) => [...all, { id, author: ME, text: value.trim(), ts: Date.now(), re: replyTo ? [replyTo] : undefined, pending: true }]);
+      setMessages((all) => [...all, { id, author: ME, text: (quoteText ? `> ${quoteText}\n\n` : '') + value.trim(), ts: Date.now(), re: replyTo ? [replyTo] : undefined, pending: true }]);
       setValue('');
       setReplyTo(null);
+      setQuoteText(null);
       setTimeout(() => setMessages((all) => all.map((m) => (m.id === id ? { ...m, pending: false } : m))), 700);
       setTimeout(() => setMessages((all) => [...all, { id: `${id}a`, author: ANA, text: 'Makes sense.', ts: Date.now() }]), 2200);
     };
@@ -191,8 +201,34 @@ export const Conversation: Story = {
           </View>
           <Button size="sm" variant="ghost" icon="refresh" accessibilityLabel="Start over" onPress={() => setMessages(ROOM.slice(0, 12))} />
         </View>
-        <MessageList messages={messages} currentUserId="me" onReact={react} onReply={setReplyTo} onOpenAttachment={fn()} />
-        <Composer value={value} onChangeText={setValue} onSend={send} onAttach={fn()} replyTo={quoted ? { name: quoted.author.name, text: quoted.text } : null} onCancelReply={() => setReplyTo(null)} placeholder="Message Pearkit crew" />
+        <MessageList
+          messages={messages}
+          currentUserId="me"
+          onReact={react}
+          onReply={(id) => { setReplyTo(id); setQuoteText(null); }}
+          onReplyToSelection={(m, text) => { setReplyTo(m.id); setQuoteText(text); }}
+          onMore={setMore}
+          quickReactions={[...recent, ...['👍', '❤️', '😂', '🎉', '🤔', '👀'].filter((e) => !recent.includes(e))].slice(0, 6)}
+          onOpenAttachment={fn()}
+        />
+        <Composer
+          value={value}
+          onChangeText={setValue}
+          onSend={send}
+          onAttach={fn()}
+          replyTo={quoted ? { name: quoted.author.name, text: quoteText ?? quoted.text } : null}
+          onCancelReply={() => { setReplyTo(null); setQuoteText(null); }}
+          placeholder="Message Pearkit crew"
+        />
+        <EmojiPicker
+          open={!!more}
+          onClose={() => setMore(null)}
+          recent={recent}
+          onPick={(e) => {
+            if (more) react(more.id, e);
+            setRecent((r) => pushRecent(r, e));
+          }}
+        />
       </>
     );
   },

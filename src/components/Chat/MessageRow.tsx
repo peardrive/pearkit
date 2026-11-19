@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Image, Platform, Pressable, View, type StyleProp, type ViewStyle } from 'react-native';
 import { cn } from '../../utils/cn';
 import { copyToClipboard } from '../../utils/clipboard';
@@ -6,8 +6,10 @@ import { formatBytes } from '../../utils/format';
 import { Icon } from '../../icons/Icon';
 import { statusToken } from '../../theme/tones';
 import { Avatar } from '../Avatar/Avatar';
-import { Button } from '../Button/Button';
+import { EmojiBar } from '../EmojiPicker/EmojiPicker';
+import { IconButton } from '../IconButton/IconButton';
 import { Text } from '../Text/Text';
+import { SelectionReply } from './SelectionReply';
 import { MarkdownText } from '../MarkdownText/MarkdownText';
 import { fileKindFromName, fileKindMeta, type FileKind } from '../Thumbnail/Thumbnail';
 import { AgentMark } from './AgentMark';
@@ -42,6 +44,12 @@ export interface MessageRowProps {
   onCopy?: (text: string) => void;
   /** A link in the text was pressed. Without it the link opens with `Linking.openURL`. */
   onLinkPress?: (url: string) => void;
+  /** The emoji on the action row, the person's most-used six as a rule. Default `QUICK_REACTIONS`. */
+  quickReactions?: string[];
+  /** The + on the action row: open the full emoji list for this message. */
+  onMore?: (message: ChatMessage) => void;
+  /** Words were selected inside the message and "Reply to this" pressed (web): answer quoting only those words. */
+  onReplyToSelection?: (message: ChatMessage, text: string) => void;
   className?: string;
   style?: StyleProp<ViewStyle>;
 }
@@ -69,11 +77,15 @@ export function MessageRow({
   onOpenAttachment,
   onCopy,
   onLinkPress,
+  quickReactions = QUICK_REACTIONS,
+  onMore,
+  onReplyToSelection,
   className,
   style,
 }: MessageRowProps) {
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
+  const body = useRef<React.ComponentRef<typeof View>>(null);
   const web = Platform.OS === 'web';
 
   if (m.system) {
@@ -89,7 +101,7 @@ export function MessageRow({
   const bubbles = look === 'bubbles';
   const right = !!mine && bubbles;
   const avatar = compact ? 22 : 28;
-  const hasActions = !!onReact || !!onReply || !m.redacted;
+  const hasActions = !!onReact || !!onReply || !!onMore || !m.redacted;
   const reactions = (m.reactions ?? []).filter((r) => r.count > 0);
   const text = m.redacted && !m.text ? 'Message removed' : m.text;
 
@@ -100,8 +112,9 @@ export function MessageRow({
     setTimeout(() => setCopied(false), 1200);
   };
 
-  const body = (
-    <View className={cn(bubbles ? 'max-w-[86%]' : 'min-w-0 flex-1', right ? 'items-end' : 'items-start')}>
+  const content = (
+    <View ref={body} className={cn(bubbles ? 'max-w-[86%]' : 'min-w-0 flex-1', right ? 'items-end' : 'items-start')}>
+      {onReplyToSelection && !m.redacted ? <SelectionReply containerRef={body} onReply={(text) => onReplyToSelection(m, text)} /> : null}
       {first && !right ? (
         <View className="flex-row items-baseline gap-2 pb-0.5">
           <Text variant="caption" weight="semibold" tone={m.author.agent ? 'primary-text' : 'foreground'}>
@@ -121,15 +134,14 @@ export function MessageRow({
         accessibilityLabel={hasActions ? `${m.author.name}: ${text}. Actions` : undefined}
         accessibilityState={{ expanded: open }}
         className={cn(
-          bubbles && (compact ? 'px-3 py-1.5' : 'px-3.5 py-2'),
-          // Both bubbles must stand clear of the surface behind them (a pane or the background), so neither uses a
-          // surface colour: mine is tinted with the primary, the other side is a lighter overlay with a visible edge.
-          bubbles && (mine ? 'border border-primary/35 bg-primary/[0.22]' : 'border border-overlay/[0.16] bg-overlay/[0.09]'),
+          bubbles && (compact ? 'px-3 py-1.5' : 'px-3.5 py-[7px]'),
+          // Like Messages: mine in the brand tint, everyone else on a quiet overlay; no edges.
+          bubbles && (mine ? 'bg-primary/[0.28]' : 'bg-overlay/[0.06]'),
           web && hasActions && 'cursor-default',
         )}
         style={
           bubbles
-            ? { borderRadius: 16, borderBottomRightRadius: right && last ? 5 : 16, borderBottomLeftRadius: !right && last ? 5 : 16 }
+            ? { borderRadius: 17, borderBottomRightRadius: right && last ? 5 : 17, borderBottomLeftRadius: !right && last ? 5 : 17 }
             : undefined
         }
       >
@@ -218,25 +230,22 @@ export function MessageRow({
       ) : null}
 
       {open && hasActions ? (
-        <View
-          className={cn('mt-1 flex-row flex-wrap items-center gap-1 rounded-full border border-overlay/[0.10] bg-pane px-1.5 py-1', right && 'self-end')}
-          accessibilityRole="toolbar"
-        >
-          {onReact
-            ? QUICK_REACTIONS.map((e) => (
-                <Pressable
-                  key={e}
-                  onPress={() => { onReact(m.id, e); setOpen(false); }}
-                  accessibilityRole="button"
-                  accessibilityLabel={`React ${e}`}
-                  className={cn('h-7 w-7 items-center justify-center rounded-full active:bg-overlay/10', web && 'cursor-pointer hover:bg-overlay/[0.06]')}
-                >
-                  <Text style={{ fontSize: 16 }}>{e}</Text>
-                </Pressable>
-              ))
-            : null}
-          {onReply ? <Button size="sm" variant="ghost" label="Reply" onPress={() => { onReply(m.id); setOpen(false); }} /> : null}
-          {!m.redacted ? <Button size="sm" variant="ghost" label={copied ? 'Copied' : 'Copy'} onPress={copy} /> : null}
+        // Icons only: the quick emoji and a + for the rest, then reply and copy.
+        <View className={cn('mt-1 flex-row flex-wrap items-center gap-1', right && 'justify-end')} accessibilityRole="toolbar">
+          {onReact || onMore ? (
+            <EmojiBar
+              size="sm"
+              emojis={onReact ? quickReactions : []}
+              onPick={(e) => { onReact?.(m.id, e); setOpen(false); }}
+              onMore={onMore ? () => { onMore(m); setOpen(false); } : undefined}
+            />
+          ) : null}
+          {onReply || !m.redacted ? (
+            <View className="flex-row items-center gap-0.5 rounded-full border border-overlay/[0.10] bg-pane px-1 py-0.5">
+              {onReply ? <IconButton icon="reply" size="xs" tooltip="Reply" onPress={() => { onReply(m.id); setOpen(false); }} className="rounded-full" /> : null}
+              {!m.redacted ? <IconButton icon={copied ? 'tick' : 'copy'} size="xs" tooltip={copied ? 'Copied' : 'Copy'} onPress={copy} className="rounded-full" /> : null}
+            </View>
+          ) : null}
         </View>
       ) : null}
 
@@ -251,7 +260,8 @@ export function MessageRow({
   return (
     <View
       className={cn('flex-row gap-2', right ? 'justify-end' : 'justify-start', m.pending && 'opacity-60', className)}
-      style={[{ paddingTop: first ? (compact ? 8 : 12) : 2 }, style]}
+      // 2 px between the bubbles of a group, 10 px between groups (8 when compact).
+      style={[{ paddingTop: first ? (compact ? 8 : 10) : 2 }, style]}
     >
       {!right ? (
         <View style={{ width: avatar }}>
@@ -264,7 +274,7 @@ export function MessageRow({
           ) : null}
         </View>
       ) : null}
-      {body}
+      {content}
     </View>
   );
 }
