@@ -9,9 +9,9 @@ import { Text } from '../Text/Text';
 import { Column, Showcase } from '../../stories/helpers';
 
 const DOCK_ITEMS: DockItem[] = [
-  { key: 'home', icon: 'grid-1', label: 'Home' },
-  { key: 'activity', icon: 'bell', label: 'Activity', badge: 3 },
-  { key: 'projects', icon: 'folder', label: 'Projects' },
+  { key: 'home', icon: 'home', label: 'Home' },
+  { key: 'activity', icon: 'bell-fill', label: 'Activity', badge: 3 },
+  { key: 'projects', icon: 'folder-fill', label: 'Projects' },
   { key: 'settings', icon: 'setting-2-bold', label: 'Settings' },
 ];
 
@@ -39,7 +39,7 @@ const meta: Meta<typeof Dock> = {
     docs: {
       description: {
         component:
-          'The floating dock at the bottom: one wide glass pill with the places of the app in it, like the Photos tab pill on an iPhone. The chosen place is embossed (a pad with an inner highlight, the icon in the primary); the others sit flat. The page shows through it blurred on the web, a tint on a phone; `inset` takes the safe-area bottom. `DockButton` is one place on its own.',
+          'The floating dock at the bottom: one wide glass pill with the places of the app in it, like the Photos tab pill on an iPhone. Every place is a filled, embossed icon on a pad that stands a little proud of the glass; the chosen one is lifted more, its icon in the primary. The page shows through it blurred on the web, a tint on a phone; `inset` takes the safe-area bottom. `DockButton` is one place on its own.',
       },
     },
   },
@@ -72,11 +72,11 @@ export const Variants: Story = {
           <Live inset={20} />
         </View>
       </Showcase>
-      <Showcase title="Buttons: flat, active, with a badge">
+      <Showcase title="Buttons: at rest, active, with a badge">
         <View className="flex-row gap-1 rounded-full border border-overlay/[0.13] bg-pane p-1.5">
-          <DockButton icon="grid-1" label="Home" onPress={fn()} />
-          <DockButton icon="bell" label="Activity" active badge={3} onPress={fn()} />
-          <DockButton icon="folder" label="Projects" badge={12} onPress={fn()} />
+          <DockButton icon="home" label="Home" onPress={fn()} />
+          <DockButton icon="bell-fill" label="Activity" active badge={3} onPress={fn()} />
+          <DockButton icon="folder-fill" label="Projects" badge={12} onPress={fn()} />
         </View>
       </Showcase>
     </Column>

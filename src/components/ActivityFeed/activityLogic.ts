@@ -6,7 +6,7 @@ import type { IconName } from '../../icons/registry';
 import type { StatusTone } from '../../theme/tones';
 import { dayLabel, sameDay } from '../Chat/chatLogic';
 
-export type ActivityKind = 'mention' | 'approval' | 'done' | 'file' | 'member' | 'conversation' | 'error' | 'note';
+export type ActivityKind = 'mention' | 'approval' | 'done' | 'file' | 'publish' | 'member' | 'conversation' | 'project' | 'proposal' | 'zap' | 'error' | 'note';
 
 export interface ActivityWho {
   id: string;
@@ -39,9 +39,13 @@ export const activityKindMeta: Record<ActivityKind, { icon: IconName; tone: Stat
   mention: { icon: 'message', tone: 'primary', label: 'Mention' },
   approval: { icon: 'alert-circle', tone: 'warning', label: 'Needs you' },
   done: { icon: 'tick', tone: 'success', label: 'Done' },
-  file: { icon: 'document', tone: 'info', label: 'File' },
+  file: { icon: 'document-fill', tone: 'info', label: 'File' },
+  publish: { icon: 'export', tone: 'info', label: 'Published' },
   member: { icon: 'people', tone: 'accent', label: 'Member' },
-  conversation: { icon: 'message', tone: 'neutral', label: 'Conversation' },
+  conversation: { icon: 'message-fill', tone: 'neutral', label: 'Conversation' },
+  project: { icon: 'folder-fill', tone: 'primary', label: 'Project' },
+  proposal: { icon: 'edit', tone: 'accent', label: 'Proposal' },
+  zap: { icon: 'bolt', tone: 'warning', label: 'Zap' },
   error: { icon: 'alert-circle', tone: 'danger', label: 'Error' },
   note: { icon: 'info-circle', tone: 'neutral', label: 'Note' },
 };

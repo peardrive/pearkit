@@ -22,6 +22,10 @@ const ITEMS: ActivityItem[] = [
   { id: '6', ts: NOW - day - hour, kind: 'conversation', title: 'started "Release 0.3"', who: { id: 'me', name: 'Guy' }, where: { org: 'PearDrive', project: 'Pearkit' } },
   { id: '7', ts: NOW - day - 2 * hour, kind: 'error', title: 'could not reach the Mac Mini', detail: 'The seat is paused until the device is back.', where: { project: 'Bitcoin Audible' }, action: { label: 'Retry', onPress: fn() } },
   { id: '8', ts: NOW - 3 * day, kind: 'note', title: 'The wiki space was created', where: { org: 'PearDrive', project: 'Pearkit' } },
+  { id: '9', ts: NOW - 3 * day - hour, kind: 'project', title: 'started the project', who: { id: 'me', name: 'Guy' }, where: { org: 'PearDrive', project: 'Pearkit' } },
+  { id: '10', ts: NOW - 4 * day, kind: 'publish', title: 'published release-notes.md to the space', who: { id: 'pear', name: 'Pear', agent: true }, where: { org: 'PearDrive', project: 'Pearkit' } },
+  { id: '11', ts: NOW - 4 * day - hour, kind: 'proposal', title: 'proposed a change to the draft', who: { id: 'ana', name: 'Ana' }, where: { org: 'Bitcoin Audible', project: 'Show notes' }, action: { label: 'Review', onPress: fn() } },
+  { id: '12', ts: NOW - 5 * day, kind: 'zap', title: 'zapped 2,100 sats', who: { id: 'tomas', name: 'Tomás' }, where: { org: 'Bitcoin Audible', project: 'Show notes' } },
 ];
 
 const meta: Meta<typeof ActivityFeed> = {

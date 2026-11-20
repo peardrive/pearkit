@@ -61,7 +61,7 @@ describe('unreadCount and kinds', () => {
   });
 
   test('every kind has an icon and a tone', () => {
-    for (const k of ['mention', 'approval', 'done', 'file', 'member', 'conversation', 'error', 'note'] as const) {
+    for (const k of ['mention', 'approval', 'done', 'file', 'publish', 'member', 'conversation', 'project', 'proposal', 'zap', 'error', 'note'] as const) {
       expect(activityKindMeta[k].icon).toBeTruthy();
       expect(activityKindMeta[k].tone).toBeTruthy();
     }

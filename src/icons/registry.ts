@@ -9,6 +9,8 @@ export interface IconPath {
   strokeLinecap?: 'round' | 'butt' | 'square';
   strokeLinejoin?: 'round' | 'miter' | 'bevel';
   strokeMiterlimit?: number;
+  /** The path has holes drawn the other way round (fill-rule evenodd). */
+  evenodd?: boolean;
 }
 
 export interface IconDefinition {
@@ -624,6 +626,15 @@ export const iconRegistry = {
       }
     ]
   },
+  "bell-fill": {
+    "set": "pearkit",
+    "paths": [
+      {
+        "d": "M12 2.5A1.4 1.4 0 0 1 13.4 3.9V4.45A6.3 6.3 0 0 1 18.2 10.6V14.1L19.9 16.5C20.5 17.3 19.9 18.4 18.9 18.4H5.1C4.1 18.4 3.5 17.3 4.1 16.5L5.8 14.1V10.6A6.3 6.3 0 0 1 10.6 4.45V3.9A1.4 1.4 0 0 1 12 2.5ZM9.2 19.6H14.8A2.8 2.8 0 0 1 9.2 19.6Z",
+        "fill": true
+      }
+    ]
+  },
   "bell": {
     "set": "pearkit",
     "paths": [
@@ -646,6 +657,15 @@ export const iconRegistry = {
         "stroke": true,
         "strokeWidth": 1.5,
         "strokeMiterlimit": 10
+      }
+    ]
+  },
+  "bolt": {
+    "set": "pearkit",
+    "paths": [
+      {
+        "d": "M13.6 2.4C13.9 2 14.6 2.3 14.5 2.8L13.2 9.9H19.1C19.6 9.9 19.9 10.5 19.6 10.9L10.4 21.6C10.1 22 9.4 21.7 9.5 21.2L10.8 14.1H4.9C4.4 14.1 4.1 13.5 4.4 13.1Z",
+        "fill": true
       }
     ]
   },
@@ -704,6 +724,16 @@ export const iconRegistry = {
         "strokeWidth": 1.5,
         "strokeLinecap": "round",
         "strokeLinejoin": "round"
+      }
+    ]
+  },
+  "document-fill": {
+    "set": "pearkit",
+    "paths": [
+      {
+        "d": "M7.6 2.5H13.5L19 8V18.9A2.6 2.6 0 0 1 16.4 21.5H7.6A2.6 2.6 0 0 1 5 18.9V5.1A2.6 2.6 0 0 1 7.6 2.5ZM13.5 2.5V6.4A1.6 1.6 0 0 0 15.1 8H19ZM8.8 11H15.2A0.8 0.8 0 0 1 16 11.8V11.8A0.8 0.8 0 0 1 15.2 12.6H8.8A0.8 0.8 0 0 1 8 11.8V11.8A0.8 0.8 0 0 1 8.8 11ZM8.8 14.2H15.2A0.8 0.8 0 0 1 16 15V15A0.8 0.8 0 0 1 15.2 15.8H8.8A0.8 0.8 0 0 1 8 15V15A0.8 0.8 0 0 1 8.8 14.2ZM8.8 17.4H12.2A0.8 0.8 0 0 1 13 18.2V18.2A0.8 0.8 0 0 1 12.2 19H8.8A0.8 0.8 0 0 1 8 18.2V18.2A0.8 0.8 0 0 1 8.8 17.4Z",
+        "fill": true,
+        "evenodd": true
       }
     ]
   },
@@ -767,6 +797,33 @@ export const iconRegistry = {
       }
     ]
   },
+  "folder-fill": {
+    "set": "pearkit",
+    "paths": [
+      {
+        "d": "M4.6 4.5H9.2L11.4 7H19.4A2.1 2.1 0 0 1 21.5 9.1V17.4A2.1 2.1 0 0 1 19.4 19.5H4.6A2.1 2.1 0 0 1 2.5 17.4V6.6A2.1 2.1 0 0 1 4.6 4.5Z",
+        "fill": true
+      }
+    ]
+  },
+  "globe": {
+    "set": "pearkit",
+    "paths": [
+      {
+        "d": "M8.11 11.35A3.9 9.5 0 0 1 15.89 11.35ZM6.91 11.35A5.1 9.5 0 0 1 12 2.5A9.5 9.5 0 0 0 2.52 11.35ZM17.09 11.35A5.1 9.5 0 0 0 12 2.5A9.5 9.5 0 0 1 21.48 11.35ZM8.11 12.65A3.9 9.5 0 0 0 15.89 12.65ZM6.91 12.65A5.1 9.5 0 0 0 12 21.5A9.5 9.5 0 0 1 2.52 12.65ZM17.09 12.65A5.1 9.5 0 0 1 12 21.5A9.5 9.5 0 0 0 21.48 12.65Z",
+        "fill": true
+      }
+    ]
+  },
+  "group": {
+    "set": "pearkit",
+    "paths": [
+      {
+        "d": "M10.1 2.6H13.9A2.4 2.4 0 0 1 16.3 5V8.8A2.4 2.4 0 0 1 13.9 11.2H10.1A2.4 2.4 0 0 1 7.7 8.8V5A2.4 2.4 0 0 1 10.1 2.6ZM5 12.8H8.8A2.4 2.4 0 0 1 11.2 15.2V19A2.4 2.4 0 0 1 8.8 21.4H5A2.4 2.4 0 0 1 2.6 19V15.2A2.4 2.4 0 0 1 5 12.8ZM15.2 12.8H19A2.4 2.4 0 0 1 21.4 15.2V19A2.4 2.4 0 0 1 19 21.4H15.2A2.4 2.4 0 0 1 12.8 19V15.2A2.4 2.4 0 0 1 15.2 12.8Z",
+        "fill": true
+      }
+    ]
+  },
   "heart-bold": {
     "set": "pearkit",
     "paths": [
@@ -789,6 +846,16 @@ export const iconRegistry = {
         "strokeWidth": 1.5,
         "strokeLinecap": "round",
         "strokeLinejoin": "round"
+      }
+    ]
+  },
+  "home": {
+    "set": "pearkit",
+    "paths": [
+      {
+        "d": "M12 2.6L2.9 10.1C2.3 10.6 2.6 11.5 3.4 11.5H4.8V18.9A2.6 2.6 0 0 0 7.4 21.5H16.6A2.6 2.6 0 0 0 19.2 18.9V11.5H20.6C21.4 11.5 21.7 10.6 21.1 10.1ZM10.1 21.5V16.1A1.9 1.9 0 0 1 13.9 16.1V21.5Z",
+        "fill": true,
+        "evenodd": true
       }
     ]
   },
@@ -857,6 +924,15 @@ export const iconRegistry = {
         "stroke": true,
         "strokeWidth": 1.5,
         "strokeLinecap": "round"
+      }
+    ]
+  },
+  "message-fill": {
+    "set": "pearkit",
+    "paths": [
+      {
+        "d": "M12 3.5C6.8 3.5 2.5 6.9 2.5 11.2C2.5 12.9 3.2 14.5 4.3 15.8L3.4 19.6C3.3 20.1 3.8 20.6 4.3 20.4L8.4 19C9.5 19.4 10.7 19.6 12 19.6C17.2 19.6 21.5 16.2 21.5 11.6C21.5 7 17.2 3.5 12 3.5Z",
+        "fill": true
       }
     ]
   },
@@ -933,6 +1009,15 @@ export const iconRegistry = {
         "strokeWidth": 1.5,
         "strokeLinecap": "round",
         "strokeLinejoin": "round"
+      }
+    ]
+  },
+  "more-fill": {
+    "set": "pearkit",
+    "paths": [
+      {
+        "d": "M10 5A2 2 0 1 1 14 5A2 2 0 1 1 10 5ZM10 12A2 2 0 1 1 14 12A2 2 0 1 1 10 12ZM10 19A2 2 0 1 1 14 19A2 2 0 1 1 10 19Z",
+        "fill": true
       }
     ]
   },
@@ -1186,4 +1271,4 @@ export const iconRegistry = {
 
 export type IconName = keyof typeof iconRegistry;
 
-export const iconNames = ["arrow-down","arrow-up","clock","copy","export","filter","folder-open","folder","grid-1","import","info-circle","more","pause","people","scan-barcode","search-normal","setting-2-bold","sidebar-left","sort","star-bold","star","stop-circle","add","alert-circle","bell","chevron-down","chevron-left","chevron-right","close","document","edit","heart-bold","heart","image","link","menu","message","microphone-slash","microphone","moon","music","paperclip","play","refresh","reply","robot","share","sun","tick","video","wifi-slash"] as IconName[];
+export const iconNames = ["arrow-down","arrow-up","clock","copy","export","filter","folder-open","folder","grid-1","import","info-circle","more","pause","people","scan-barcode","search-normal","setting-2-bold","sidebar-left","sort","star-bold","star","stop-circle","add","alert-circle","bell-fill","bell","bolt","chevron-down","chevron-left","chevron-right","close","document-fill","document","edit","folder-fill","globe","group","heart-bold","heart","home","image","link","menu","message-fill","message","microphone-slash","microphone","moon","more-fill","music","paperclip","play","refresh","reply","robot","share","sun","tick","video","wifi-slash"] as IconName[];

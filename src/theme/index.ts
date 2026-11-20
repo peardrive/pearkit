@@ -3,3 +3,4 @@ export * from './themes';
 export * from './createTheme';
 export * from './ThemeProvider';
 export * from './tones';
+export * from './emboss';

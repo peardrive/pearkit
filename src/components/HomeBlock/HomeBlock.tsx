@@ -43,7 +43,7 @@ export function HomeBlock({ title, icon, count, action, size = 'compact', onPres
         accessibilityLabel={onPress ? title : undefined}
         className={cn('-m-1 flex-row items-center gap-2 rounded-md p-1', onPress && 'hover:bg-overlay/[0.04]', onPress && web && 'cursor-pointer')}
       >
-        {renderIcon(icon, { size: 16, tone: 'icon-strong' })}
+        {renderIcon(icon, { size: 16, tone: 'icon-strong', emboss: true })}
         <Text variant="body-lg" weight="semibold" numberOfLines={1} className="min-w-0 shrink">
           {title}
         </Text>

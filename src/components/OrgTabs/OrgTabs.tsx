@@ -2,6 +2,8 @@ import React from 'react';
 import { Image, Platform, Pressable, ScrollView, View, type StyleProp, type ViewStyle } from 'react-native';
 import { cn } from '../../utils/cn';
 import { Icon } from '../../icons/Icon';
+import { useTheme } from '../../theme/ThemeProvider';
+import { embossPad } from '../../theme/emboss';
 import { Avatar } from '../Avatar/Avatar';
 import { Text } from '../Text/Text';
 
@@ -71,11 +73,13 @@ function Tab({ selected, onPress, label, count, size, accessibilityLabel, childr
 }
 
 /**
- * The organizations as a row of round tabs with their names under, "All" first, a + last; the chosen one ringed in
- * the primary. The row scrolls sideways and snaps to a tab, so a flick moves along it.
+ * The organizations as a row of round tabs with their names under: "All" first (an embossed globe), a + last;
+ * the chosen one ringed in the primary. The row scrolls sideways and snaps to a tab, so a flick moves along it.
  */
 export function OrgTabs({ items, value, onChange, onAdd, size = 'md', allLabel = 'All', hideAll, className, style }: OrgTabsProps) {
   const s = sizes[size];
+  const theme = useTheme();
+  const web = Platform.OS === 'web';
   return (
     <ScrollView
       horizontal
@@ -90,8 +94,8 @@ export function OrgTabs({ items, value, onChange, onAdd, size = 'md', allLabel =
     >
       {!hideAll ? (
         <Tab size={size} label={allLabel} selected={value === ALL_ORGS} onPress={() => onChange(ALL_ORGS)}>
-          <View className={cn('items-center justify-center rounded-full border border-overlay/10', value === ALL_ORGS ? 'bg-primary/[0.14]' : 'bg-overlay/[0.06]')} style={{ width: s.avatar, height: s.avatar }}>
-            <Icon name="grid-1" size={Math.round(s.avatar * 0.4)} tone={value === ALL_ORGS ? 'primary-text' : 'icon-strong'} />
+          <View className="items-center justify-center rounded-full" style={[{ width: s.avatar, height: s.avatar }, embossPad(theme, { active: value === ALL_ORGS, primary: value === ALL_ORGS }, web)]}>
+            <Icon name="globe" size={Math.round(s.avatar * 0.46)} tone={value === ALL_ORGS ? 'primary-text' : 'icon-strong'} emboss />
           </View>
         </Tab>
       ) : null}
@@ -106,8 +110,8 @@ export function OrgTabs({ items, value, onChange, onAdd, size = 'md', allLabel =
       ))}
       {onAdd ? (
         <Tab size={size} label="New" onPress={onAdd} accessibilityLabel="New organization">
-          <View className="items-center justify-center rounded-full border border-dashed border-overlay/25" style={{ width: s.avatar, height: s.avatar }}>
-            <Icon name="add" size={Math.round(s.avatar * 0.4)} tone="icon-strong" />
+          <View className="items-center justify-center rounded-full" style={[{ width: s.avatar, height: s.avatar }, embossPad(theme, {}, web)]}>
+            <Icon name="add" size={Math.round(s.avatar * 0.4)} tone="icon-strong" emboss />
           </View>
         </Tab>
       ) : null}

@@ -40,9 +40,9 @@ function ChatWithBar({ position = 'top' as 'top' | 'bottom' }) {
   const [value, setValue] = useState('');
   const bar = (
     <GlassBar position={position}>
-      <GlassBarButton icon="message" label="Chat" active={tab === 'chat'} onPress={() => setTab('chat')} accessibilityLabel="Chat" />
-      <GlassBarButton icon="folder" label="Files" badge={2} active={tab === 'files'} onPress={() => setTab('files')} accessibilityLabel="Files" />
-      <GlassBarButton icon="more" label="Project" active={tab === 'more'} onPress={() => setTab('more')} accessibilityLabel="The project" />
+      <GlassBarButton icon="message-fill" label="Chat" active={tab === 'chat'} onPress={() => setTab('chat')} accessibilityLabel="Chat" />
+      <GlassBarButton icon="folder-fill" label="Files" badge={2} active={tab === 'files'} onPress={() => setTab('files')} accessibilityLabel="Files" />
+      <GlassBarButton icon="more-fill" label="Project" active={tab === 'more'} onPress={() => setTab('more')} accessibilityLabel="The project" />
     </GlassBar>
   );
   return (
@@ -61,7 +61,7 @@ const meta: Meta<typeof GlassBar> = {
     docs: {
       description: {
         component:
-          'A floating translucent bar over content, at the top or the bottom: on the web the content shows through it blurred (`backdrop-filter`), on a phone it is a near-solid tint. `GlassBarButton` is PearDrive\'s toolbar action: a glass circle with its name under it, lit when chosen, with a count on its corner. `inset` takes the safe-area padding on the outer edge.',
+          'A floating translucent bar over content, at the top or the bottom: on the web the content shows through it blurred (`backdrop-filter`), on a phone it is a near-solid tint. `GlassBarButton` is PearDrive\'s toolbar action: an embossed circle with a filled, embossed icon and its name under it, painted with the primary when chosen, with a count on its corner. `inset` takes the safe-area padding on the outer edge.',
       },
     },
   },
@@ -87,26 +87,26 @@ export const Variants: Story = {
         <View className="relative overflow-hidden rounded-card border border-overlay/[0.08] bg-background" style={{ width: 360, height: 200 }}>
           <Backdrop />
           <GlassBar position="top">
-            <GlassBarButton icon="message" label="Chat" active onPress={fn()} accessibilityLabel="Chat" />
-            <GlassBarButton icon="folder" label="Files" badge={12} onPress={fn()} accessibilityLabel="Files" />
-            <GlassBarButton icon="more" label="Project" onPress={fn()} accessibilityLabel="The project" />
+            <GlassBarButton icon="message-fill" label="Chat" active onPress={fn()} accessibilityLabel="Chat" />
+            <GlassBarButton icon="folder-fill" label="Files" badge={12} onPress={fn()} accessibilityLabel="Files" />
+            <GlassBarButton icon="more-fill" label="Project" onPress={fn()} accessibilityLabel="The project" />
           </GlassBar>
         </View>
         <View className="relative overflow-hidden rounded-card border border-overlay/[0.08] bg-background" style={{ width: 360, height: 200 }}>
           <Backdrop />
           <GlassBar position="bottom" inset={12}>
-            <GlassBarButton icon="bell" onPress={fn()} accessibilityLabel="Activity" badge={3} />
-            <GlassBarButton icon="folder" onPress={fn()} accessibilityLabel="Projects" active />
+            <GlassBarButton icon="bell-fill" onPress={fn()} accessibilityLabel="Activity" badge={3} />
+            <GlassBarButton icon="folder-fill" onPress={fn()} accessibilityLabel="Projects" active />
             <GlassBarButton icon="setting-2-bold" onPress={fn()} accessibilityLabel="Settings" />
           </GlassBar>
         </View>
       </Showcase>
       <Showcase title="Buttons">
-        <GlassBarButton icon="message" label="Chat" onPress={fn()} accessibilityLabel="Chat" />
-        <GlassBarButton icon="message" label="Active" active onPress={fn()} accessibilityLabel="Active" />
-        <GlassBarButton icon="folder" label="Badge" badge={7} onPress={fn()} accessibilityLabel="Badge" />
-        <GlassBarButton icon="more" onPress={fn()} accessibilityLabel="No label" />
-        <GlassBarButton icon="more" label="Disabled" disabled onPress={fn()} accessibilityLabel="Disabled" />
+        <GlassBarButton icon="message-fill" label="Chat" onPress={fn()} accessibilityLabel="Chat" />
+        <GlassBarButton icon="message-fill" label="Active" active onPress={fn()} accessibilityLabel="Active" />
+        <GlassBarButton icon="folder-fill" label="Badge" badge={7} onPress={fn()} accessibilityLabel="Badge" />
+        <GlassBarButton icon="more-fill" onPress={fn()} accessibilityLabel="No label" />
+        <GlassBarButton icon="more-fill" label="Disabled" disabled onPress={fn()} accessibilityLabel="Disabled" />
       </Showcase>
     </Column>
   ),

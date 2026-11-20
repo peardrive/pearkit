@@ -36,6 +36,7 @@ for (const set of sets) {
       }
       const fill = attr(tag, 'fill');
       if (fill && fill !== 'none') p.fill = true;
+      if (attr(tag, 'fill-rule') === 'evenodd') p.evenodd = true; // holes: a door, the lines on a page
       return p;
     });
     icons[basename(file, '.svg')] = { set, paths };
@@ -54,6 +55,8 @@ export interface IconPath {
   strokeLinecap?: 'round' | 'butt' | 'square';
   strokeLinejoin?: 'round' | 'miter' | 'bevel';
   strokeMiterlimit?: number;
+  /** The path has holes drawn the other way round (fill-rule evenodd). */
+  evenodd?: boolean;
 }
 
 export interface IconDefinition {
