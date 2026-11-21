@@ -6,7 +6,7 @@ import { NetworkStatusCard } from './NetworkStatusCard';
 import { SidebarSurface } from '../../stories/helpers';
 
 const meta: Meta<typeof NetworkStatusCard> = {
-  title: 'Patterns/NetworkStatusCard',
+  title: 'App tools/NetworkStatusCard',
   component: NetworkStatusCard,
   parameters: { docs: { description: { component: 'P2P network summary for the sidebar footer: state dot, peer count, live rates and a pause/resume action. `compact` renders just the dot (with a tooltip) for the collapsed rail.' } } },
   argTypes: { state: { control: 'inline-radio', options: ['connected', 'connecting', 'offline'] } },

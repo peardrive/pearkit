@@ -8,7 +8,7 @@ import { Waveform } from '../Waveform/Waveform';
 import { demoPeaks } from '../../stories/fixtures/media';
 
 const meta: Meta<typeof Scrubber> = {
-  title: 'Components/Scrubber',
+  title: 'Media/Scrubber',
   component: Scrubber,
   parameters: {
     docs: {

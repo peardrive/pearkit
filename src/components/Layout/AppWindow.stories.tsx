@@ -6,7 +6,7 @@ import { Sidebar, SidebarHeader, SidebarSpacer, SidebarToggle } from '../Sidebar
 import { WindowControls } from '../WindowControls/WindowControls';
 
 const meta: Meta<typeof AppWindow> = {
-  title: 'Components/AppWindow & Pane',
+  title: 'App frame/AppWindow & Pane',
   component: AppWindow,
   subcomponents: { Pane, PaneBody } as never,
   parameters: { docs: { description: { component: 'Layout skeleton. `AppWindow` is the row of panes (optionally `framed` with rounded chrome for previews); `Pane` is a fixed-width or flexible column with a `surface`, hairline and optional brand `glow`; `PaneBody` scrolls its content.' } } },

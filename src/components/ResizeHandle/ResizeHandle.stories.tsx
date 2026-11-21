@@ -6,7 +6,7 @@ import { Text } from '../Text/Text';
 import { clamp } from '../../utils/format';
 
 const meta: Meta<typeof ResizeHandle> = {
-  title: 'Components/ResizeHandle',
+  title: 'App frame/ResizeHandle',
   component: ResizeHandle,
   parameters: {
     docs: {

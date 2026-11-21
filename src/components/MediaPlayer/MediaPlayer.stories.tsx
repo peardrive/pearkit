@@ -151,7 +151,7 @@ function OneFile({ file, ...player }: OneFileProps) {
 }
 
 const meta: Meta<typeof Demo> = {
-  title: 'Components/MediaPlayer',
+  title: 'Media/MediaPlayer',
   component: Demo,
   parameters: {
     layout: 'centered',

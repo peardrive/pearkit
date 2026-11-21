@@ -8,7 +8,7 @@ import { demoPeaks } from '../../stories/fixtures/media';
 const peaks = demoPeaks(92);
 
 const meta: Meta<typeof Waveform> = {
-  title: 'Components/Waveform',
+  title: 'Media/Waveform',
   component: Waveform,
   parameters: {
     docs: {

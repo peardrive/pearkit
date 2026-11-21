@@ -4,7 +4,7 @@ import { PeerChip } from './PeerChip';
 import { Showcase } from '../../stories/helpers';
 
 const meta: Meta<typeof PeerChip> = {
-  title: 'Components/PeerChip',
+  title: 'People/PeerChip',
   component: PeerChip,
   parameters: { docs: { description: { component: 'A connected peer: generated avatar and the middle-truncated key (`a12b…4f5g`). Pressable when `onPress` is set.' } } },
   args: { peerId: 'a12b9f03c7d14f5g' },

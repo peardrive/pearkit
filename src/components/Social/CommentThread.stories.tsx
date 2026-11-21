@@ -17,7 +17,7 @@ const SAMPLE: CommentData[] = [
 ];
 
 const meta: Meta<typeof CommentThread> = {
-  title: 'Components/CommentThread',
+  title: 'Conversation/CommentThread',
   component: CommentThread,
   parameters: { docs: { description: { component: 'The comments of a post or a file. Answers sit under their comment (an answer to an answer stays under the same comment and names who it answers). It takes comments and callbacks only: reading, sending and deleting are the app\'s. `CommentRow` is one comment, for an app with its own list; `commentTree()` is the order rule on its own.' } } },
   args: { comments: SAMPLE, onLike: () => {}, onReply: () => {}, onMenu: () => {} },

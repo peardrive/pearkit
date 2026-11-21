@@ -9,7 +9,7 @@ import { Text } from '../Text/Text';
 const tones = ['success', 'warning', 'danger', 'neutral', 'primary', 'info', 'accent'] as const;
 
 const meta: Meta<typeof StatusPill> = {
-  title: 'Components/Status',
+  title: 'Status & messages/Status',
   component: StatusPill,
   parameters: {
     docs: {

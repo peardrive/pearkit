@@ -18,7 +18,7 @@ function Stage({ children, width = 360, height = 202 }: { children: React.ReactN
 }
 
 const meta: Meta<typeof MediaNotice> = {
-  title: 'Components/MediaNotice',
+  title: 'Media/MediaNotice',
   component: MediaNotice,
   parameters: {
     docs: {

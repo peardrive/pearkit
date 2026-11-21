@@ -8,7 +8,7 @@ import { Showcase } from '../../stories/helpers';
 const peers = ['a12b9f03c7d14f5g', '9e7c55e0b2a811ad', 'c03fd18e4a7cb82e'];
 
 const meta: Meta<typeof TransferCard> = {
-  title: 'Patterns/TransferCard',
+  title: 'Files & sharing/TransferCard',
   component: TransferCard,
   subcomponents: { TransferRate } as never,
   parameters: { docs: { description: { component: 'Live transfer panel: title, percentage, gradient progress, speed / ETA / size and the connected peers. Numbers can be raw (bytes, bytes/s, seconds — formatted for you) or preformatted strings.' } } },

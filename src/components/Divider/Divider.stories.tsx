@@ -5,7 +5,7 @@ import { IconButton } from '../IconButton/IconButton';
 import { Text } from '../Text/Text';
 
 const meta: Meta<typeof Divider> = {
-  title: 'Components/Divider',
+  title: 'App frame/Divider',
   component: Divider,
   parameters: { docs: { description: { component: 'Hairline separator. Horizontal between blocks; vertical between toolbar groups.' } } },
   argTypes: { orientation: { control: 'inline-radio', options: ['horizontal', 'vertical'] } },

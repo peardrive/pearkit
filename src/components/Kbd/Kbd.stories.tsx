@@ -3,7 +3,7 @@ import { Kbd } from './Kbd';
 import { Showcase } from '../../stories/helpers';
 
 const meta: Meta<typeof Kbd> = {
-  title: 'Components/Kbd',
+  title: 'Buttons & actions/Kbd',
   component: Kbd,
   parameters: { docs: { description: { component: 'Keyboard shortcut hint, used inside `SearchField` (⌘F) and tooltips.' } } },
   args: { children: '⌘F' },

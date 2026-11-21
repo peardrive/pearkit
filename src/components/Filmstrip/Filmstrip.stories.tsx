@@ -6,7 +6,7 @@ import { Text } from '../Text/Text';
 import { demoFrames } from '../../stories/fixtures/media';
 
 const meta: Meta<typeof Filmstrip> = {
-  title: 'Components/Filmstrip',
+  title: 'Media/Filmstrip',
   component: Filmstrip,
   parameters: {
     docs: {

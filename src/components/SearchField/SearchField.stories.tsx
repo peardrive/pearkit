@@ -5,7 +5,7 @@ import { SearchField } from './SearchField';
 import { Text } from '../Text/Text';
 
 const meta: Meta<typeof SearchField> = {
-  title: 'Components/SearchField',
+  title: 'Text & input/SearchField',
   component: SearchField,
   parameters: { docs: { description: { component: 'Compact search input built on `TextInput`. Shows a shortcut hint when empty and a clear button once there is text. Controlled or uncontrolled.' } } },
   args: { placeholder: 'Search shares', shortcut: '⌘F' },

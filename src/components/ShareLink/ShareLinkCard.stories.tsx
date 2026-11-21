@@ -4,7 +4,7 @@ import { fn } from 'storybook/test';
 import { ShareLinkCard } from './ShareLinkCard';
 
 const meta: Meta<typeof ShareLinkCard> = {
-  title: 'Patterns/ShareLinkCard',
+  title: 'Files & sharing/ShareLinkCard',
   component: ShareLinkCard,
   parameters: { docs: { description: { component: 'Everything needed to hand a share to someone: a scannable QR, the copyable link and actions. Every string and action is configurable; `layout="vertical"` stacks it for phones.' } } },
   argTypes: { layout: { control: 'inline-radio', options: ['horizontal', 'vertical'] } },

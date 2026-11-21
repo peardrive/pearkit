@@ -7,7 +7,7 @@ import { WindowControls } from '../WindowControls/WindowControls';
 import { Text } from '../Text/Text';
 
 const meta: Meta<typeof UpdateNotice> = {
-  title: 'Patterns/UpdateNotice',
+  title: 'App tools/UpdateNotice',
   component: UpdateNotice,
   parameters: {
     layout: 'fullscreen',

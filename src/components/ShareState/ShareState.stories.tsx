@@ -13,7 +13,7 @@ import { describeShareState, type ShareStateInput, type ShareStateTone } from '.
  * every app and every layout.
  */
 const meta = {
-  title: 'Components/ShareState',
+  title: 'Files & sharing/ShareState',
   parameters: { layout: 'padded' },
 } satisfies Meta;
 

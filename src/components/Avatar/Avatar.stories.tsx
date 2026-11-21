@@ -3,7 +3,7 @@ import { Avatar } from './Avatar';
 import { Showcase } from '../../stories/helpers';
 
 const meta: Meta<typeof Avatar> = {
-  title: 'Components/Avatar',
+  title: 'People/Avatar',
   component: Avatar,
   parameters: { docs: { description: { component: 'Deterministic gradient avatar: the same `seed` (peer key, device id) always picks the same gradient from the theme-aware `avatarPalette`.' } } },
   args: { seed: 'a12b9f03c7d14f5g', size: 40 },

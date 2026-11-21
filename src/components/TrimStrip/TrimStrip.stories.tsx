@@ -11,7 +11,7 @@ const peaks = demoPeaks(92);
 const frames = demoFrames(12);
 
 const meta: Meta<typeof TrimStrip> = {
-  title: 'Components/TrimStrip',
+  title: 'Media/TrimStrip',
   component: TrimStrip,
   parameters: {
     docs: {

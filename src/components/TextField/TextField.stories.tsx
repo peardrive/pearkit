@@ -6,7 +6,7 @@ import { Kbd } from '../Kbd/Kbd';
 import { iconNames } from '../../icons/registry';
 
 const meta: Meta<typeof TextField> = {
-  title: 'Components/TextField',
+  title: 'Text & input/TextField',
   component: TextField,
   parameters: { docs: { description: { component: 'Labelled text input with hint / error, leading icon, trailing slot, password reveal and a monospace mode for keys and links. Built on `TextInput`, so it works on native and in Electron.' } } },
   argTypes: { icon: { control: 'select', options: [undefined, ...iconNames] }, size: { control: 'inline-radio', options: ['sm', 'md'] } },

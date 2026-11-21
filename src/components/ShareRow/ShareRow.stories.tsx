@@ -8,7 +8,7 @@ import { SectionLabel } from '../SectionLabel/SectionLabel';
 import { images, shareMeta, shares } from '../../stories/fixtures/shares';
 
 const meta: Meta<typeof ShareRow> = {
-  title: 'Patterns/ShareRow',
+  title: 'Files & sharing/ShareRow',
   component: ShareRow,
   parameters: {
     docs: { description: { component: 'List row for a share (file or folder) — mirrors the Figma “Share Row” component: toggle `progress` for in-flight transfers and `favorite` for starred items. Status pill, timestamp or an inline action (Retry) on the right.' } },

@@ -77,13 +77,21 @@ Then follow the guide for your platform:
 
 ## What's in the box
 
-| Layer | Components |
+| Category | Pieces |
 | --- | --- |
-| **Foundations** | `ThemeProvider` · `createTheme` · `Text` (9-step type scale) · `Icon` (39 icons, 22 exported from the Figma file) · `LinearGradient` / `RadialGlow` |
-| **Components** | `Button` · `IconButton` · `Tooltip` · `StatusPill` · `StatusDot` · `CountBadge` · `ProgressBar` · `SearchField` · `Thumbnail` · `Avatar` · `PeerChip` · `QRCode` · `LinkField` · `KeyValueList` · `EmptyState` · `MediaNotice` · `TextField` · `Dialog` · `Card` · `Divider` · `Kbd` · `SectionLabel` · `Spacer` |
-| **App chrome** | `WindowControls` · `DragRegion` · `Sidebar` (resizable, collapsible) · `Toolbar` · `PaneHeader` · `AppWindow` / `Pane` / `PaneBody` |
-| **PearDrop patterns** | `ShareRow` · `FileHeader` · `TransferCard` · `ShareLinkCard` · `NetworkStatusCard` · `DangerZone` |
-| **Layouts** | Full desktop and mobile PearDrop screens, built only from the components above |
+| **Foundations** | `ThemeProvider` · `createTheme` · `Text` (9-step type scale) · `Icon` · `LinearGradient` / `RadialGlow` |
+| **Buttons & actions** | `Button` · `IconButton` · `Chip` · `Kbd` |
+| **Text & input** | `TextField` · `SearchField` · `LinkField` |
+| **Status & messages** | `StatusPill` · `StatusDot` · `CountBadge` · `ProgressBar` · `Tooltip` · `Dialog` · `EmptyState` · `DangerZone` |
+| **People** | `Avatar` · `PeerChip` |
+| **Files & sharing** | `Thumbnail` · `MediaTile` · `FileViews` · `Masonry` · `FileHeader` · `ShareRow` · `ShareLinkCard` · `TransferCard` · `QRCode` · `KeyValueList` |
+| **Media** | `Transport` · `Scrubber` · `Waveform` · `Filmstrip` · `TrimStrip` · `MediaPlayer` · `MediaNotice` |
+| **Conversation** | `SocialBar` · `CommentBox` · `CommentThread` |
+| **App frame** | `AppWindow` / `Pane` / `PaneBody` · `Sidebar` · `Toolbar` · `PaneHeader` · `FolderTabs` · `WindowControls` · `DragRegion` · `ResizeHandle` · `Card` · `Divider` · `SectionLabel` · `Spacer` |
+| **App tools** | `DebugNotesButton` · `UpdateNotice` · `NetworkStatusCard` |
+| **Layouts** | Full desktop and mobile PearDrop screens, built only from the pieces above |
+
+Where a new piece goes, and the rules that keep app imports from breaking: [AGENTS.md](AGENTS.md).
 
 Full API: [docs/components.md](docs/components.md).
 

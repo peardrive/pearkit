@@ -4,7 +4,7 @@ import { Card } from './Card';
 import { Text } from '../Text/Text';
 
 const meta: Meta<typeof Card> = {
-  title: 'Components/Card',
+  title: 'App frame/Card',
   component: Card,
   parameters: { docs: { description: { component: 'Translucent grouping surface. `md` for detail panels (16px padding, 14px radius), `sm` for sidebar cards (12px / 12px). Because it tints with the `overlay` token, it adapts to any background and theme.' } } },
   argTypes: { size: { control: 'inline-radio', options: ['sm', 'md'] }, variant: { control: 'inline-radio', options: ['surface', 'outline', 'plain'] } },

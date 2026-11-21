@@ -6,7 +6,7 @@ import { Text } from '../Text/Text';
 import { Showcase, Column } from '../../stories/helpers';
 
 const meta: Meta<typeof WindowControls> = {
-  title: 'Components/WindowControls',
+  title: 'App frame/WindowControls',
   component: WindowControls,
   parameters: {
     docs: {

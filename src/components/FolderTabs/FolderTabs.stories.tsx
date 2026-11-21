@@ -13,7 +13,7 @@ const PAGES: FolderTab[] = [
 ];
 
 const meta: Meta<typeof FolderTabs> = {
-  title: 'Components/FolderTabs',
+  title: 'App frame/FolderTabs',
   component: FolderTabs,
   parameters: {
     docs: {

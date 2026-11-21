@@ -19,7 +19,7 @@ import { Text } from '../Text/Text';
 import { SidebarSurface } from '../../stories/helpers';
 
 const meta: Meta<typeof Sidebar> = {
-  title: 'Components/Sidebar',
+  title: 'App frame/Sidebar',
   component: Sidebar,
   subcomponents: { SidebarHeader, SidebarSection, SidebarItem, SidebarContent, SidebarFooter, SidebarToggle } as never,
   parameters: {

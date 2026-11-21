@@ -10,7 +10,7 @@ import { Button } from '../Button/Button';
 import { Showcase, Column } from '../../stories/helpers';
 
 const meta: Meta<typeof OrderTile> = {
-  title: 'Components/OrderTile',
+  title: 'Files & sharing/OrderTile',
   component: OrderTile,
   parameters: { docs: { description: { component: 'Choosing things in order. A tap gives a tile the next number (1, 2, 3) in place of a check mark; a tap on a chosen tile lets it go and the ones after it move up. Number 1 leads: the main picture or video of a post. `useOrderedSelection` holds the order, `OrderBadge` is the number alone, and the rule itself is in `utils/order` for pages that are not React.' } } },
 };
