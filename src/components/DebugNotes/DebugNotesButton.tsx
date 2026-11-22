@@ -3,6 +3,8 @@ import { Platform, Pressable, View, type StyleProp, type ViewStyle } from 'react
 import { cn } from '../../utils/cn';
 import { Icon } from '../../icons/Icon';
 import { Text } from '../Text/Text';
+import { StatusDot } from '../Status/StatusDot';
+import { networkStateMeta, type NetworkState } from '../NetworkStatus/NetworkStatusCard';
 import type { DebugNotes, StoppedNote } from '../../debug';
 
 /* ───────────────────────── useDebugNotes ───────────────────────── */
@@ -109,6 +111,14 @@ export interface DebugNotesButtonProps {
   onIdleClick?: () => void | Promise<void>;
   /** The note was stopped and saved. */
   onStopped?: (saved: StoppedNote | null) => void;
+  /**
+   * Whether the device that reads the notes (the Mac pulling a phone's notes) is connected right now: a small dot
+   * at the button's corner, green and glowing when it is, grey when not, amber and breathing while connecting.
+   * Omit it when nothing is known.
+   */
+  connection?: NetworkState;
+  /** Words for the dot (screen readers, tooltips). Default: "Connected" / "Connecting…" / "Offline". */
+  connectionLabel?: string;
   size?: 'sm' | 'md';
   className?: string;
   style?: StyleProp<ViewStyle>;
@@ -128,7 +138,7 @@ const clock = (s: number) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60))
  * pearcast's title-bar button (hairline ring idle, red ring and glow recording);
  * `variant="compact"` is the same button reduced to the mic and the indicator.
  */
-export function DebugNotesButton({ notes, variant = 'expanded', label = 'Debug notes', onIdleClick, onStopped, size = 'sm', className, style }: DebugNotesButtonProps) {
+export function DebugNotesButton({ notes, variant = 'expanded', label = 'Debug notes', onIdleClick, onStopped, connection, connectionLabel, size = 'sm', className, style }: DebugNotesButtonProps) {
   const s = useDebugNotes(notes);
   const silent = s.active && !s.audio;
   const recording = s.active && !silent;
@@ -169,18 +179,19 @@ export function DebugNotesButton({ notes, variant = 'expanded', label = 'Debug n
     : 'Record a debug note: talk, and keep using the app';
   const box = compact ? (size === 'md' ? 'h-8 w-8 justify-center' : 'h-7 w-7 justify-center') : size === 'md' ? 'h-8 pl-2.5 pr-3' : 'h-7 pl-2 pr-2.5';
   const barMax = compact ? 8 : 15;
+  const link = connection ? (connectionLabel ?? networkStateMeta[connection].label) : null;
 
   return (
     <Pressable
       accessibilityRole="button"
-      accessibilityLabel={s.stopping ? 'Saving the debug note' : s.active ? `Stop the debug note (${clock(s.seconds)}, ${s.steps} steps)` : 'Start a debug note'}
+      accessibilityLabel={`${s.stopping ? 'Saving the debug note' : s.active ? `Stop the debug note (${clock(s.seconds)}, ${s.steps} steps)` : 'Start a debug note'}${link ? ` · ${link}` : ''}`}
       accessibilityHint={hint}
       accessibilityState={{ selected: s.active, busy: s.stopping }}
       onPress={press}
       onHoverIn={() => setHovered(true)}
       onHoverOut={() => setHovered(false)}
       className={cn(
-        'flex-row items-center gap-1.5 self-start rounded-full border',
+        'relative flex-row items-center gap-1.5 self-start rounded-full border',
         box,
         Platform.OS === 'web' && 'cursor-pointer select-none app-region-no-drag',
         !s.active && 'border-overlay/[0.08] bg-overlay/[0.06] hover:bg-overlay/10 active:bg-overlay/[0.14]',
@@ -215,6 +226,11 @@ export function DebugNotesButton({ notes, variant = 'expanded', label = 'Debug n
           {label}
         </Text>
       )}
+      {connection ? (
+        <View className="absolute -bottom-px -right-px rounded-full border border-pane bg-pane p-px" accessibilityElementsHidden importantForAccessibility="no-hide-descendants" {...({ dataSet: { connection } } as object)}>
+          <StatusDot tone={networkStateMeta[connection].tone} size={6} glow={connection === 'connected'} pulse={connection === 'connecting'} />
+        </View>
+      ) : null}
     </Pressable>
   );
 }
