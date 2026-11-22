@@ -60,3 +60,14 @@ export function dayLabel(ts: number, now: number = Date.now()): string {
 export function quotedMessages(message: ChatMessage, byId: ReadonlyMap<string, ChatMessage>): ChatMessage[] {
   return (message.re ?? []).map((id) => byId.get(id)).filter((m): m is ChatMessage => !!m);
 }
+
+/**
+ * Where the list should be scrolled to after its box changed height (the keyboard came up or went away, a pane
+ * was resized), so that what sits against the bottom edge stays there: the view slides as one piece, the top
+ * goes off the screen, the reading place is kept. Clamped to the scrollable range. `scrollY` is the offset
+ * before the change, `contentHeight` the content's full height.
+ */
+export function anchoredScrollY(scrollY: number, oldHeight: number, newHeight: number, contentHeight: number): number {
+  const max = Math.max(0, contentHeight - newHeight);
+  return Math.min(max, Math.max(0, scrollY + (oldHeight - newHeight)));
+}

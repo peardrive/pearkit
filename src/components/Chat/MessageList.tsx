@@ -3,7 +3,7 @@ import { ActivityIndicator, ScrollView, View, type StyleProp, type ViewStyle } f
 import { cn } from '../../utils/cn';
 import { useTheme } from '../../theme/ThemeProvider';
 import { Text } from '../Text/Text';
-import { dayLabel, placeOf, quotedMessages } from './chatLogic';
+import { anchoredScrollY, dayLabel, placeOf, quotedMessages } from './chatLogic';
 import { MessageRow, type ChatLook } from './MessageRow';
 import type { ChatAttachment, ChatMessage } from './types';
 
@@ -88,6 +88,8 @@ export function MessageList({
   const atEnd = useRef(true);
   const scrollY = useRef(0);
   const contentHeight = useRef(0);
+  /** The box's own height, to keep the bottom edge anchored when it changes (the keyboard, a resized pane). */
+  const boxHeight = useRef(0);
   const reachedTop = useRef(false);
   /** Where we were before older messages were put in front, to go back there once the new height is known. */
   const prepended = useRef<{ y: number; height: number } | null>(null);
@@ -147,8 +149,20 @@ export function MessageList({
       ref={scroller}
       className={cn('flex-1', className)}
       style={style}
-      contentContainerStyle={{ padding: pad, paddingBottom: 6, flexGrow: 1, justifyContent: 'flex-end' }}
+      contentContainerStyle={{ padding: pad, paddingBottom: 4, flexGrow: 1, justifyContent: 'flex-end' }}
+      accessibilityLabel="Messages"
       scrollEventThrottle={50}
+      onLayout={(e) => {
+        // The box changed height (the keyboard came up or went away, a pane was resized): the whole conversation
+        // slides as one piece so what sat against the bottom edge stays there; nobody loses their place.
+        const h = e.nativeEvent.layout.height;
+        const was = boxHeight.current;
+        boxHeight.current = h;
+        if (!was || was === h) return;
+        const y = anchoredScrollY(scrollY.current, was, h, contentHeight.current);
+        scrollY.current = y;
+        scroller.current?.scrollTo({ y, animated: false });
+      }}
       onScroll={(e) => {
         const n = e.nativeEvent;
         scrollY.current = n.contentOffset.y;
