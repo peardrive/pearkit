@@ -17,7 +17,7 @@ export interface MessageListProps {
   onReact?: (id: string, emoji: string) => void;
   onReply?: (id: string) => void;
   onOpenAttachment?: (attachment: ChatAttachment, message: ChatMessage) => void;
-  /** Draw a message yourself; `MessageRow` draws the rest. */
+  /** Draw a message yourself (a card for an agent's ask, say); return null or undefined and `MessageRow` draws it as usual. */
   renderMessage?: (message: ChatMessage) => ReactNode;
   /** Shown while there are no messages, filling the pane. */
   emptyState?: ReactNode;
@@ -198,6 +198,7 @@ export function MessageList({
       {header}
       {messages.map((m, i) => {
         const { first, last: lastOfGroup, newDay } = placeOf(messages, i);
+        const custom = renderMessage?.(m); // null or undefined: the app leaves this one to MessageRow
         return (
           <React.Fragment key={m.id}>
             {showDays && newDay ? (
@@ -209,8 +210,8 @@ export function MessageList({
                 <View className="h-px flex-1 bg-overlay/[0.08]" />
               </View>
             ) : null}
-            {renderMessage ? (
-              renderMessage(m)
+            {custom != null ? (
+              custom
             ) : (
               <MessageRow
                 message={m}
