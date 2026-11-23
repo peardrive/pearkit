@@ -146,7 +146,8 @@ export function MessageList({
     );
   }
 
-  const pad = compact ? 10 : 14;
+  // the list's margin: thin, so the words reach near the edges of a phone (2026-11-23, "fit more")
+  const pad = compact ? 6 : 8;
   return (
     <ScrollView
       ref={scroller}

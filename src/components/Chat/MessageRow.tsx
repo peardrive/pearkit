@@ -119,7 +119,7 @@ export function MessageRow({
   };
 
   const content = (
-    <View ref={body} className={cn(bubbles ? 'max-w-[86%]' : 'min-w-0 flex-1', right ? 'items-end' : 'items-start')}>
+    <View ref={body} className={cn(bubbles ? 'max-w-[92%]' : 'min-w-0 flex-1', right ? 'items-end' : 'items-start')}>
       {onReplyToSelection && !m.redacted ? <SelectionReply containerRef={body} onReply={(text) => onReplyToSelection(m, text)} /> : null}
       {first && !right ? (
         <View className="flex-row items-baseline gap-2 pb-0.5">
@@ -142,7 +142,7 @@ export function MessageRow({
         accessibilityLabel={hasActions ? `${m.author.name}: ${text}. Actions` : undefined}
         accessibilityState={{ expanded: open }}
         className={cn(
-          bubbles && (compact ? 'px-3 py-1.5' : 'px-3.5 py-[7px]'),
+          bubbles && (compact ? 'px-2.5 py-1.5' : 'px-3 py-[7px]'),
           // Like Messages: mine in the brand tint, everyone else on a quiet overlay; no edges.
           bubbles && (mine ? 'bg-primary/[0.28]' : 'bg-overlay/[0.06]'),
           web && hasActions && 'cursor-default',

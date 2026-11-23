@@ -33,17 +33,18 @@ module.exports = {
       fontFamily: {
         sans: ['"Plus Jakarta Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
-      // Type scale lifted from the PearDrop Figma file.
+      // Type scale lifted from the PearDrop Figma file, one point up across the board (2026-11-23: on a phone
+      // the Figma sizes read cramped; Guy asked for "all the font a little bigger").
       fontSize: {
-        overline: ['10.5px', { letterSpacing: '0.84px' }], // section labels (LIBRARY, DETAILS)
-        micro: '11px', // pills, timestamps
-        caption: '11.5px', // secondary lines
-        label: '12px', // meta, key/value rows
-        'body-sm': '12.5px', // small buttons, search
-        body: '13px', // nav items, buttons
-        'body-lg': '13.5px', // row titles, card titles
-        title: '18px', // pane titles
-        display: '21px', // detail hero
+        overline: ['11px', { letterSpacing: '0.84px' }], // section labels (LIBRARY, DETAILS)
+        micro: '12px', // pills, timestamps
+        caption: '12.5px', // secondary lines
+        label: '13px', // meta, key/value rows
+        'body-sm': '13.5px', // small buttons, search
+        body: '14px', // nav items, buttons
+        'body-lg': '14.5px', // row titles, card titles
+        title: '19px', // pane titles
+        display: '22px', // detail hero
       },
       borderRadius: {
         xs: '5px',
