@@ -142,6 +142,9 @@ export function MessageRow({
         accessibilityLabel={hasActions ? `${m.author.name}: ${text}. Actions` : undefined}
         accessibilityState={{ expanded: open }}
         className={cn(
+          // A word with no spaces (a pasted link, a hash) sets a flex item's minimum width, so without this cap the
+          // bubble grows to the word and runs off the screen (2026-11-23: a pearcore:// link on a phone).
+          'max-w-full',
           bubbles && (compact ? 'px-2.5 py-1.5' : 'px-3 py-[7px]'),
           // Like Messages: mine in the brand tint, everyone else on a quiet overlay; no edges.
           bubbles && (mine ? 'bg-primary/[0.28]' : 'bg-overlay/[0.06]'),

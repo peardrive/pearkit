@@ -50,3 +50,40 @@ export function askOutcomeLine(status: AskStatus, answer: AskAnswer | null | und
   if (status === 'lapsed') return 'nobody answered in time: refused';
   return '';
 }
+
+/** One ask as the folded block lists it: the tool, what it would do, and where it stands. */
+export interface FoldedAsk {
+  id: string;
+  tool: string;
+  what: string;
+  status: AskStatus;
+  /** Who answered, when someone did. */
+  by?: string | null;
+}
+
+/** How many of the folded asks ended each way. */
+export function askFoldCounts(asks: FoldedAsk[]): Record<AskStatus, number> {
+  const c: Record<AskStatus, number> = { open: 0, allowed: 0, refused: 0, lapsed: 0 };
+  for (const a of asks) c[a.status]++;
+  return c;
+}
+
+const plural = (n: number, word: string) => `${n} ${word}${n === 1 ? '' : 's'}`;
+
+/**
+ * The one line a stretch of asked permissions folds into: "asked for 3 permissions · 3 allowed", with the
+ * refusals and lapses when there were any, and the steps around them ("· 8 steps") when there were.
+ */
+export function askFoldLine(asks: FoldedAsk[], steps = 0): string {
+  const c = askFoldCounts(asks);
+  const parts: string[] = [];
+  if (asks.length === 1) parts.push(`asked for ${asks[0].tool}: ${asks[0].what}`, c.allowed ? 'allowed' : c.refused ? 'refused' : c.lapsed ? 'lapsed' : 'open');
+  else {
+    parts.push(`asked for ${plural(asks.length, 'permission')}`);
+    if (c.allowed) parts.push(`${c.allowed} allowed`);
+    if (c.refused) parts.push(`${c.refused} refused`);
+    if (c.lapsed) parts.push(`${c.lapsed} lapsed`);
+  }
+  if (steps) parts.push(plural(steps, 'step'));
+  return parts.join(' · ');
+}

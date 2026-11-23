@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { askOutcomeLine, askStatus, askTimeLeft, choiceWords } from './askLogic';
+import { askFoldCounts, askFoldLine, askOutcomeLine, askStatus, askTimeLeft, choiceWords, type FoldedAsk } from './askLogic';
 
 const NOW = 1_700_000_000_000;
 
@@ -30,5 +30,21 @@ describe('an agent asking a person', () => {
     expect(askOutcomeLine('refused', { choice: 'reject_once', by: 'guy', ts: NOW })).toBe('refused by guy');
     expect(askOutcomeLine('lapsed', null)).toBe('nobody answered in time: refused');
     expect(askOutcomeLine('open', null)).toBe('');
+  });
+});
+
+describe('the block the asks of one stretch fold into', () => {
+  const a = (id: string, status: FoldedAsk['status'], what = `cmd ${id}`): FoldedAsk => ({ id, tool: 'Bash', what, status, by: status === 'allowed' || status === 'refused' ? 'guy' : null });
+
+  it('names one ask and its outcome', () => {
+    expect(askFoldLine([a('1', 'allowed', 'npm test')])).toBe('asked for Bash: npm test · allowed');
+    expect(askFoldLine([a('1', 'refused')], 4)).toBe('asked for Bash: cmd 1 · refused · 4 steps');
+    expect(askFoldLine([a('1', 'lapsed')])).toBe('asked for Bash: cmd 1 · lapsed');
+  });
+
+  it('counts several, saying only what happened', () => {
+    expect(askFoldLine([a('1', 'allowed'), a('2', 'allowed'), a('3', 'allowed')], 8)).toBe('asked for 3 permissions · 3 allowed · 8 steps');
+    expect(askFoldLine([a('1', 'allowed'), a('2', 'refused'), a('3', 'lapsed')])).toBe('asked for 3 permissions · 1 allowed · 1 refused · 1 lapsed');
+    expect(askFoldCounts([a('1', 'allowed'), a('2', 'refused')])).toEqual({ open: 0, allowed: 1, refused: 1, lapsed: 0 });
   });
 });
