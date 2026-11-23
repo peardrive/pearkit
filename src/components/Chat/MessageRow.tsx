@@ -14,7 +14,7 @@ import { MarkdownText } from '../MarkdownText/MarkdownText';
 import { fileKindFromName, fileKindMeta, type FileKind } from '../Thumbnail/Thumbnail';
 import { AgentMark } from './AgentMark';
 import { messageTime } from './chatLogic';
-import { QUICK_REACTIONS, type ChatAttachment, type ChatMessage } from './types';
+import { QUICK_REACTIONS, type ChatAttachment, type ChatAuthor, type ChatMessage } from './types';
 
 export type ChatLook = 'bubbles' | 'flat';
 
@@ -53,6 +53,8 @@ export interface MessageRowProps {
   onMore?: (message: ChatMessage) => void;
   /** Words were selected inside the message and "Reply to this" pressed (web): answer quoting only those words. */
   onReplyToSelection?: (message: ChatMessage, text: string) => void;
+  /** The author's avatar or name was pressed: open their profile (a bot's settings, a person's devices). */
+  onAuthorPress?: (author: ChatAuthor) => void;
   className?: string;
   style?: StyleProp<ViewStyle>;
 }
@@ -83,6 +85,7 @@ export function MessageRow({
   quickReactions = QUICK_REACTIONS,
   onMore,
   onReplyToSelection,
+  onAuthorPress,
   className,
   style,
 }: MessageRowProps) {
@@ -120,9 +123,11 @@ export function MessageRow({
       {onReplyToSelection && !m.redacted ? <SelectionReply containerRef={body} onReply={(text) => onReplyToSelection(m, text)} /> : null}
       {first && !right ? (
         <View className="flex-row items-baseline gap-2 pb-0.5">
-          <Text variant="caption" weight="semibold" tone={m.author.agent ? 'primary-text' : 'foreground'}>
-            {m.author.name}
-          </Text>
+          <Pressable onPress={onAuthorPress ? () => onAuthorPress(m.author) : undefined} disabled={!onAuthorPress} accessibilityRole={onAuthorPress ? 'button' : undefined} accessibilityLabel={onAuthorPress ? `${m.author.name}'s profile` : undefined}>
+            <Text variant="caption" weight="semibold" tone={m.author.agent ? 'primary-text' : 'foreground'}>
+              {m.author.name}
+            </Text>
+          </Pressable>
           {!bubbles && showTime ? (
             <Text variant="micro" tone="subtle">
               {messageTime(m.ts)}
@@ -269,11 +274,16 @@ export function MessageRow({
       {!right ? (
         <View style={{ width: avatar }}>
           {first ? (
-            m.author.agent ? (
-              <AgentMark size={avatar} />
-            ) : (
-              <Avatar seed={m.author.id} size={avatar} label={m.author.name.slice(0, 1)} accessibilityLabel={m.author.name} />
-            )
+            // the picture opens the profile: a bot's settings, a person's devices
+            <Pressable
+              onPress={onAuthorPress ? () => onAuthorPress(m.author) : undefined}
+              disabled={!onAuthorPress}
+              hitSlop={6}
+              accessibilityRole={onAuthorPress ? 'button' : undefined}
+              accessibilityLabel={onAuthorPress ? `Open ${m.author.name}'s profile` : m.author.name}
+            >
+              {m.author.agent ? <AgentMark size={avatar} /> : <Avatar seed={m.author.id} size={avatar} label={m.author.name.slice(0, 1)} accessibilityLabel={m.author.name} />}
+            </Pressable>
           ) : null}
         </View>
       ) : null}

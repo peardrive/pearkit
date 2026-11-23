@@ -5,7 +5,7 @@ import { useTheme } from '../../theme/ThemeProvider';
 import { Text } from '../Text/Text';
 import { anchoredScrollY, dayLabel, placeOf, quotedMessages } from './chatLogic';
 import { MessageRow, type ChatLook } from './MessageRow';
-import type { ChatAttachment, ChatMessage } from './types';
+import type { ChatAttachment, ChatAuthor, ChatMessage } from './types';
 
 /** How close to the top (px) counts as reaching it. */
 export const REACH_TOP_PX = 80;
@@ -39,6 +39,8 @@ export interface MessageListProps {
   onMore?: (message: ChatMessage) => void;
   /** Words were selected inside a message and "Reply to this" pressed (web): answer quoting only those words. */
   onReplyToSelection?: (message: ChatMessage, text: string) => void;
+  /** An author's avatar or name was pressed: open their profile. */
+  onAuthorPress?: (author: ChatAuthor) => void;
   /** Above the first message, inside the scroll (the start of the conversation, a "load more" button). */
   header?: ReactNode;
   /**
@@ -76,6 +78,7 @@ export function MessageList({
   quickReactions,
   onMore,
   onReplyToSelection,
+  onAuthorPress,
   header,
   onReachTop,
   loadingOlder,
@@ -230,6 +233,7 @@ export function MessageList({
                 quickReactions={quickReactions}
                 onMore={onMore}
                 onReplyToSelection={onReplyToSelection}
+                onAuthorPress={onAuthorPress}
               />
             )}
           </React.Fragment>
