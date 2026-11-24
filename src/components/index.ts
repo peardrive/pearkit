@@ -18,6 +18,7 @@ export * from './Thumbnail/Thumbnail';
 export * from './Avatar/Avatar';
 export * from './PeerChip/PeerChip';
 export * from './QRCode/QRCode';
+export * from './QRScanner/QRScanner';
 export * from './LinkField/LinkField';
 export * from './KeyValueList/KeyValueList';
 export * from './EmptyState/EmptyState';

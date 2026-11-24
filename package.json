@@ -1,7 +1,7 @@
 {
   "name": "pearkit",
   "version": "0.2.0",
-  "description": "Universal, themeable UI kit for PearDrive apps — one set of React components for React Native and Electron, styled with Tailwind (NativeWind).",
+  "description": "Universal, themeable UI kit for PearDrive apps \u2014 one set of React components for React Native and Electron, styled with Tailwind (NativeWind).",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
   "types": "./lib/typescript/commonjs/index.d.ts",
@@ -64,13 +64,17 @@
     "react-native": ">=0.76",
     "react-native-svg": ">=15",
     "react-native-web": ">=0.19",
-    "tailwindcss": "^3.4.0"
+    "tailwindcss": "^3.4.0",
+    "expo-camera": ">=16"
   },
   "peerDependenciesMeta": {
     "react-native-web": {
       "optional": true
     },
     "@vitejs/plugin-react": {
+      "optional": true
+    },
+    "expo-camera": {
       "optional": true
     }
   },
