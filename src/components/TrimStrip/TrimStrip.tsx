@@ -1,10 +1,6 @@
 import React from 'react';
 import type { StyleProp, ViewStyle } from 'react-native';
-<<<<<<< HEAD
 import { Scrubber, type ScrubberLook } from '../Scrubber/Scrubber';
-=======
-import { Scrubber } from '../Scrubber/Scrubber';
->>>>>>> feat/38-dock-controls
 import type { TimeRange } from '../Scrubber/timeRange';
 import { Waveform } from '../Waveform/Waveform';
 import type { WaveformSource } from '../Waveform/waveformBars';
@@ -32,11 +28,8 @@ export interface TrimStripProps {
   compact?: boolean;
   /** The shortest allowed range, seconds. Default 0.1. */
   minGap?: number;
-<<<<<<< HEAD
   /** How the chosen part is drawn: the clip frame (default) or the older in/out pins. */
   look?: ScrubberLook;
-=======
->>>>>>> feat/38-dock-controls
   disabled?: boolean;
   accessibilityLabel?: string;
   className?: string;
@@ -45,14 +38,9 @@ export interface TrimStripProps {
 
 /**
  * A clip, miniaturised: its frames edge to edge with the sound along the bottom (or the whole height
-<<<<<<< HEAD
  * of waveform for audio), the chosen part framed as a timeline frames a selected clip (the selection
  * colour, a bar inside each end), everything outside it dimmed, the playhead over it. Drag either
  * end of the frame to trim, drag anywhere else to scrub.
-=======
- * of waveform for audio), the chosen part lit with a light edge and a pin at each end, everything
- * outside it dimmed, the playhead over it. Drag a pin's ball to trim, drag anywhere else to scrub.
->>>>>>> feat/38-dock-controls
  */
 export function TrimStrip({
   duration,
@@ -65,10 +53,7 @@ export function TrimStrip({
   height,
   compact = false,
   minGap,
-<<<<<<< HEAD
   look = 'clip',
-=======
->>>>>>> feat/38-dock-controls
   disabled,
   accessibilityLabel = 'Trim',
   className,
@@ -87,15 +72,10 @@ export function TrimStrip({
       minGap={minGap}
       height={h}
       pins
-<<<<<<< HEAD
       look={look}
       dimOutside
       frame
       emboss={false}
-=======
-      dimOutside
-      frame
->>>>>>> feat/38-dock-controls
       disabled={disabled}
       trackClassName={compact ? 'bg-inset/[0.35]' : 'bg-inset/[0.55]'}
       accessibilityLabel={accessibilityLabel}

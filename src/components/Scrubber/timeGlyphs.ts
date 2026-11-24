@@ -2,7 +2,6 @@
  * The two time glyphs, as numbers and as canvas painters.
  *
  *  - the playhead: a line with a little house on top ("the universal playhead")
-<<<<<<< HEAD
  *  - the clip frame: the chosen part outlined the way a timeline outlines a selected clip — a 2px
  *    rounded frame in the selection colour with a short bar inside each end; the ends are what you
  *    drag to trim (the one trim look, everywhere a clip is chosen or stretched)
@@ -11,12 +10,6 @@
  * `<Playhead/>`, `<ClipFrame/>` and `<InOutPin/>` (Glyphs.tsx) draw these with React Native views; a
  * canvas surface such as a timeline calls `paintPlayhead` / `paintClipFrame` / `paintInOutPin` and gets
  * the exact same shape.
-=======
- *  - the in/out pin: a line with a ball under the strip — the ball is what you grab
- *
- * `<Playhead/>` and `<InOutPin/>` (Glyphs.tsx) draw these with React Native views; a canvas surface
- * such as a timeline calls `paintPlayhead` / `paintInOutPin` and gets the exact same shape.
->>>>>>> feat/38-dock-controls
  */
 
 /** The subset of a 2D canvas context the painters use; a `CanvasRenderingContext2D` satisfies it. */
@@ -65,7 +58,6 @@ export const PIN = {
 /** Space to leave under a strip so the pins' balls have room. */
 export const PIN_PAD = 8;
 
-<<<<<<< HEAD
 export const CLIP = {
   /** Width of the frame's line. */
   lineWidth: 2,
@@ -84,8 +76,6 @@ export const CLIP = {
 /** The bar's height for a strip of this height: the full bar when there is room, else what fits. */
 export const clipBarHeight = (height: number) => Math.max(4, Math.min(CLIP.barHeight, height - 6));
 
-=======
->>>>>>> feat/38-dock-controls
 /** The house's size: its width, its full height, and where its walls end and its point begins. */
 export interface PlayheadCap {
   width: number;
@@ -167,7 +157,6 @@ export function paintInOutPin(ctx: Canvas2D, { x, top, height, color, outline, l
   }
 }
 
-<<<<<<< HEAD
 export interface PaintClipFrameOptions {
   /** Left edge of the chosen part. */
   x: number;
@@ -200,8 +189,6 @@ export function paintClipFrame(ctx: Canvas2D, { x, top, width, height, color, li
   }
 }
 
-=======
->>>>>>> feat/38-dock-controls
 /** Centre of a pin's ball, relative to the strip's top. */
 export const pinBallCenterY = (height: number) => height + PIN.drop + PIN.ballRadius / 2;
 

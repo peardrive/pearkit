@@ -4,11 +4,7 @@ import Svg, { Path } from 'react-native-svg';
 import { cn } from '../../utils/cn';
 import { useTheme } from '../../theme/ThemeProvider';
 import type { ColorToken } from '../../theme/tokens';
-<<<<<<< HEAD
 import { CLIP, PIN, PLAYHEAD, clipBarHeight, pinBallCenterY, playheadCapPath } from './timeGlyphs';
-=======
-import { PIN, PLAYHEAD, pinBallCenterY, playheadCapPath } from './timeGlyphs';
->>>>>>> feat/38-dock-controls
 
 export interface PlayheadProps {
   /** Horizontal position in the parent, px. */
@@ -45,7 +41,6 @@ export function Playhead({ x, height, tone = 'playhead', color, className, style
   );
 }
 
-<<<<<<< HEAD
 export interface ClipFrameProps {
   /** Left edge of the chosen part in the parent, px. */
   x: number;
@@ -108,8 +103,6 @@ export function ClipFrame({ x, width, height, lit, tone = 'selection', color, cl
   );
 }
 
-=======
->>>>>>> feat/38-dock-controls
 export interface InOutPinProps {
   /** Horizontal position in the parent, px. */
   x: number;

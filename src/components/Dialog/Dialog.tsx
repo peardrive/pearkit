@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Modal, Platform, Pressable, ScrollView, View, type StyleProp, type ViewStyle } from 'react-native';
 import { vars } from 'nativewind';
 import { cn } from '../../utils/cn';
@@ -7,7 +7,6 @@ import { themeToCssVariables } from '../../theme/createTheme';
 import { renderIcon, type IconSource } from '../../icons/Icon';
 import { IconButton } from '../IconButton/IconButton';
 import { Text } from '../Text/Text';
-import { DialogSubmitContext, enterPressesMain } from './enterKey';
 
 export interface DialogProps {
   open: boolean;
@@ -20,16 +19,6 @@ export interface DialogProps {
   children?: React.ReactNode;
   /** Footer buttons, right-aligned. */
   actions?: React.ReactNode;
-  /**
-   * The dialog's one main action ("go", "yes", "join"): the same function its main button calls. Enter
-   * presses it on web / Electron, from a field or from anywhere in the dialog; on a phone the keyboard's
-   * return key of a single-line `TextField` inside does. Leave it out when there is no single main action.
-   */
-  onSubmit?: () => void;
-  /** The main button is not live yet (nothing typed, still working): Enter does nothing. */
-  submitDisabled?: boolean;
-  /** The main action deletes, removes or leaves. Enter never does that: it takes a click or a tap. */
-  destructive?: boolean;
   /** Panel width in px. Default 420. */
   width?: number;
   /** Close on backdrop press. Default true. */
@@ -53,9 +42,6 @@ export function Dialog({
   icon,
   children,
   actions,
-  onSubmit,
-  submitDisabled,
-  destructive,
   width = 420,
   dismissable = true,
   hideCloseButton,
@@ -65,34 +51,13 @@ export function Dialog({
   const theme = useTheme();
   const themeVars = useMemo(() => vars(themeToCssVariables(theme)), [theme]);
 
-  const panel = useRef<React.ComponentRef<typeof View>>(null);
-  // Enter never presses a delete, and nothing while the main button is not live. A key held down, or
-  // pressed twice in a moment, presses it once.
-  const live = !!onSubmit && !destructive && !submitDisabled;
-  const main = useRef(onSubmit);
-  main.current = onSubmit;
-  const lastAt = useRef(0);
-  const once = useCallback(() => {
-    const now = Date.now();
-    if (now - lastAt.current < 600) return;
-    lastAt.current = now;
-    main.current?.();
-  }, []);
-  const submit = live ? once : null;
-
-  // On web / Electron: Escape closes, Enter presses the main action (the rule is in enterKey.ts). Enter
-  // typed in a field does not arrive here; a single-line TextField presses the main action itself.
+  // Escape closes on web / Electron.
   useEffect(() => {
-    if (!open || Platform.OS !== 'web' || typeof window === 'undefined' || (!onClose && !submit)) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') { onClose?.(); return; }
-      if (!submit || !enterPressesMain(e, panel.current as unknown as { contains: (node: never) => boolean } | null)) return;
-      e.preventDefault();
-      submit();
-    };
+    if (!open || Platform.OS !== 'web' || typeof window === 'undefined' || !onClose) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [open, onClose, submit]);
+  }, [open, onClose]);
 
   return (
     <Modal visible={open} transparent animationType="fade" onRequestClose={onClose}>
@@ -105,7 +70,6 @@ export function Dialog({
           focusable={false}
         />
         <View
-          ref={panel}
           accessibilityRole={Platform.OS === 'web' ? ('dialog' as never) : undefined}
           aria-modal
           aria-label={title}
@@ -127,10 +91,8 @@ export function Dialog({
                 {onClose && !hideCloseButton ? <IconButton icon="close" size="sm" accessibilityLabel="Close" onPress={onClose} className="-mr-1.5 -mt-1" /> : null}
               </View>
             ) : null}
-            <DialogSubmitContext.Provider value={submit}>
-              {children}
-              {actions ? <View className="flex-row justify-end gap-2 pt-1">{actions}</View> : null}
-            </DialogSubmitContext.Provider>
+            {children}
+            {actions ? <View className="flex-row justify-end gap-2 pt-1">{actions}</View> : null}
           </ScrollView>
         </View>
       </View>

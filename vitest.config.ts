@@ -14,8 +14,6 @@ const dirname =
 export default defineConfig({
   test: {
     projects: [
-      // The rules that need no screen: plain files, run in Node.
-      { extends: true, test: { name: 'unit', environment: 'node', include: ['src/**/*.test.ts'] } },
       {
         extends: true,
         plugins: [

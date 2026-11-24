@@ -2,8 +2,6 @@
   <img src="docs/assets/header.png" alt="pearkit: primitives nest into patterns, patterns into full layouts" width="100%" />
 </p>
 
-<p align="center"><img src="docs/assets/icon.png" alt="The Pearkit icon" width="112" /></p>
-
 <h1 align="center">pearkit</h1>
 
 <p align="center">
@@ -79,8 +77,8 @@ Then follow the guide for your platform:
 
 | Layer | Components |
 | --- | --- |
-| **Foundations** | `ThemeProvider` · `createTheme` · `Text` (9-step type scale) · `Icon` (39 icons, 22 exported from the Figma file) · `LinearGradient` / `RadialGlow` |
-| **Components** | `Button` · `IconButton` · `Tooltip` · `StatusPill` · `StatusDot` · `CountBadge` · `ProgressBar` · `SearchField` · `Thumbnail` · `Avatar` · `PeerChip` · `QRCode` · `LinkField` · `KeyValueList` · `EmptyState` · `MediaNotice` · `TextField` · `Dialog` · `Card` · `Divider` · `Kbd` · `SectionLabel` · `Spacer` |
+| **Foundations** | `ThemeProvider` · `createTheme` · `Text` (9-step type scale) · `Icon` (37 icons, 22 exported from the Figma file) · `LinearGradient` / `RadialGlow` |
+| **Components** | `Button` · `IconButton` · `Tooltip` · `StatusPill` · `StatusDot` · `CountBadge` · `ProgressBar` · `SearchField` · `Thumbnail` · `Avatar` · `PeerChip` · `QRCode` · `LinkField` · `KeyValueList` · `EmptyState` · `TextField` · `Dialog` · `Card` · `Divider` · `Kbd` · `SectionLabel` · `Spacer` |
 | **App chrome** | `WindowControls` · `DragRegion` · `Sidebar` (resizable, collapsible) · `Toolbar` · `PaneHeader` · `AppWindow` / `Pane` / `PaneBody` |
 | **PearDrop patterns** | `ShareRow` · `FileHeader` · `TransferCard` · `ShareLinkCard` · `NetworkStatusCard` · `DangerZone` |
 | **Layouts** | Full desktop and mobile PearDrop screens, built only from the components above |
