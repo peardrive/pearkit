@@ -26,6 +26,11 @@ export * from './MediaNotice/MediaNotice';
 export * from './Gradient/LinearGradient';
 export * from './ResizeHandle/ResizeHandle';
 
+// Capture: what a recording app's dock is made of
+export * from './LevelMeter/LevelMeter';
+export * from './RecordButton/RecordButton';
+export * from './DeviceToggle/DeviceToggle';
+
 // App chrome & navigation
 export * from './WindowControls/WindowControls';
 export * from './Sidebar/Sidebar';
