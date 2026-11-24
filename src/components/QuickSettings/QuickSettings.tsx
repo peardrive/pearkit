@@ -62,7 +62,7 @@ export function QuickSettingsLine({ icon, name, detail, children, dim, className
       {icon ? renderIcon(icon, { size: 18, tone: 'icon' }) : null}
       <View className="flex-1">
         <Text variant="body-sm" weight="medium" numberOfLines={1}>{name}</Text>
-        {detail ? <Text variant="micro" tone="muted" numberOfLines={1}>{detail}</Text> : null}
+        {detail ? <Text variant="micro" tone="muted" numberOfLines={2}>{detail}</Text> : null}
       </View>
       <View className="flex-row items-center gap-2">{children}</View>
     </View>
