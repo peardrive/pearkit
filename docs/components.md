@@ -27,6 +27,8 @@ A map of everything pearkit exports. Storybook has full prop tables, controls an
 | `Avatar`, `PeerChip` | Deterministic gradient avatars; truncated peer keys. |
 | `QRCode` | Real QR generation, one SVG path, themeable colours. |
 | `QRScanner` | The camera as a QR reader (expo-camera, an optional peer): framed viewfinder, `accept`/`onScan`, close, title and description, a paste alternative; says so where there is no camera. |
+| `Switch` | On or off as a switch (`sm · md`): the track fills with the brand colour, the thumb slides; a state, not an action. |
+| `QuickSettings`, `QuickSettingsLine` | The small options box that pops up from a control: one line per setting (icon, name, detail, the control), a footer button to the full page; the host places and dismisses it. |
 | `LinkField` | Copyable recessed field with "copied" feedback. |
 | `KeyValueList`, `KeyValueRow` | Metadata lists, data-driven or composed. |
 | `EmptyState` | Icon, title, description, actions. |
