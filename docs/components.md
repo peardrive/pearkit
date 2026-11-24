@@ -17,7 +17,7 @@ A map of everything pearkit exports. Storybook has full prop tables, controls an
 | Component | Highlights |
 | --- | --- |
 | `Button` | `primary · secondary · subtle · ghost · danger`, `sm · md · lg`, leading/trailing icons, `fill`, `fullWidth`, `glow`, `loading`, icon-only. |
-| `IconButton` | `xs · sm · md · lg`, `ghost · subtle · solid`, `active`, built-in `tooltip`. |
+| `IconButton` | `xs · sm · md · lg · xl` (xl is a dock's 50px), `ghost · subtle · solid`, `active`, built-in `tooltip`. |
 | `Tooltip` | Label + shortcut, four placements, hover / long-press, controlled or `defaultOpen`. |
 | `StatusPill`, `StatusDot` | Seven tones; `status` presets via `shareStatusMeta`; dot `glow` and `pulse`. |
 | `CountBadge` | Quiet count or tinted pill, `max`, `hideZero`. |
