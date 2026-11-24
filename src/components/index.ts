@@ -83,6 +83,12 @@ export * from './SettingsBlock/SettingsBlock';
 export * from './ProfileCard/ProfileCard';
 export * from './HomeBlock/HomeBlock';
 
+// First-run setup: one step at a time, a few ways to do each, a standing notice for a step skipped
+export * from './Setup/setupLogic';
+export * from './Setup/SetupStep';
+export * from './Setup/ChoiceCard';
+export * from './Setup/CalloutBlock';
+
 export * from './Social/SocialBar';
 export * from './Social/CommentThread';
 export * from './Social/CommentBox';
