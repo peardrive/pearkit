@@ -17,13 +17,23 @@ export * from './SearchField/SearchField';
 export * from './Thumbnail/Thumbnail';
 export * from './Avatar/Avatar';
 export * from './PeerChip/PeerChip';
+export * from './Chip/Chip';
 export * from './QRCode/QRCode';
 export * from './QRScanner/QRScanner';
 export * from './LinkField/LinkField';
 export * from './KeyValueList/KeyValueList';
 export * from './EmptyState/EmptyState';
+export * from './MediaNotice/MediaNotice';
 export * from './Gradient/LinearGradient';
 export * from './ResizeHandle/ResizeHandle';
+<<<<<<< HEAD
+=======
+
+// Capture: what a recording app's dock is made of
+export * from './LevelMeter/LevelMeter';
+export * from './RecordButton/RecordButton';
+export * from './DeviceToggle/DeviceToggle';
+>>>>>>> feat/38-dock-controls
 
 // App chrome & navigation
 export * from './WindowControls/WindowControls';
@@ -31,6 +41,7 @@ export * from './Sidebar/Sidebar';
 export * from './Toolbar/Toolbar';
 export * from './PaneHeader/PaneHeader';
 export * from './Layout/AppWindow';
+export * from './FolderTabs/FolderTabs';
 
 // PearDrop patterns
 export * from './NetworkStatus/NetworkStatusCard';
@@ -41,19 +52,57 @@ export * from './FileHeader/FileHeader';
 export * from './ShareLink/ShareLinkCard';
 export * from './DangerZone/DangerZone';
 
+<<<<<<< HEAD
+=======
+// Media browse
+export * from './Masonry/masonryColumns';
+export * from './Masonry/Masonry';
+export * from './MediaTile/MediaTile';
+>>>>>>> feat/38-dock-controls
 // Media time
 export * from './Scrubber/timeRange';
 export * from './Scrubber/useTimeRange';
 export * from './Scrubber/timeGlyphs';
 export * from './Scrubber/Glyphs';
 export * from './Scrubber/Scrubber';
+<<<<<<< HEAD
 export * from './Transport/Transport';
 export * from './Waveform/waveformBars';
 export * from './Waveform/Waveform';
+=======
+
+export * from './Transport/Transport';
+
+export * from './Waveform/waveformBars';
+export * from './Waveform/Waveform';
+
+>>>>>>> feat/38-dock-controls
 export * from './Filmstrip/filmstripCells';
 export * from './Filmstrip/Filmstrip';
 export * from './TrimStrip/TrimStrip';
 
 // Forms & overlays
 export * from './TextField/TextField';
+
 export * from './Dialog/Dialog';
+export { enterPressesMain, type EnterKey } from './Dialog/enterKey';
+
+export * from './Social/SocialBar';
+export * from './Social/CommentThread';
+export * from './Social/CommentBox';
+
+export * from './Order/OrderBadge';
+export * from './Order/OrderTile';
+export * from './Order/useOrderedSelection';
+
+// Media
+export * from './MediaPlayer';
+
+// Files
+export * from './FileViews';
+
+// Share states: the universal words, colours and progress bar
+export * from './ShareState';
+// In-app tools
+export * from './UpdateNotice/UpdateNotice';
+export * from './DebugNotes/DebugNotesButton';

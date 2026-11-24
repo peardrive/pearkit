@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Platform, Pressable, TextInput, View, type StyleProp, type TextInputProps, type TextStyle, type ViewStyle } from 'react-native';
 import { cn } from '../../utils/cn';
 import { Icon, renderIcon, type IconSource } from '../../icons/Icon';
 import { useTheme } from '../../theme/ThemeProvider';
 import { fontWeightValue } from '../../theme/tokens';
 import { Text } from '../Text/Text';
+import { DialogSubmitContext } from '../Dialog/enterKey';
 
 export interface TextFieldProps extends Omit<TextInputProps, 'style' | 'placeholderTextColor' | 'editable'> {
   /** Label above the field. */
@@ -36,6 +37,11 @@ export const TextField = React.forwardRef<React.ComponentRef<typeof TextInput>, 
 ) {
   const theme = useTheme();
   const multiline = !!rest.multiline;
+  // In a Dialog with a main action, Enter in a single-line field (the keyboard's return key on a phone)
+  // presses it, unless the field has its own onSubmitEditing. The field has to do this itself: a text
+  // input keeps its key presses to itself, so the Dialog never sees an Enter typed in one.
+  const dialogSubmit = useContext(DialogSubmitContext);
+  const go = !multiline && dialogSubmit ? dialogSubmit : null;
   const [focused, setFocused] = useState(false);
   const [revealed, setRevealed] = useState(false);
   const family = mono
@@ -76,6 +82,7 @@ export const TextField = React.forwardRef<React.ComponentRef<typeof TextInput>, 
             Platform.OS === 'web' ? ({ outlineStyle: 'none' } as unknown as TextStyle) : null,
             inputStyle,
           ]}
+          {...(go ? { returnKeyType: 'go' as const, onSubmitEditing: go } : null)}
           {...rest}
         />
         {password ? (

@@ -1,20 +1,27 @@
 name: Previews
 
-# A Storybook for every place a component can be looked at: main, develop and each open pull request, published to
-# GitHub Pages at /<slot>/ (main, develop, pr-<n>). Pearkit Studio shows these; they're also plain links to share.
+# A Storybook for every place a component can be looked at: main, develop, each open pull request, and any other
+# branch on request, published to GitHub Pages at /<slot>/ (main, develop, pr-<n>, or the branch's name).
+# Pearkit Studio shows these; they're also plain links to share.
 on:
   push:
     branches: [main, develop]
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review, closed]
-  # Build any branch's preview on demand (Actions → Previews → Run workflow), e.g. main before its next release.
+  # Build any branch's preview on demand (Actions → Previews → Run workflow, or Pearkit Studio's "Build the preview"):
+  # run it from develop and name the branch. A branch with no pull request has no other way to get a preview.
   workflow_dispatch:
+    inputs:
+      branch:
+        description: 'The branch to build a preview of (empty: the branch the workflow runs from)'
+        required: false
+        type: string
 
 permissions:
   contents: write
 
 concurrency:
-  group: previews-${{ github.event.pull_request.number || github.ref }}
+  group: previews-${{ github.event.pull_request.number || inputs.branch || github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -22,10 +29,13 @@ jobs:
     # Pull requests from forks get a read-only token; they're previewed once a maintainer opens them from a branch here.
     if: >-
       github.event.action != 'closed' &&
-      (github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository)
+      (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Empty for a push or a pull request: the default checkout.
+          ref: ${{ inputs.branch }}
 
       - uses: actions/setup-node@v4
         with:
@@ -40,10 +50,16 @@ jobs:
 
       - name: Which slot
         id: slot
+        env:
+          BRANCH: ${{ inputs.branch }}
         run: |
           if [ "${{ github.event_name }}" = "pull_request" ]; then echo "dir=pr-${{ github.event.pull_request.number }}" >> "$GITHUB_OUTPUT";
+          elif [ -n "$BRANCH" ]; then echo "dir=$BRANCH" >> "$GITHUB_OUTPUT";
           else echo "dir=${GITHUB_REF_NAME}" >> "$GITHUB_OUTPUT"; fi
-          echo '{"sha":"${{ github.event.pull_request.head.sha || github.sha }}","builtAt":"'"$(date -u +%FT%TZ)"'"}' > storybook-static/preview.json
+          # The commit that was built: the pull request's head, else whatever was checked out.
+          SHA="${{ github.event.pull_request.head.sha }}"; [ -n "$SHA" ] || SHA="$(git rev-parse HEAD)"
+          echo "sha=$SHA" >> "$GITHUB_OUTPUT"
+          echo '{"sha":"'"$SHA"'","builtAt":"'"$(date -u +%FT%TZ)"'"}' > storybook-static/preview.json
 
       - uses: peaceiris/actions-gh-pages@v4
         with:
@@ -51,7 +67,7 @@ jobs:
           publish_dir: ./storybook-static
           destination_dir: ${{ steps.slot.outputs.dir }}
           keep_files: true
-          commit_message: "preview: ${{ steps.slot.outputs.dir }} @ ${{ github.event.pull_request.head.sha || github.sha }}"
+          commit_message: "preview: ${{ steps.slot.outputs.dir }} @ ${{ steps.slot.outputs.sha }}"
 
   remove:
     # A closed pull request takes its preview with it.

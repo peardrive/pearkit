@@ -20,8 +20,12 @@ const meta: Meta<typeof Transport> = {
   },
   argTypes: {
     duration: { control: { type: 'number', min: 1, step: 1 } },
+<<<<<<< HEAD
     size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
     look: { control: 'inline-radio', options: ['clip', 'pins'] },
+=======
+    size: { control: 'inline-radio', options: ['sm', 'md'] },
+>>>>>>> feat/38-dock-controls
     times: { control: 'boolean' },
     fractionDigits: { control: { type: 'range', min: 0, max: 3, step: 1 } },
     disabled: { control: 'boolean' },
@@ -89,11 +93,18 @@ export const Playground: Story = {
 export const Variants: Story = {
   render: () => (
     <View className="gap-6">
+<<<<<<< HEAD
       <Player duration={92} time={14} label="play and scrub · sm: thin, raised, centred on the play button" />
       <Player duration={92} time={14} size="md" label="md" />
       <Player duration={92} time={14} trims range={{ in: 8, out: 40 }} label="trims too: the clip frame, the in – out · length times, the whole-clip button" />
       <Player duration={92} time={14} trims range={{ in: 8, out: 40 }} look="pins" label="look=pins · the older in/out pins" />
       <Player duration={92} time={14} size="lg" label="a waveform inside the bar">
+=======
+      <Player duration={92} time={14} label="play and scrub · sm" />
+      <Player duration={92} time={14} size="md" label="md" />
+      <Player duration={92} time={14} trims range={{ in: 8, out: 40 }} label="trims too: the range, the in – out · length times, the whole-clip button" />
+      <Player duration={92} time={14} size="md" label="a waveform inside the bar">
+>>>>>>> feat/38-dock-controls
         <Waveform source={demoPeaks(92)} window={{ from: 0, to: 92 }} className="absolute inset-0" style={{ height: 26 }} opacity={0.45} />
       </Player>
       <Player duration={3725} time={3600} fractionDigits={0} label="over an hour, no fraction" />

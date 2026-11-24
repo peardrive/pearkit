@@ -20,7 +20,8 @@ const tokens = [
   'success', 'warning', 'danger', 'danger-foreground', 'neutral', 'info', 'accent', 'favorite',
   'window-close', 'window-minimize', 'window-maximize', 'window-inactive',
   'qr-background', 'qr-foreground',
-  'playhead',
+  'playhead', 'selection',
+  'rec',
 ];
 
 const colors = Object.fromEntries(tokens.map((t) => [t, `rgb(var(--pk-${t}) / <alpha-value>)`]));

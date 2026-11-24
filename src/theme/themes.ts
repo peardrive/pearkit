@@ -54,8 +54,13 @@ export const darkTheme: Theme = {
     'qr-background': '#ffffff',
     'qr-foreground': '#0b0b0c',
 
+<<<<<<< HEAD
     playhead: '#f4f4f7',
     selection: '#ffd60a',
+=======
+    playhead: '#ffd60a',
+    rec: '#ff453a',
+>>>>>>> feat/38-dock-controls
   },
 };
 
@@ -103,8 +108,13 @@ export const lightTheme: Theme = {
     'qr-background': '#ffffff',
     'qr-foreground': '#0b0b0c',
 
+<<<<<<< HEAD
     playhead: '#1d1d1f',
     selection: '#d9a400',
+=======
+    playhead: '#d9a400',
+    rec: '#e0352b',
+>>>>>>> feat/38-dock-controls
   },
 };
 

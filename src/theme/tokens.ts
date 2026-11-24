@@ -51,7 +51,12 @@ export const colorTokenNames = [
   'qr-foreground',
   // Media
   'playhead', // the playhead over a scrubber, a trim strip, a timeline
+<<<<<<< HEAD
   'selection', // the chosen clip's frame and its two bars on a scrubber, a trim strip, a timeline (Final Cut yellow)
+=======
+  // Capture
+  'rec', // the record red: the record button's disc, a level that clips, a device switched off. Not `danger`: nothing is wrong
+>>>>>>> feat/38-dock-controls
 ] as const;
 
 export type ColorToken = (typeof colorTokenNames)[number];
