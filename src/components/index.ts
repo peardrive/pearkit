@@ -64,6 +64,8 @@ export * from './Filmstrip/Filmstrip';
 export * from './TrimStrip/TrimStrip';
 
 // Forms & overlays
+export * from './Switch/Switch';
+export * from './QuickSettings/QuickSettings';
 export * from './TextField/TextField';
 
 export * from './Dialog/Dialog';
