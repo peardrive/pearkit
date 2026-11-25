@@ -930,6 +930,51 @@ export const iconRegistry = {
       }
     ]
   },
+  "screen": {
+    "set": "pearkit",
+    "paths": [
+      {
+        "d": "M4 3H20C21.1 3 22 3.9 22 5V15C22 16.1 21.1 17 20 17H4C2.9 17 2 16.1 2 15V5C2 3.9 2.9 3 4 3Z",
+        "stroke": true,
+        "strokeWidth": 1.5,
+        "strokeLinecap": "round",
+        "strokeLinejoin": "round"
+      },
+      {
+        "d": "M8 21H16",
+        "stroke": true,
+        "strokeWidth": 1.5,
+        "strokeLinecap": "round",
+        "strokeLinejoin": "round"
+      },
+      {
+        "d": "M12 17V21",
+        "stroke": true,
+        "strokeWidth": 1.5,
+        "strokeLinecap": "round",
+        "strokeLinejoin": "round"
+      }
+    ]
+  },
+  "settings": {
+    "set": "pearkit",
+    "paths": [
+      {
+        "d": "M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915",
+        "stroke": true,
+        "strokeWidth": 1.5,
+        "strokeLinecap": "round",
+        "strokeLinejoin": "round"
+      },
+      {
+        "d": "M12 9C13.66 9 15 10.34 15 12C15 13.66 13.66 15 12 15C10.34 15 9 13.66 9 12C9 10.34 10.34 9 12 9Z",
+        "stroke": true,
+        "strokeWidth": 1.5,
+        "strokeLinecap": "round",
+        "strokeLinejoin": "round"
+      }
+    ]
+  },
   "share": {
     "set": "pearkit",
     "paths": [
@@ -1037,4 +1082,4 @@ export const iconRegistry = {
 
 export type IconName = keyof typeof iconRegistry;
 
-export const iconNames = ["arrow-down","arrow-up","clock","copy","export","filter","folder-open","folder","grid-1","import","info-circle","more","pause","people","scan-barcode","search-normal","setting-2-bold","sidebar-left","sort","star-bold","star","stop-circle","add","chevron-left","chevron-right","close","document","heart-bold","heart","image","link","menu","message","moon","music","play","refresh","share","sun","tick","video"] as IconName[];
+export const iconNames = ["arrow-down","arrow-up","clock","copy","export","filter","folder-open","folder","grid-1","import","info-circle","more","pause","people","scan-barcode","search-normal","setting-2-bold","sidebar-left","sort","star-bold","star","stop-circle","add","alert-circle","chevron-left","chevron-right","close","document","heart-bold","heart","image","link","menu","message","microphone-slash","microphone","moon","music","play","refresh","screen","settings","share","sun","tick","video","wifi-slash"] as IconName[];

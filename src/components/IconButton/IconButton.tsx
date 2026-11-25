@@ -5,7 +5,7 @@ import { renderIcon, type IconSource } from '../../icons/Icon';
 import type { ColorToken } from '../../theme/tokens';
 import { Tooltip, type TooltipPlacement } from '../Tooltip/Tooltip';
 
-export type IconButtonSize = 'xs' | 'sm' | 'md' | 'lg';
+export type IconButtonSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 export type IconButtonVariant = 'ghost' | 'subtle' | 'solid';
 
 const sizes: Record<IconButtonSize, { box: string; icon: number }> = {
@@ -13,6 +13,7 @@ const sizes: Record<IconButtonSize, { box: string; icon: number }> = {
   sm: { box: 'h-[30px] w-[30px] rounded-md', icon: 16 },
   md: { box: 'h-8 w-8 rounded-md', icon: 17 },
   lg: { box: 'h-9 w-9 rounded-control', icon: 18 },
+  xl: { box: 'h-[50px] w-[50px] rounded-[15px]', icon: 23 }, // a dock's button: big enough for a glance and a thumb
 };
 
 const variants: Record<IconButtonVariant, string> = {

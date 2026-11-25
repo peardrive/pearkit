@@ -21,6 +21,7 @@ const tokens = [
   'window-close', 'window-minimize', 'window-maximize', 'window-inactive',
   'qr-background', 'qr-foreground',
   'playhead',
+  'rec',
 ];
 
 const colors = Object.fromEntries(tokens.map((t) => [t, `rgb(var(--pk-${t}) / <alpha-value>)`]));

@@ -51,6 +51,8 @@ export const colorTokenNames = [
   'qr-foreground',
   // Media
   'playhead', // the playhead over a scrubber, a trim strip, a timeline
+  // Capture
+  'rec', // the record red: the record button's disc, a level that clips, a device switched off. Not `danger`: nothing is wrong
 ] as const;
 
 export type ColorToken = (typeof colorTokenNames)[number];

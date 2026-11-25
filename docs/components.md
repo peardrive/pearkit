@@ -17,7 +17,7 @@ A map of everything pearkit exports. Storybook has full prop tables, controls an
 | Component | Highlights |
 | --- | --- |
 | `Button` | `primary · secondary · subtle · ghost · danger`, `sm · md · lg`, leading/trailing icons, `fill`, `fullWidth`, `glow`, `loading`, icon-only. |
-| `IconButton` | `xs · sm · md · lg`, `ghost · subtle · solid`, `active`, built-in `tooltip`. |
+| `IconButton` | `xs · sm · md · lg · xl` (xl is a dock's 50px), `ghost · subtle · solid`, `active`, built-in `tooltip`. |
 | `Tooltip` | Label + shortcut, four placements, hover / long-press, controlled or `defaultOpen`. |
 | `StatusPill`, `StatusDot` | Seven tones; `status` presets via `shareStatusMeta`; dot `glow` and `pulse`. |
 | `CountBadge` | Quiet count or tinted pill, `max`, `hideZero`. |
@@ -71,6 +71,14 @@ One in/out, one playhead, one waveform, one filmstrip — for every media app, o
 | `PaneHeader` | Title, subtitle, data-driven actions, `leading` slot. |
 | `AppWindow`, `Pane`, `PaneBody` | Layout skeleton: panes, surfaces, glow, scrolling. |
 | `FolderTabs`, `FolderTabPage` | Tabs that open into their page: the open tab lit, the page edge running on from it across the top and fading down the sides; tabs scroll when they outgrow the row; `trailing` slot. `FolderTabPage` is the framed page on its own. |
+
+## Capture
+
+| Component | Highlights |
+| --- | --- |
+| `RecordButton` | The one record key: `arm` (a red ring) · `ready` (a disc) · `recording` (a pulsing square) · `busy`; a label or clock beside it; `md` 54px or `lg` 64px for a thumb. |
+| `DeviceToggle` | A live input as a capsule: the body toggles the device, the caret opens its options; off is tinted `rec` with a slash; an optional `level` along the bottom; `compact` drops the caret (long press for the options). |
+| `LevelMeter` | An input level as one thin bar, `rec` when it clips; horizontal or vertical, any `length`. |
 
 ## PearDrop patterns
 
