@@ -1,0 +1,5 @@
+---
+"pearkit": minor
+---
+
+New **`pearkit/updates`**, the in-app update module every Anjou app runs: `signRelease` / `verifyRelease` for the release record of `~/Anjou/_deliveries/AGENTS.md` (canonical JSON, the host's own ed25519), `parseInstallerName`, `compareReleases`, `versionsFor` / `pendingFor`, and **`UpdateChannel`**, which reads records from a source the app provides (a pearcore Space, a folder), keeps the publisher's, says `starting · no-channel · connecting · up-to-date · available · downloading · installing · none-posted`, downloads with progress, hands the installer to the app's `install`, and remembers a build that did not load. `noticeFor` turns its state into `UpdateNotice`'s props. **`pearkit/electron`'s `installUpdate`** now keeps the replaced macOS copy in `<keepDir>/previous.noindex/` (never beside the app, where Spotlight listed it as a second app), asks the new build to load its native modules before the swap (`preflight`; a build that cannot is refused with `UnfitBuildError`), and has the way back (`revertUpdate`, `previousAt`).

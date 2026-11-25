@@ -1,7 +1,7 @@
 {
   "name": "pearkit",
   "version": "0.2.0",
-  "description": "Universal, themeable UI kit for PearDrive apps — one set of React components for React Native and Electron, styled with Tailwind (NativeWind).",
+  "description": "Universal, themeable UI kit for PearDrive apps \u2014 one set of React components for React Native and Electron, styled with Tailwind (NativeWind).",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
   "types": "./lib/typescript/commonjs/index.d.ts",
@@ -27,6 +27,16 @@
       "require": {
         "types": "./lib/typescript/commonjs/electron/index.d.ts",
         "default": "./lib/commonjs/electron/index.js"
+      }
+    },
+    "./updates": {
+      "import": {
+        "types": "./lib/typescript/module/updates/index.d.ts",
+        "default": "./lib/module/updates/index.js"
+      },
+      "require": {
+        "types": "./lib/typescript/commonjs/updates/index.d.ts",
+        "default": "./lib/commonjs/updates/index.js"
       }
     },
     "./tailwind-preset": "./tailwind.preset.js",
