@@ -1,0 +1,15 @@
+import{n as e}from"./rolldown-runtime-BCiCTKAo.js";import{t}from"./react-BWPDF9mI.js";import{n,t as r}from"./Text-CPaIl-yS.js";import{a as i,u as a,z as o}from"./iframe-DCe4DXPm.js";import{n as s,t as c}from"./OrgTabs-CKepovk4.js";import{i as l,n as u,t as d}from"./helpers-zAnan5Dk.js";function f({items:e=g,size:t,onAdd:n,width:i=390}){let[a,s]=(0,p.useState)(`*`);return(0,m.jsxs)(o,{className:`overflow-hidden rounded-card border border-overlay/[0.08] bg-background`,style:{width:i},children:[(0,m.jsx)(c,{items:e,value:a,onChange:s,size:t,onAdd:n}),(0,m.jsxs)(r,{variant:`caption`,tone:`muted`,className:`px-4 pb-3`,children:[`Chosen: `,a===`*`?`All`:e.find(e=>e.key===a)?.name]})]})}var p,m,h,g,_,v,y,b;function x(){return(x=e((()=>{p=t(),a(),s(),n(),l(),m=i(),{fn:h}=__STORYBOOK_MODULE_TEST__,g=[{key:`peardrive`,name:`PearDrive`,avatar:{uri:`data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22128%22%20height%3D%22128%22%3E%3Crect%20width%3D%22128%22%20height%3D%22128%22%20fill%3D%22%231f3b2a%22%2F%3E%3Ccircle%20cx%3D%2264%22%20cy%3D%2264%22%20r%3D%2234%22%20fill%3D%22%23a8d08d%22%2F%3E%3C%2Fsvg%3E`},count:6},{key:`audible`,name:`Bitcoin Audible`,count:3},{key:`anjou`,name:`Anjou`,count:2},{key:`family`,name:`Family`},{key:`crew`,name:`Pearkit crew`,count:1},{key:`lab`,name:`The lab`}],_={title:`Components/OrgTabs`,component:c,parameters:{docs:{description:{component:'The organizations as a row of round tabs with their names under: "All" first, a + last with `onAdd`, the chosen one ringed in the primary. The row scrolls sideways and snaps to a tab, so a flick moves along it; the page below can listen to its own swipes. `ALL_ORGS` is the key of the "All" tab.'}}},argTypes:{size:{control:`inline-radio`,options:[`sm`,`md`]}},args:{items:g,value:`*`,size:`md`,onChange:h(),onAdd:h()}},v={render:e=>(0,m.jsx)(f,{items:e.items,size:e.size,onAdd:e.onAdd})},y={render:()=>(0,m.jsxs)(d,{children:[(0,m.jsx)(u,{title:`Medium, with a +, on a phone's width (flick it)`,children:(0,m.jsx)(f,{onAdd:h()})}),(0,m.jsx)(u,{title:`Small, no +, three organizations`,children:(0,m.jsx)(f,{size:`sm`,items:g.slice(0,3)})}),(0,m.jsx)(u,{title:`Wide`,children:(0,m.jsx)(f,{width:720,onAdd:h()})})]})},b=[`Playground`,`Variants`],v.parameters={...v.parameters,docs:{...v.parameters?.docs,source:{originalSource:`{
+  render: args => <Live items={args.items} size={args.size} onAdd={args.onAdd} />
+}`,...v.parameters?.docs?.source}}},y.parameters={...y.parameters,docs:{...y.parameters?.docs,source:{originalSource:`{
+  render: () => <Column>
+      <Showcase title="Medium, with a +, on a phone's width (flick it)">
+        <Live onAdd={fn()} />
+      </Showcase>
+      <Showcase title="Small, no +, three organizations">
+        <Live size="sm" items={ORGS.slice(0, 3)} />
+      </Showcase>
+      <Showcase title="Wide">
+        <Live width={720} onAdd={fn()} />
+      </Showcase>
+    </Column>
+}`,...y.parameters?.docs?.source}}}})))()}x();export{v as Playground,y as Variants,b as __namedExportsOrder,_ as default};

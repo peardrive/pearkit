@@ -1,0 +1,25 @@
+import{n as e,o as t}from"./rolldown-runtime-BCiCTKAo.js";import{t as n}from"./react-BWPDF9mI.js";import{i as r,n as i,r as a,t as o}from"./Text-CPaIl-yS.js";import{n as s,t as c}from"./Icon-BOdpE8ZS.js";import{V as l,a as u,h as d,o as f,s as p,u as m,z as h}from"./iframe-DCe4DXPm.js";import{a as g,t as _}from"./askLogic-BaMyoacp.js";import{i as v,t as y}from"./helpers-zAnan5Dk.js";function b({agent:e,asks:t,steps:n=0,defaultExpanded:i=!1,className:a,style:s}){let[l,u]=(0,x.useState)(i),p=_(t,n);return(0,S.jsxs)(h,{className:f(`w-full max-w-[560px]`,a),style:s,dataSet:{askFold:l?`open`:`closed`},children:[(0,S.jsxs)(d,{onPress:()=>u(e=>!e),accessibilityRole:`button`,accessibilityLabel:`${e} ${p}`,accessibilityState:{expanded:l},className:`flex-row items-center gap-1.5 py-0.5`,children:[(0,S.jsx)(c,{name:l?`chevron-down`:`chevron-right`,size:12,tone:`subtle`}),(0,S.jsxs)(o,{variant:`micro`,tone:`subtle`,className:`min-w-0 flex-1`,numberOfLines:l?void 0:1,children:[e,` `,p]})]}),l?(0,S.jsx)(h,{className:`ml-[18px] gap-0.5 border-l border-overlay/10 pl-2.5`,children:t.map(e=>(0,S.jsxs)(h,{className:`flex-row items-center gap-2`,accessibilityLabel:`${e.tool}: ${e.what}. ${T[e.status]}${e.by?` by ${e.by}`:``}`,children:[(0,S.jsx)(h,{className:f(`h-1.5 w-1.5 rounded-full`,r[w[e.status]])}),(0,S.jsxs)(o,{variant:`micro`,tone:`muted`,numberOfLines:1,className:`min-w-0 flex-1`,style:{fontFamily:C},children:[e.tool,`: `,e.what]}),(0,S.jsxs)(o,{variant:`micro`,tone:e.status===`refused`?`danger`:`subtle`,children:[T[e.status],e.by?` · ${e.by}`:``]})]},e.id))}):null]})}var x,S,C,w,T;function E(){return(E=e((()=>{x=t(n()),m(),p(),s(),a(),i(),g(),S=u(),C=l.select({web:`ui-monospace, SFMono-Regular, Menlo, Consolas, monospace`,ios:`Menlo`,default:`monospace`}),w={open:`warning`,allowed:`success`,refused:`danger`,lapsed:`neutral`},T={open:`open`,allowed:`allowed`,refused:`refused`,lapsed:`lapsed`},b.__docgenInfo={description:`The permissions an agent asked for during one stretch of work, as one quiet line of the conversation (2026-11-23
+memo: "they only ever take up one block"). A press opens it to one line per ask, the tool and what it would do,
+with the answer at the end of the line; a press closes it again. The open question itself is never in here:
+that one stands as its card until it is answered.`,methods:[],displayName:`AskFold`,props:{agent:{required:!0,tsType:{name:`string`},description:`The agent that asked.`},asks:{required:!0,tsType:{name:`Array`,elements:[{name:`FoldedAsk`}],raw:`FoldedAsk[]`},description:`The asks of one stretch of work, in order.`},steps:{required:!1,tsType:{name:`number`},description:`The steps the agent took around them, hidden with the fold.`,defaultValue:{value:`0`,computed:!1}},defaultExpanded:{required:!1,tsType:{name:`boolean`},description:`Start open.`,defaultValue:{value:`false`,computed:!1}},className:{required:!1,tsType:{name:`string`},description:``},style:{required:!1,tsType:{name:`StyleProp`,elements:[{name:`ViewStyle`}],raw:`StyleProp<ViewStyle>`},description:``}}}})))()}var D,O,k,A,j,M;function N(){return(N=e((()=>{m(),E(),v(),D=u(),O={title:`Chat/AskFold`,component:b,parameters:{docs:{description:{component:`The permissions an agent asked for during one stretch of work, folded into one line of the conversation. A press opens it to one line per ask with its answer. The open question is never in here: it stands as its AskCard until answered.`}}},args:{agent:`pear`,steps:8,asks:[{id:`1`,tool:`Bash`,what:`cd ~/Projects/peardrive && npm test`,status:`allowed`,by:`guy`},{id:`2`,tool:`Bash`,what:`ls ~/Projects/peardrive/src`,status:`allowed`,by:`guy`},{id:`3`,tool:`Edit`,what:`src/share-row.tsx`,status:`refused`,by:`guy`},{id:`4`,tool:`WebFetch`,what:`https://registry.npmjs.org/pearkit`,status:`lapsed`}]},decorators:[e=>(0,D.jsx)(h,{style:{width:380},children:(0,D.jsx)(e,{})})]},k={},A={args:{defaultExpanded:!0}},j={render:e=>(0,D.jsxs)(y,{children:[(0,D.jsx)(b,{...e,steps:0,asks:[{id:`1`,tool:`Bash`,what:`npm run release`,status:`allowed`,by:`guy`}]}),(0,D.jsx)(b,{...e,steps:3,asks:[{id:`2`,tool:`Bash`,what:`rm -rf dist`,status:`refused`,by:`guy`}],defaultExpanded:!0})]})},M=[`Closed`,`Open`,`OneAsk`],k.parameters={...k.parameters,docs:{...k.parameters?.docs,source:{originalSource:`{}`,...k.parameters?.docs?.source}}},A.parameters={...A.parameters,docs:{...A.parameters?.docs,source:{originalSource:`{
+  args: {
+    defaultExpanded: true
+  }
+}`,...A.parameters?.docs?.source}}},j.parameters={...j.parameters,docs:{...j.parameters?.docs,source:{originalSource:`{
+  render: args => <Column>
+      <AskFold {...args} steps={0} asks={[{
+      id: '1',
+      tool: 'Bash',
+      what: 'npm run release',
+      status: 'allowed',
+      by: 'guy'
+    }]} />
+      <AskFold {...args} steps={3} asks={[{
+      id: '2',
+      tool: 'Bash',
+      what: 'rm -rf dist',
+      status: 'refused',
+      by: 'guy'
+    }]} defaultExpanded />
+    </Column>
+}`,...j.parameters?.docs?.source}}}})))()}N();export{k as Closed,j as OneAsk,A as Open,M as __namedExportsOrder,O as default};

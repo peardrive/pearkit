@@ -1,0 +1,14 @@
+import{n as e}from"./rolldown-runtime-BCiCTKAo.js";import{t}from"./react-BWPDF9mI.js";import{i as n,o as r}from"./Icon-BOdpE8ZS.js";import{a as i,u as a,z as o}from"./iframe-DCe4DXPm.js";import{n as s,t as c}from"./Kbd-DwPizEV0.js";import{n as l,t as u}from"./TextField-BEImit0X.js";var d,f,p,m,h,g;function _(){return(_=e((()=>{d=t(),a(),l(),s(),r(),f=i(),p={title:`Components/TextField`,component:u,parameters:{docs:{description:{component:"Labelled text input with hint / error, leading icon, trailing slot, password reveal and a monospace mode for keys and links. Built on `TextInput`, so it works on native and in Electron."}}},argTypes:{icon:{control:`select`,options:[void 0,...n]},size:{control:`inline-radio`,options:[`sm`,`md`]}},args:{label:`Username`,placeholder:`alice`,hint:`Stored only on this device.`},decorators:[e=>(0,f.jsx)(o,{style:{width:340},children:(0,f.jsx)(e,{})})]},m={},h={render:()=>{let[e,t]=(0,d.useState)(`correct horse battery`);return(0,f.jsxs)(o,{className:`gap-5`,children:[(0,f.jsx)(u,{label:`Username`,placeholder:`alice`,icon:`people`}),(0,f.jsx)(u,{label:`Password`,password:!0,value:e,onChangeText:t}),(0,f.jsx)(u,{label:`Share link`,mono:!0,icon:`link`,placeholder:`pearcore://…`,defaultValue:`pearcore://3MApi3V1vV8Yh3Uv1KN32hrL`}),(0,f.jsx)(u,{label:`Space name`,error:`A space with this name already exists`,defaultValue:`Holiday`}),(0,f.jsx)(u,{size:`sm`,placeholder:`Filter`,icon:`search-normal`,trailing:(0,f.jsx)(c,{children:`⌘K`})}),(0,f.jsx)(u,{label:`Recovery phrase`,multiline:!0,placeholder:`orbit pear velvet …`}),(0,f.jsx)(u,{label:`Disabled`,disabled:!0,defaultValue:`read only`})]})}},g=[`Playground`,`Variants`],m.parameters={...m.parameters,docs:{...m.parameters?.docs,source:{originalSource:`{}`,...m.parameters?.docs?.source}}},h.parameters={...h.parameters,docs:{...h.parameters?.docs,source:{originalSource:`{
+  render: () => {
+    const [pw, setPw] = useState('correct horse battery');
+    return <View className="gap-5">
+        <TextField label="Username" placeholder="alice" icon="people" />
+        <TextField label="Password" password value={pw} onChangeText={setPw} />
+        <TextField label="Share link" mono icon="link" placeholder="pearcore://…" defaultValue="pearcore://3MApi3V1vV8Yh3Uv1KN32hrL" />
+        <TextField label="Space name" error="A space with this name already exists" defaultValue="Holiday" />
+        <TextField size="sm" placeholder="Filter" icon="search-normal" trailing={<Kbd>⌘K</Kbd>} />
+        <TextField label="Recovery phrase" multiline placeholder="orbit pear velvet …" />
+        <TextField label="Disabled" disabled defaultValue="read only" />
+      </View>;
+  }
+}`,...h.parameters?.docs?.source}}}})))()}_();export{m as Playground,h as Variants,g as __namedExportsOrder,p as default};

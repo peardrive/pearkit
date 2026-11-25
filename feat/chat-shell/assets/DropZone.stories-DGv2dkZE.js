@@ -1,0 +1,40 @@
+import{n as e,o as t}from"./rolldown-runtime-BCiCTKAo.js";import{t as n}from"./react-BWPDF9mI.js";import{n as r,t as i}from"./Text-CPaIl-yS.js";import{n as a,t as o}from"./Icon-BOdpE8ZS.js";import{a as s,o as c,s as l,u,z as d}from"./iframe-DCe4DXPm.js";import{n as f,t as p}from"./EmptyState-ByOKcMN9.js";import{i as m,n as h,t as g}from"./helpers-zAnan5Dk.js";function _(e){if(!e)return[];let t=[],n=e.items?Array.from(e.items):[];if(n.length){for(let e of n){if(e.kind!==`file`)continue;let n=e.webkitGetAsEntry?.(),r=e.getAsFile()??void 0;n?.isDirectory?t.push({kind:`directory`,name:n.name||r?.name||`folder`}):r&&t.push({kind:`file`,name:r.name,file:r})}if(t.length)return t}for(let n of Array.from(e.files??[]))t.push({kind:`file`,name:n.name,file:n});return t}function v({onDrop:e,onDragActiveChange:t,overlay:n,disabled:r,children:i,className:a,style:o}){let s=(0,b.useRef)(null),[l,u]=(0,b.useState)(!1),f=(0,b.useRef)(0),p=(0,b.useRef)({onDrop:e,onDragActiveChange:t});p.current={onDrop:e,onDragActiveChange:t},(0,b.useEffect)(()=>{let e=s.current;if(!e||r||typeof e.addEventListener!=`function`)return;let t=e=>{u(t=>(t!==e&&p.current.onDragActiveChange?.(e),e))},n=e=>{S(e.dataTransfer)&&(e.preventDefault(),f.current+=1,t(!0))},i=e=>{S(e.dataTransfer)&&(e.preventDefault(),e.dataTransfer&&(e.dataTransfer.dropEffect=`copy`))},a=e=>{S(e.dataTransfer)&&(f.current=Math.max(0,f.current-1),f.current===0&&t(!1))},o=e=>{S(e.dataTransfer)&&(e.preventDefault(),f.current=0,t(!1),p.current.onDrop(_(e.dataTransfer),e))};return e.addEventListener(`dragenter`,n),e.addEventListener(`dragover`,i),e.addEventListener(`dragleave`,a),e.addEventListener(`drop`,o),()=>{e.removeEventListener(`dragenter`,n),e.removeEventListener(`dragover`,i),e.removeEventListener(`dragleave`,a),e.removeEventListener(`drop`,o),f.current=0,t(!1)}},[r]);let m=typeof n==`function`?n(l):l?n??(0,x.jsx)(y,{}):null;return(0,x.jsxs)(d,{ref:s,className:c(`relative`,a),style:o,children:[i,m?(0,x.jsx)(d,{pointerEvents:`none`,className:`absolute inset-0`,children:m}):null]})}function y(){return(0,x.jsxs)(d,{className:`flex-1 items-center justify-center gap-2 rounded-lg border-2 border-dashed border-primary/60 bg-primary/[0.10] p-4`,children:[(0,x.jsx)(o,{name:`import`,size:22,tone:`primary`}),(0,x.jsx)(i,{variant:`body-sm`,weight:`semibold`,tone:`primary-text`,children:`Drop to add`})]})}var b,x,S;function C(){return(C=e((()=>{b=t(n()),u(),l(),a(),r(),x=s(),S=e=>!!e&&Array.from(e.types??[]).includes(`Files`),v.__docgenInfo={description:`A place files can be dropped. Listens to the browser's drag events on its own element, tells folders from files,
+and shows an overlay while a drag is over it. Only a drag that carries files counts; text being dragged does not.`,methods:[],displayName:`DropZone`,props:{onDrop:{required:!0,tsType:{name:`signature`,type:`function`,raw:`(items: DroppedItem[], event?: unknown) => void`,signature:{arguments:[{type:{name:`Array`,elements:[{name:`DroppedItem`}],raw:`DroppedItem[]`},name:`items`},{type:{name:`unknown`},name:`event`}],return:{name:`void`}}},description:`What was dropped, and the browser's drop event.`},onDragActiveChange:{required:!1,tsType:{name:`signature`,type:`function`,raw:`(active: boolean) => void`,signature:{arguments:[{type:{name:`boolean`},name:`active`}],return:{name:`void`}}},description:`A drag came over the zone, or left it.`},overlay:{required:!1,tsType:{name:`union`,raw:`ReactNode | ((active: boolean) => ReactNode)`,elements:[{name:`ReactNode`},{name:`unknown`}]},description:"What to show while a drag is over the zone, on top of the children. A function is called with `active` and\ndrawn all the time (so it can fade); a node is drawn only while active. Without one, a dashed primary frame."},disabled:{required:!1,tsType:{name:`boolean`},description:``},children:{required:!1,tsType:{name:`ReactNode`},description:``},className:{required:!1,tsType:{name:`string`},description:``},style:{required:!1,tsType:{name:`StyleProp`,elements:[{name:`ViewStyle`}],raw:`StyleProp<ViewStyle>`},description:``}}}})))()}function w({children:e,height:t=180}){return(0,E.jsx)(d,{className:`items-center justify-center rounded-card border border-overlay/[0.08] bg-pane`,style:{height:t,width:360},children:e})}var T,E,D,O,k,A,j;function M(){return(M=e((()=>{T=n(),u(),C(),f(),r(),m(),E=s(),{fn:D}=__STORYBOOK_MODULE_TEST__,O={title:`Components/DropZone`,component:v,parameters:{docs:{description:{component:"A place files can be dropped. On the web it listens to the browser's drag events on its own element, tells folders from files (`webkitGetAsEntry`), and shows an `overlay` while a drag with files is over it (a dashed primary frame by default). On a phone it only draws its children. Drag a file from your desktop onto the frames below."}}},args:{onDrop:D(),onDragActiveChange:D(),disabled:!1}},k={render:e=>{let[t,n]=(0,T.useState)([]);return(0,E.jsx)(v,{...e,onDrop:(t,r)=>{n(t),e.onDrop(t,r)},children:(0,E.jsx)(w,{children:t.length?(0,E.jsx)(d,{className:`gap-1 p-4`,children:t.map((e,t)=>(0,E.jsxs)(i,{variant:`caption`,children:[e.kind===`directory`?`📁`:`📄`,` `,e.name]},t))}):(0,E.jsx)(p,{icon:`import`,title:`Drop files here`,description:`Folders are told from files.`})})})}},A={render:()=>(0,E.jsxs)(g,{children:[(0,E.jsx)(h,{title:`Default overlay`,children:(0,E.jsx)(v,{onDrop:D(),children:(0,E.jsx)(w,{children:(0,E.jsx)(i,{variant:`caption`,tone:`muted`,children:`Drag a file over me`})})})}),(0,E.jsx)(h,{title:"Your own overlay, drawn all the time (a function of `active`)",children:(0,E.jsx)(v,{onDrop:D(),overlay:e=>(0,E.jsx)(d,{className:e?`flex-1 items-center justify-center bg-success/20`:`flex-1`,style:{borderRadius:14},children:e?(0,E.jsx)(i,{variant:`body-lg`,tone:`success`,children:`Let go`}):null}),children:(0,E.jsx)(w,{children:(0,E.jsx)(i,{variant:`caption`,tone:`muted`,children:`A green wash while over`})})})}),(0,E.jsx)(h,{title:`Disabled`,children:(0,E.jsx)(v,{onDrop:D(),disabled:!0,children:(0,E.jsx)(w,{height:100,children:(0,E.jsx)(i,{variant:`caption`,tone:`muted`,children:`Nothing happens here`})})})})]})},j=[`Playground`,`Variants`],k.parameters={...k.parameters,docs:{...k.parameters?.docs,source:{originalSource:`{
+  render: args => {
+    const [dropped, setDropped] = useState<DroppedItem[]>([]);
+    return <DropZone {...args} onDrop={(items, e) => {
+      setDropped(items);
+      args.onDrop(items, e);
+    }}>
+        <Target>
+          {dropped.length ? <View className="gap-1 p-4">
+              {dropped.map((d, i) => <Text key={i} variant="caption">
+                  {d.kind === 'directory' ? '📁' : '📄'} {d.name}
+                </Text>)}
+            </View> : <EmptyState icon="import" title="Drop files here" description="Folders are told from files." />}
+        </Target>
+      </DropZone>;
+  }
+}`,...k.parameters?.docs?.source}}},A.parameters={...A.parameters,docs:{...A.parameters?.docs,source:{originalSource:`{
+  render: () => <Column>
+      <Showcase title="Default overlay">
+        <DropZone onDrop={fn()}>
+          <Target><Text variant="caption" tone="muted">Drag a file over me</Text></Target>
+        </DropZone>
+      </Showcase>
+      <Showcase title="Your own overlay, drawn all the time (a function of \`active\`)">
+        <DropZone onDrop={fn()} overlay={active => <View className={active ? 'flex-1 items-center justify-center bg-success/20' : 'flex-1'} style={{
+        borderRadius: 14
+      }}>
+              {active ? <Text variant="body-lg" tone="success">Let go</Text> : null}
+            </View>}>
+          <Target><Text variant="caption" tone="muted">A green wash while over</Text></Target>
+        </DropZone>
+      </Showcase>
+      <Showcase title="Disabled">
+        <DropZone onDrop={fn()} disabled>
+          <Target height={100}><Text variant="caption" tone="muted">Nothing happens here</Text></Target>
+        </DropZone>
+      </Showcase>
+    </Column>
+}`,...A.parameters?.docs?.source}}}})))()}M();export{k as Playground,A as Variants,j as __namedExportsOrder,O as default};
