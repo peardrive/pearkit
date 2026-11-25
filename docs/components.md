@@ -117,6 +117,8 @@ One in/out, one playhead, one waveform, one filmstrip — for every media app, o
 | Export | Highlights |
 | --- | --- |
 | `DebugNotesButton`, `useDebugNotes`, `useMicLevel` | The debug-notes button: mic + label idle, red with a live level and `m:ss · steps` while a note records, grey without a microphone. |
+| `UpdateNotice` | The notice at the bottom of the sidebar when a newer version waits: one press downloads, installs and restarts; `downloading` with a progress bar, `restarting`, `error` with "Try again"; icon-only in a collapsed sidebar. |
+| `UpdatesPanel`, `ReleaseDialog`, `updateAge` | The Updates block of an app's settings, as PearDrive lays it out: the newest version and its button, every version in a framed list with yours marked, the channel and publisher behind "Advanced", a version's notes and signature in a window. |
 | `createDebugNotes` (+ `createTrace`, `createWebRecorder`, `createUnavailableRecorder`, `installCapture`, `domPath`, `noteId`) | Headless debug notes: a voice recording plus a timed trace of every step, saved as `note.<audio>` + `trace.jsonl` + `note.json`. See [debug-notes.md](debug-notes.md). |
 
 ## Utilities

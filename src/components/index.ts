@@ -107,6 +107,7 @@ export * from './FileViews';
 export * from './ShareState';
 // In-app tools
 export * from './UpdateNotice/UpdateNotice';
+export * from './UpdatesPanel/UpdatesPanel';
 export * from './DebugNotes/DebugNotesButton';
 // Where one item stands with the other device (a note and the Mac that pulls it)
 export * from './SyncBubble/SyncBubble';
