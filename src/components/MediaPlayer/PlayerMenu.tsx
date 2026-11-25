@@ -13,6 +13,7 @@ import {
 
 import { PlayerIcon, type PlayerIconName } from './PlayerIcon';
 import {
+  audioLine,
   canStepSpeed,
   captionLine,
   captionSwitchTarget,
@@ -21,6 +22,7 @@ import {
   ROTATION_CHOICES,
   speedLabel,
   stepSpeed,
+  type AudioChoice,
   type CaptionChoice,
   type MenuLine,
   type RotationLock,
@@ -51,6 +53,9 @@ export type PlayerMenuProps = {
   /** The caption track last shown for this file; -1 when there has been none. */
   captionMemory: number;
   onCaption: (index: number) => void;
+  /** The sound tracks inside the file; the Audio track line lists them when there are two or more. */
+  audioTracks?: readonly AudioChoice[];
+  onAudioTrack?: (index: number) => void;
   accent: string;
   glass?: PlayerGlass;
 };
@@ -66,8 +71,14 @@ const TURN_ICON: Record<RotationLock, PlayerIconName> = {
 
 export function PlayerMenu(props: PlayerMenuProps) {
   const { lines, captions, captionMemory, accent, glass } = props;
-  const [languagesOpen, setLanguagesOpen] = useState(false);
+  /** Which list is open under its line; one at a time. */
+  const [open, setOpen] = useState<'captions' | 'audio' | null>(null);
+  const languagesOpen = open === 'captions';
+  const setLanguagesOpen = (next: boolean | ((was: boolean) => boolean)) =>
+    setOpen((was) => ((typeof next === 'function' ? next(was === 'captions') : next) ? 'captions' : null));
   const line = captionLine(captions, captionMemory);
+  const sound = audioLine(props.audioTracks);
+  const soundOpen = open === 'audio' && sound.available;
   const Box: PlayerGlass = glass ?? View;
 
   return (
@@ -127,6 +138,54 @@ export function PlayerMenu(props: PlayerMenuProps) {
               })}
             </View>
           </Line>
+        )}
+
+        {lines.includes('audio') && (
+          <Line icon="audio-track" name="Audio track" dim={!sound.available}>
+            <Pressable
+              style={[styles.language, styles.soundName, !sound.available && styles.spent, soundOpen && styles.languageOpen]}
+              onPress={() => setOpen((was) => (was === 'audio' ? null : 'audio'))}
+              disabled={!sound.available}
+              accessibilityRole="button"
+              accessibilityLabel={sound.shown ? `Audio track ${sound.shown.label}` : 'This video has one audio track'}
+              accessibilityState={{ expanded: soundOpen, disabled: !sound.available }}
+              hitSlop={6}
+            >
+              <Text style={[styles.languageText, styles.soundNameText]} numberOfLines={1} maxFontSizeMultiplier={1.15}>
+                {sound.shown ? sound.shown.short : 'Default'}
+              </Text>
+              {sound.available && <PlayerIcon name="caret-down" size={10} color="#fff" />}
+            </Pressable>
+          </Line>
+        )}
+
+        {soundOpen && (
+          <View style={styles.languages}>
+            {sound.tracks.map((track) => {
+              const chosen = track.index === sound.shown?.index;
+              return (
+                <Pressable
+                  key={track.key}
+                  style={styles.languageLine}
+                  onPress={() => {
+                    props.onAudioTrack?.(track.index);
+                    setOpen(null);
+                  }}
+                  accessibilityRole="button"
+                  accessibilityLabel={`Audio track ${track.label}`}
+                  accessibilityState={{ selected: chosen }}
+                >
+                  <View style={styles.languageTick}>
+                    {chosen && <PlayerIcon name="check" size={14} color="#fff" />}
+                  </View>
+                  <Text style={[styles.languageName, chosen && styles.languageNameOn]} numberOfLines={1}>
+                    {track.label}
+                  </Text>
+                  {track.short !== track.label && <Text style={styles.languageCode}>{track.short}</Text>}
+                </Pressable>
+              );
+            })}
+          </View>
         )}
 
         {lines.includes('captions') && (
@@ -324,6 +383,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255,255,255,0.16)',
   },
   languageOpen: { backgroundColor: 'rgba(255,255,255,0.30)' },
+  // A sound track is called by its own name, which is longer than a language code.
+  soundName: { maxWidth: 132 },
+  soundNameText: { flexShrink: 1 },
   languageText: { color: '#fff', fontSize: 13, fontWeight: '700' },
 
   languages: {

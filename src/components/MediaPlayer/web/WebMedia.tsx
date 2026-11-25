@@ -1,6 +1,6 @@
 import React, { useMemo, useRef, type CSSProperties } from 'react';
 
-import type { CaptionTrack, MediaEngine } from '../playerLogic';
+import type { CaptionTrack, MediaAudioTrack, MediaEngine } from '../playerLogic';
 
 /**
  * The engine for a browser: the page's own <video> and <audio> elements behind the same few
@@ -23,6 +23,27 @@ function captionTracks(el: HTMLMediaElement | null): TextTrack[] {
 
 function describe(track: TextTrack, index: number): CaptionTrack {
   return { id: String(index), language: track.language, label: track.label };
+}
+
+/** A sound track as a browser lists it (`video.audioTracks`). */
+type WebAudioTrack = { id: string; label: string; language: string; enabled: boolean };
+
+/**
+ * Does this browser list the sound tracks inside a file? Safari does. Chrome and Electron do only
+ * with the "AudioVideoTracks" feature switched on (in Electron: `enableBlinkFeatures:
+ * 'AudioVideoTracks'` on the window); without it the player has no Audio track line.
+ */
+export function webListsAudioTracks(): boolean {
+  return typeof HTMLMediaElement !== 'undefined' && 'audioTracks' in HTMLMediaElement.prototype;
+}
+
+function soundTracks(el: HTMLMediaElement | null): WebAudioTrack[] {
+  const list = (el as unknown as { audioTracks?: ArrayLike<WebAudioTrack> } | null)?.audioTracks;
+  return list ? Array.from(list) : [];
+}
+
+function describeSound(track: WebAudioTrack, index: number): MediaAudioTrack {
+  return { id: track.id || String(index), language: track.language, label: track.label };
 }
 
 /** An engine and the place to attach the element it drives: `<WebVideo attach={attach} … />`. */
@@ -69,6 +90,25 @@ export function useWebMedia(): { engine: MediaEngine; attach: (el: HTMLMediaElem
         });
       },
     };
+    if (webListsAudioTracks()) {
+      engine.audioTracks = () => {
+        const tracks = soundTracks(element.current);
+        const playing = tracks.findIndex((t) => t.enabled);
+        return {
+          tracks: tracks.map(describeSound),
+          current: playing >= 0 ? describeSound(tracks[playing]!, playing) : null,
+        };
+      };
+      engine.chooseAudioTrack = (index) => {
+        const tracks = soundTracks(element.current);
+        if (!tracks[index]) return;
+        // The new one on first, so there is never a moment with no track chosen.
+        tracks[index]!.enabled = true;
+        tracks.forEach((track, i) => {
+          if (i !== index) track.enabled = false;
+        });
+      };
+    }
     return {
       engine,
       attach: (el: HTMLMediaElement | null) => {

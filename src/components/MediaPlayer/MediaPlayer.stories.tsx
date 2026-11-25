@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Image, Pressable, View } from 'react-native';
 import { fn } from 'storybook/test';
@@ -18,12 +18,21 @@ import {
   DEFAULT_PLAYER_SETTINGS,
   playlistNeighbours,
   screenRotationFor,
+  type MediaAudioTrack,
+  type MediaEngine,
   type PlayerKind,
   type PlayerSettings,
 } from './playerLogic';
 import { useWebMedia, WebAudio, WebVideo, type WebCaption } from './web/WebMedia';
 
-type DemoFile = { kind: PlayerKind; title: string; src: string; captions?: WebCaption[] };
+type DemoFile = {
+  kind: PlayerKind;
+  title: string;
+  src: string;
+  captions?: WebCaption[];
+  /** Sound tracks to list in the menu (see `withDemoSound`). */
+  sounds?: MediaAudioTrack[];
+};
 
 // The caption names are deliberately wordy, the way real files write them: the menu shows EN and ES.
 const FILES: DemoFile[] = [
@@ -41,6 +50,34 @@ const FILES: DemoFile[] = [
   { kind: 'audio', title: 'A steady tone.m4a', src: sampleTone },
   { kind: 'image', title: 'Harbour.jpg', src: photoHarbor },
 ];
+
+// A film as people keep them: the original sound, a comedy commentary over it, and a dub.
+const MANY_SOUNDS: DemoFile[] = [
+  {
+    kind: 'video',
+    title: 'A film with three audio tracks.mkv',
+    src: sampleWide,
+    sounds: [
+      { id: '1', language: 'eng', label: 'English' },
+      { id: '2', language: 'eng', label: 'RiffTrax' },
+      { id: '3', language: 'fra', label: 'French audio track' },
+    ],
+  },
+];
+
+/**
+ * Storybook's browser does not list the sound tracks inside a file, so this stands in for an engine
+ * that does: the list is the demo's, and choosing a line only moves the tick. The sound does not change.
+ */
+function withDemoSound(engine: MediaEngine, sounds: readonly MediaAudioTrack[], chosen: { current: number }): MediaEngine {
+  return {
+    ...engine,
+    audioTracks: () => ({ tracks: sounds, current: sounds[chosen.current] ?? null }),
+    chooseAudioTrack: (index) => {
+      chosen.current = index;
+    },
+  };
+}
 
 const BROKEN: DemoFile[] = [{ kind: 'video', title: 'A format this device cannot play.mkv', src: 'missing.mkv' }];
 
@@ -121,7 +158,13 @@ type OneFileProps = Omit<React.ComponentProps<typeof MediaPlayer>, 'kind' | 'tit
 };
 
 function OneFile({ file, ...player }: OneFileProps) {
-  const { engine, attach } = useWebMedia();
+  const web = useWebMedia();
+  const { attach } = web;
+  const chosenSound = useRef({ current: 0 }).current;
+  const engine = useMemo(
+    () => (file.sounds ? withDemoSound(web.engine, file.sounds, chosenSound) : web.engine),
+    [web.engine, file.sounds, chosenSound],
+  );
   // The edges an upright phone keeps clear: the camera cut-out and the home bar.
   const shared = { ...player, title: file.title, insets: { top: 50, bottom: 28, left: 0, right: 0 } };
   if (file.kind === 'image') {
@@ -158,7 +201,7 @@ const meta: Meta<typeof Demo> = {
     docs: {
       description: {
         component:
-          'One player for video, sound and pictures, the same on iPhone, Android and the web. It draws the controls and decides what every touch does; the app gives it something that plays the file (an **engine**) and the picture. Here the engine is the browser. **Try it with the mouse as a finger:** drag up to put the player away, drag left or right to move through the five files, and open the options (top right) for Speed, Loop, Orientation and Captions.',
+          'One player for video, sound and pictures, the same on iPhone, Android and the web. It draws the controls and decides what every touch does; the app gives it something that plays the file (an **engine**) and the picture. Here the engine is the browser. **Try it with the mouse as a finger:** drag up to put the player away, drag left or right to move through the five files, and open the options (top right) for Speed, Loop, Orientation and Captions. A file with more than one sound track also gets **Audio track** (see the Audio tracks story).',
       },
     },
   },
@@ -185,6 +228,9 @@ export const Playground: Story = {};
 export const Options: Story = { args: { menuOpen: true } };
 
 /** The same player with the phone on its side. */
+/** A file with more than one sound track: Audio track names the one playing and lists the rest. */
+export const AudioTracks: Story = { args: { files: MANY_SOUNDS, start: 0, menuOpen: true } };
+
 export const OnItsSide: Story = { args: { turned: true, menuOpen: true } };
 
 /** Sound has nothing to turn and no captions, so its options are Speed and Loop. */

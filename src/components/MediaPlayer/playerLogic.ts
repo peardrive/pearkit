@@ -312,9 +312,9 @@ function sameLanguage(a: CaptionTrack, b: CaptionTrack): boolean {
 type TrackFacts = { lang: string; region: string; plain: string };
 
 /** What a track says about itself: its language, its region, and its own name with the noise taken out. */
-function trackFacts(track: CaptionTrack): TrackFacts {
+function trackFacts(track: CaptionTrack, noise: RegExp = CAPTION_NOISE): TrackFacts {
   const plain = String(track.label ?? '')
-    .replace(CAPTION_NOISE, ' ')
+    .replace(noise, ' ')
     .replace(/\(\s*\)|\[\s*\]/g, ' ')
     .replace(/\s+/g, ' ')
     .replace(/^[\s,:;–-]+|[\s,:;–-]+$/g, '');
@@ -421,6 +421,100 @@ export function captionChoices(
   ];
 }
 
+// ---------------------------------------------------------------------------
+// Audio tracks
+// ---------------------------------------------------------------------------
+
+/** One of the sound tracks inside a video: another language, a commentary, a second mix. */
+export type MediaAudioTrack = { id?: string | null; language?: string | null; label?: string | null };
+export type AudioChoice = {
+  key: string;
+  /** The name in the list: the track's own name ("Commentary"), else its language ("English"). */
+  label: string;
+  /** The short form on the button: the track's own name, else "EN". */
+  short: string;
+  index: number;
+  selected: boolean;
+};
+
+/** Words a file adds to a sound track's name that tell the viewer nothing about what to pick. */
+const AUDIO_NOISE = /\b(audio|sound ?track|track)\b/gi;
+
+/**
+ * Names for every sound track of a file. A track's own name is what tells it apart ("Commentary",
+ * "Director's cut"), so it is used when there is one; a track with no name of its own is called by
+ * its language. Two tracks with the same name get their language added, and are numbered if they
+ * still read the same.
+ */
+export function audioNames(
+  tracks: readonly MediaAudioTrack[] | null | undefined,
+): { label: string; short: string }[] {
+  const list = Array.isArray(tracks) ? tracks.filter(Boolean) : [];
+  const facts = list.map((t) => {
+    const f = trackFacts(t, AUDIO_NOISE);
+    const code = f.lang.toUpperCase();
+    const language = f.lang ? (LANGUAGE_NAMES[f.lang] ?? code) : '';
+    // A name that only repeats the language ("English", "eng") is not a name of its own.
+    // Nor is a bare number ("Track 2" with the noise gone): the list numbers such tracks itself.
+    const repeats = [language, code, f.lang].some((w) => w && w.toLowerCase() === f.plain.toLowerCase());
+    const own = repeats || /^\d*$/.test(f.plain) ? '' : f.plain;
+    return { own, code, language };
+  });
+  const perName = new Map<string, number>();
+  for (const f of facts) if (f.own) perName.set(f.own, (perName.get(f.own) ?? 0) + 1);
+  const named = facts.map((f, i) => {
+    if (!f.own) return f.language ? { label: f.language, short: f.code } : { label: `Track ${i + 1}`, short: `${i + 1}` };
+    const shared = (perName.get(f.own) ?? 0) > 1 && !!f.language;
+    const label = shared ? `${f.own} (${f.language})` : f.own;
+    return { label, short: label };
+  });
+  const seen = new Map<string, number>();
+  return named.map((n) => {
+    const count = (seen.get(n.label) ?? 0) + 1;
+    seen.set(n.label, count);
+    return count === 1 ? n : { label: `${n.label} ${count}`, short: `${n.short} ${count}` };
+  });
+}
+
+/**
+ * The sound track list: every track in the file, in the file's order. There is no "Off": a video
+ * always plays one of them. Empty when the engine lists none. `index` is the track's place in `tracks`.
+ */
+export function audioChoices(
+  tracks: readonly MediaAudioTrack[] | null | undefined,
+  current: MediaAudioTrack | null | undefined,
+): AudioChoice[] {
+  const list = Array.isArray(tracks) ? tracks.filter(Boolean) : [];
+  if (list.length === 0) return [];
+  const currentIndex = current
+    ? list.findIndex(
+        (t) =>
+          (t.id != null && t.id === current.id) ||
+          (t.id == null && t.language === current.language && t.label === current.label),
+      )
+    : -1;
+  const names = audioNames(list);
+  return list.map((t, i) => ({
+    key: trackKey(t, i),
+    label: names[i]?.label ?? `Track ${i + 1}`,
+    short: names[i]?.short ?? `${i + 1}`,
+    index: i,
+    selected: i === currentIndex,
+  }));
+}
+
+/**
+ * The Audio track line of the menu: the track playing, and a list to pick another from. With one
+ * track or none there is nothing to choose, and the line is dimmed.
+ */
+export function audioLine(
+  choices: readonly AudioChoice[] | null | undefined,
+): { available: boolean; shown: AudioChoice | null; tracks: AudioChoice[] } {
+  const tracks = [...(choices ?? [])];
+  const shown = tracks.find((c) => c.selected) ?? tracks[0] ?? null;
+  return { available: tracks.length > 1, shown, tracks };
+}
+
 /**
  * The Captions line of the menu: a switch, and the language beside it.
  * `remembered` is the track last shown for this file (-1 when none yet), so switching captions
@@ -525,7 +619,19 @@ export type MediaEngine = {
   captions(): { tracks: readonly CaptionTrack[]; current: CaptionTrack | null };
   /** `index` as in `captionChoices`: -1 turns captions off. */
   chooseCaption(index: number): void;
+  /**
+   * The sound tracks inside the file. Optional: an engine that cannot list them leaves both calls
+   * out, and the player then has no Audio track line.
+   */
+  audioTracks?(): { tracks: readonly MediaAudioTrack[]; current: MediaAudioTrack | null };
+  /** `index` as in `audioChoices`. */
+  chooseAudioTrack?(index: number): void;
 };
+
+/** Can this engine list and switch sound tracks? */
+export function engineHasAudioTracks(engine: MediaEngine | null | undefined): boolean {
+  return typeof engine?.audioTracks === 'function' && typeof engine?.chooseAudioTrack === 'function';
+}
 
 /** The engine's state, with anything unreadable turned into a plain zero or false. */
 export function readEngine(engine: MediaEngine | null | undefined): EngineReading {
@@ -587,6 +693,14 @@ export function applyPlayback(
   if (!wasPlaying) safely(() => engine.pause(), undefined);
 }
 
+/** The sound track list of an engine; empty when it has none or cannot say. */
+export function engineAudioChoices(engine: MediaEngine | null | undefined): AudioChoice[] {
+  if (!engine || !engineHasAudioTracks(engine)) return [];
+  const got = safely(() => engine.audioTracks!(), null as ReturnType<NonNullable<MediaEngine['audioTracks']>> | null);
+  if (!got) return [];
+  return audioChoices(got.tracks, got.current);
+}
+
 /** The caption list of an engine; empty when it has none or cannot say. */
 export function engineCaptionChoices(engine: MediaEngine | null | undefined): CaptionChoice[] {
   if (!engine) return [];
@@ -599,11 +713,16 @@ export function engineCaptionChoices(engine: MediaEngine | null | undefined): Ca
 // The options menu
 // ---------------------------------------------------------------------------
 
-export type MenuLine = 'speed' | 'loop' | 'orientation' | 'captions';
+export type MenuLine = 'speed' | 'loop' | 'orientation' | 'audio' | 'captions';
 
-/** The lines of the menu, top to bottom. Sound has no picture to turn and no captions to show. */
-export function menuLines(kind: PlayerKind): MenuLine[] {
-  if (kind === 'video') return ['speed', 'loop', 'orientation', 'captions'];
+/**
+ * The lines of the menu, top to bottom. Sound has no picture to turn and no captions to show.
+ * Audio track is there only when the engine can list sound tracks (`can.audioTracks`).
+ */
+export function menuLines(kind: PlayerKind, can: { audioTracks?: boolean } = {}): MenuLine[] {
+  if (kind === 'video') {
+    return can.audioTracks ? ['speed', 'loop', 'orientation', 'audio', 'captions'] : ['speed', 'loop', 'orientation', 'captions'];
+  }
   if (kind === 'audio') return ['speed', 'loop'];
   return [];
 }
