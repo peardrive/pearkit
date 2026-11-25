@@ -3,7 +3,7 @@ import { QRCode } from './QRCode';
 import { Showcase } from '../../stories/helpers';
 
 const meta: Meta<typeof QRCode> = {
-  title: 'Components/QRCode',
+  title: 'Files & sharing/QRCode',
   component: QRCode,
   parameters: { docs: { description: { component: 'Real, scannable QR code generated in JS and drawn as one SVG path. Colours come from the `qr-foreground` / `qr-background` tokens.' } } },
   argTypes: { errorCorrection: { control: 'inline-radio', options: ['L', 'M', 'Q', 'H'] }, size: { control: { type: 'range', min: 64, max: 280, step: 4 } } },

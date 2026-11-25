@@ -33,6 +33,10 @@ jobs:
       - name: Typecheck
         run: npm run typecheck
 
+      # Every exported name is still there, and every story is filed under a known category (AGENTS.md).
+      - name: Names and categories
+        run: npx vitest run --project unit
+
       - name: Build Storybook
         run: npm run build-storybook -- --quiet
 

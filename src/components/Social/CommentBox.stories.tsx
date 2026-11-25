@@ -10,7 +10,7 @@ function Held(props: Partial<CommentBoxProps> & { start?: string }) {
 }
 
 const meta: Meta<typeof CommentBox> = {
-  title: 'Components/CommentBox',
+  title: 'Conversation/CommentBox',
   component: CommentBox,
   parameters: { docs: { description: { component: 'The box a comment is written in: one line that grows with its text up to `maxLines`, Send at its right, a banner while answering somebody. On a keyboard, Enter sends and Shift+Enter starts a new line. The box does not empty itself: the app does, once the comment went, so a comment that failed keeps its words.' } } },
   args: { maxLines: 5 },

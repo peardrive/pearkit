@@ -23,7 +23,7 @@ function renderTile(item: DemoMediaItem) {
 }
 
 const meta: Meta<typeof Masonry<DemoMediaItem>> = {
-  title: 'Components/Masonry',
+  title: 'Files & sharing/Masonry',
   component: Masonry,
   parameters: {
     docs: {

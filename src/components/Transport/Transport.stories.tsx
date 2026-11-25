@@ -8,7 +8,7 @@ import { Waveform } from '../Waveform/Waveform';
 import { demoPeaks } from '../../stories/fixtures/media';
 
 const meta: Meta<typeof Transport> = {
-  title: 'Components/Transport',
+  title: 'Media/Transport',
   component: Transport,
   parameters: {
     docs: {

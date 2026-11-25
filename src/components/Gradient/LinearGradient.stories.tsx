@@ -4,7 +4,7 @@ import { LinearGradient, RadialGlow } from './LinearGradient';
 import { Text } from '../Text/Text';
 
 const meta: Meta<typeof LinearGradient> = {
-  title: 'Components/Gradient',
+  title: 'Foundations/Gradient',
   component: LinearGradient,
   parameters: { docs: { description: { component: 'SVG-based gradients that render the same on native and web. `LinearGradient` paints the sidebar and progress bars; `RadialGlow` the soft corner light in the detail pane.' } } },
   argTypes: { direction: { control: 'select', options: ['to-right', 'to-left', 'to-bottom', 'to-top', 'to-bottom-right', 'to-top-right'] } },

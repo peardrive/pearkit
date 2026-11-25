@@ -6,7 +6,7 @@ import { Column, Showcase } from '../../stories/helpers';
 import { Text } from '../Text/Text';
 
 const meta: Meta<typeof Thumbnail> = {
-  title: 'Components/Thumbnail',
+  title: 'Files & sharing/Thumbnail',
   component: Thumbnail,
   parameters: { docs: { description: { component: 'File preview tile. Shows an image when you have one, otherwise a tinted icon for the file kind (`fileKindMeta`). Corner radius scales with size unless set.' } } },
   argTypes: { kind: { control: 'select', options: Object.keys(fileKindMeta) }, size: { control: { type: 'range', min: 24, max: 120, step: 2 } } },

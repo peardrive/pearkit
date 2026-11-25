@@ -6,7 +6,7 @@ import { iconNames } from '../../icons/registry';
 import { Column, Showcase } from '../../stories/helpers';
 
 const meta: Meta<typeof Button> = {
-  title: 'Components/Button',
+  title: 'Buttons & actions/Button',
   component: Button,
   parameters: {
     docs: {

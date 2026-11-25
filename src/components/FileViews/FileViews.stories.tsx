@@ -136,7 +136,7 @@ function Demo({ mode: startMode, columns, compact, menu, width, height, onOpen, 
 }
 
 const meta: Meta<typeof Demo> = {
-  title: 'Components/FileViews',
+  title: 'Files & sharing/FileViews',
   component: Demo,
   parameters: {
     layout: 'centered',

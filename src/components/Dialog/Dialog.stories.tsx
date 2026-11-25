@@ -8,7 +8,7 @@ import { TextField } from '../TextField/TextField';
 import { Text } from '../Text/Text';
 
 const meta: Meta<typeof Dialog> = {
-  title: 'Components/Dialog',
+  title: 'Status & messages/Dialog',
   component: Dialog,
   parameters: {
     layout: 'fullscreen',

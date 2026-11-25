@@ -4,7 +4,7 @@ import { ProgressBar } from './ProgressBar';
 import { Text } from '../Text/Text';
 
 const meta: Meta<typeof ProgressBar> = {
-  title: 'Components/ProgressBar',
+  title: 'Status & messages/ProgressBar',
   component: ProgressBar,
   parameters: { docs: { description: { component: 'Gradient progress track drawn with react-native-svg. `transfer` (amber → pear) is used in list rows, `brand` (green → pear) in the transfer card; `solid` takes any colour token.' } } },
   argTypes: {

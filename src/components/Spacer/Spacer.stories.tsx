@@ -5,7 +5,7 @@ import { Text } from '../Text/Text';
 import { IconButton } from '../IconButton/IconButton';
 
 const meta: Meta<typeof Spacer> = {
-  title: 'Components/Spacer',
+  title: 'App frame/Spacer',
   component: Spacer,
   parameters: { docs: { description: { component: 'Flexible (`flex-1`) or fixed gap. The design uses it to push trailing actions to the edge — the sidebar toggle, the inspector button, the peer count.' } } },
 };

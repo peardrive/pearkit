@@ -80,7 +80,11 @@ const preview: Preview = {
     a11y: { test: 'todo' },
     options: {
       storySort: {
-        order: ['Introduction', 'Docs', 'Foundations', 'Components', 'Patterns', 'Layouts', '*'],
+        // The categories, in the order of AGENTS.md. src/organization.test.ts refuses a story filed anywhere else.
+        order: [
+          'Introduction', 'Docs', 'Foundations', 'Buttons & actions', 'Text & input', 'Status & messages', 'People',
+          'Files & sharing', 'Media', 'Conversation', 'App frame', 'App tools', 'Layouts', '*',
+        ],
       },
     },
     docs: { codePanel: true },

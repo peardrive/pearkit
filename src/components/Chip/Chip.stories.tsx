@@ -5,7 +5,7 @@ import { Chip } from './Chip';
 import { Showcase } from '../../stories/helpers';
 
 const meta: Meta<typeof Chip> = {
-  title: 'Components/Chip',
+  title: 'Buttons & actions/Chip',
   component: Chip,
   parameters: {
     docs: {

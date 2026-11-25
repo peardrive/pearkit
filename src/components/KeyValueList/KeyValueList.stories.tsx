@@ -5,7 +5,7 @@ import { KeyValueList, KeyValueRow } from './KeyValueList';
 import { StatusPill } from '../Status/StatusPill';
 
 const meta: Meta<typeof KeyValueList> = {
-  title: 'Components/KeyValueList',
+  title: 'Files & sharing/KeyValueList',
   component: KeyValueList,
   parameters: { docs: { description: { component: 'Metadata list (the DETAILS block). Data-driven via `items`, or compose `KeyValueRow`s. Values can be any node; rows become pressable with `onPress`.' } } },
   args: {

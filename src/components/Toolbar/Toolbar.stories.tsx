@@ -4,7 +4,7 @@ import { View } from 'react-native';
 import { Toolbar, ToolbarButton, ToolbarSeparator, ToolbarSpacer } from './Toolbar';
 
 const meta: Meta<typeof Toolbar> = {
-  title: 'Components/Toolbar',
+  title: 'App frame/Toolbar',
   component: Toolbar,
   subcomponents: { ToolbarButton, ToolbarSeparator, ToolbarSpacer } as never,
   parameters: { docs: { description: { component: '52px action bar at the top of a pane. `ToolbarButton`s show a tooltip with label + shortcut; `dragRegion` lets empty space drag a frameless Electron window.' } } },

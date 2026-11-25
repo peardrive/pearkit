@@ -5,7 +5,7 @@ import { iconNames } from '../../icons/registry';
 import { Column, Showcase } from '../../stories/helpers';
 
 const meta: Meta<typeof IconButton> = {
-  title: 'Components/IconButton',
+  title: 'Buttons & actions/IconButton',
   component: IconButton,
   parameters: {
     docs: { description: { component: 'Square icon button for headers and toolbars. Pass `tooltip` for a hover label (and screen-reader name), with an optional keyboard shortcut.' } },

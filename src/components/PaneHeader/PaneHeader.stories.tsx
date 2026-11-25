@@ -5,7 +5,7 @@ import { PaneHeader } from './PaneHeader';
 import { IconButton } from '../IconButton/IconButton';
 
 const meta: Meta<typeof PaneHeader> = {
-  title: 'Components/PaneHeader',
+  title: 'App frame/PaneHeader',
   component: PaneHeader,
   parameters: { docs: { description: { component: 'Title, subtitle and icon actions at the top of a pane. Pass `actions` as data (rendered as tooltip-ed `IconButton`s) or any nodes; `leading` adds e.g. a back button on mobile.' } } },
   args: {

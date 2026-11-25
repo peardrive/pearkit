@@ -5,7 +5,7 @@ import { IconButton } from '../IconButton/IconButton';
 import { Button } from '../Button/Button';
 
 const meta: Meta<typeof Tooltip> = {
-  title: 'Components/Tooltip',
+  title: 'Status & messages/Tooltip',
   component: Tooltip,
   parameters: {
     docs: { description: { component: 'Hover tooltip with an optional shortcut. Hover on desktop / web, long-press on touch. Sizes to its content without measuring, so it behaves identically on native and web.' } },

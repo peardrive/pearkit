@@ -6,7 +6,7 @@ import { Showcase, Column } from '../../stories/helpers';
 import { toggleLiked, type SocialCounts } from '../../utils/social';
 
 const meta: Meta<typeof SocialBar> = {
-  title: 'Components/SocialBar',
+  title: 'Conversation/SocialBar',
   component: SocialBar,
   parameters: { docs: { description: { component: 'Like, comment and share under a post: icons alone, each with its number once there is one. The heart fills in the primary colour when the like is yours. `vertical` is the rail over a full-screen picture or video. The bar keeps no numbers of its own: the app hands in `counts` and changes them.' } } },
   args: { counts: { likes: 12, liked: false, comments: 3 }, onLike: () => {}, onComment: () => {}, onShare: () => {} },

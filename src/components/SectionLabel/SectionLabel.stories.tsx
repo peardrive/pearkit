@@ -4,7 +4,7 @@ import { SectionLabel } from './SectionLabel';
 import { IconButton } from '../IconButton/IconButton';
 
 const meta: Meta<typeof SectionLabel> = {
-  title: 'Components/SectionLabel',
+  title: 'App frame/SectionLabel',
   component: SectionLabel,
   parameters: { docs: { description: { component: 'Uppercase, tracked overline that titles a group: LIBRARY, STATUS, IN PROGRESS · 2, DETAILS.' } } },
   argTypes: { inset: { control: 'inline-radio', options: ['sidebar', 'list', 'none'] } },

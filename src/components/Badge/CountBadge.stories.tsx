@@ -3,7 +3,7 @@ import { CountBadge } from './CountBadge';
 import { Showcase } from '../../stories/helpers';
 
 const meta: Meta<typeof CountBadge> = {
-  title: 'Components/CountBadge',
+  title: 'Status & messages/CountBadge',
   component: CountBadge,
   parameters: { docs: { description: { component: 'Trailing counter for navigation items. Quiet text by default; give it a `tone` to draw attention (Sharing now · 2, Failed · 1).' } } },
   argTypes: { tone: { control: 'select', options: [undefined, 'success', 'warning', 'danger', 'neutral', 'primary', 'info', 'accent'] } },

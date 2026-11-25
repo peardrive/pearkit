@@ -4,7 +4,7 @@ import { fn } from 'storybook/test';
 import { DangerZone } from './DangerZone';
 
 const meta: Meta<typeof DangerZone> = {
-  title: 'Patterns/DangerZone',
+  title: 'Status & messages/DangerZone',
   component: DangerZone,
   parameters: { docs: { description: { component: 'A destructive action with its consequence spelled out next to it.' } } },
   argTypes: { layout: { control: 'inline-radio', options: ['horizontal', 'vertical'] } },

@@ -5,7 +5,7 @@ import { Button } from '../Button/Button';
 import { iconNames } from '../../icons/registry';
 
 const meta: Meta<typeof EmptyState> = {
-  title: 'Components/EmptyState',
+  title: 'Status & messages/EmptyState',
   component: EmptyState,
   parameters: { docs: { description: { component: 'Placeholder for empty lists, no selection or search misses.' } } },
   argTypes: { icon: { control: 'select', options: iconNames } },

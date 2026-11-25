@@ -11,7 +11,7 @@ import { Text } from '../Text/Text';
 import { Toolbar, ToolbarSpacer } from '../Toolbar/Toolbar';
 
 const meta: Meta<typeof DebugNotesButton> = {
-  title: 'Patterns/DebugNotesButton',
+  title: 'App tools/DebugNotesButton',
   component: DebugNotesButton,
   parameters: {
     layout: 'fullscreen',

@@ -8,7 +8,7 @@ import { demoWall } from '../../stories/fixtures/browse';
 const [dusk, harbor, ridge] = demoWall(3, 3);
 
 const meta: Meta<typeof MediaTile> = {
-  title: 'Components/MediaTile',
+  title: 'Files & sharing/MediaTile',
   component: MediaTile,
   parameters: {
     docs: {

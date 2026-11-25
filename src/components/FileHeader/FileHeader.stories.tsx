@@ -5,7 +5,7 @@ import { shareStatusMeta } from '../Status/status';
 import { images } from '../../stories/fixtures/shares';
 
 const meta: Meta<typeof FileHeader> = {
-  title: 'Patterns/FileHeader',
+  title: 'Files & sharing/FileHeader',
   component: FileHeader,
   parameters: { docs: { description: { component: 'Hero block for the detail pane: 68px preview, display title, meta line and status. `layout="vertical"` centres everything for mobile.' } } },
   argTypes: { status: { control: 'select', options: Object.keys(shareStatusMeta) }, layout: { control: 'inline-radio', options: ['horizontal', 'vertical'] } },
