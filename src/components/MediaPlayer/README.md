@@ -9,7 +9,8 @@ See it: `npm run storybook`, then **Components → MediaPlayer**. Use the mouse 
 - Play and pause, 15 seconds back and forward, a bar to drag.
 - An options box that drops down from its button (top right), one line per setting:
   **Speed** (minus, value, plus), **Loop** (switch), **Orientation** (auto, upright, sideways),
-  **Captions** (language and a switch). Sound shows Speed and Loop; a picture has no options.
+  **Audio track** (the sound track playing, and a list of the others), **Captions** (language and a
+  switch). Sound shows Speed and Loop; a picture has no options.
 - Swipe **up** to put the player away. Swipe **left or right** to move to the next or previous file.
 - A file that cannot be shown says "Cannot display this file." (one message for every kind of file) and offers the share button; it never leaves a blank screen.
 
@@ -24,7 +25,8 @@ See it: `npm run storybook`, then **Components → MediaPlayer**. Use the mouse 
 | `web/WebMedia.tsx` | The engine for a browser (`<video>`, `<audio>`), used by Storybook and desktop apps. |
 
 The player does not play anything itself. The app gives it an **engine**: eight small calls
-(`play`, `pause`, `seekTo`, `setRate`, `setLoop`, `read`, `captions`, `chooseCaption`) onto
+(`play`, `pause`, `seekTo`, `setRate`, `setLoop`, `read`, `captions`, `chooseCaption`), and two
+optional ones (`audioTracks`, `chooseAudioTrack`), onto
 whatever plays files there, such as expo-video on a phone or a `<video>` element in a browser. That is
 what lets one player run everywhere, and what lets the rules be tested without a device.
 
@@ -70,3 +72,25 @@ untouched and current). Change the player here, look at it in Storybook, then sy
 
 - Android on a real device (it compiles; nobody has held it).
 - Tablets.
+
+## Audio tracks
+
+A film may carry several sound tracks: another language, a commentary, a second mix. An engine that
+can list them adds two calls, and the menu then has an **Audio track** line. An engine without them
+is unchanged: no line, nothing to update.
+
+```ts
+audioTracks: () => ({ tracks: player.availableAudioTracks ?? [], current: player.audioTrack ?? null }),
+chooseAudioTrack: (index) => { player.audioTrack = player.availableAudioTracks[index] ?? null; },
+```
+
+(That is expo-video on a phone.) Each track is `{ id?, language?, label? }`. The line is dimmed when
+the file has only one track.
+
+In a browser the engine from `useWebMedia()` has the two calls when the browser lists sound tracks
+(`webListsAudioTracks()`): Safari does; Chrome and Electron only with the feature switched on. In
+an Electron app, on the window that shows the player:
+
+```ts
+new BrowserWindow({ webPreferences: { enableBlinkFeatures: 'AudioVideoTracks' } });
+```

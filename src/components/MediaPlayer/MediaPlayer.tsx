@@ -24,7 +24,9 @@ import {
   controlsMayHide,
   controlsPinned,
   EMPTY_READING,
+  engineAudioChoices,
   engineCaptionChoices,
+  engineHasAudioTracks,
   JUMP_SECONDS,
   menuBox,
   menuLines,
@@ -37,6 +39,7 @@ import {
   swipeAction,
   swipeAxis,
   swipeOffset,
+  type AudioChoice,
   type CaptionChoice,
   type Edges,
   type EngineReading,
@@ -114,7 +117,7 @@ function sameReading(a: EngineReading, b: EngineReading): boolean {
   );
 }
 
-function sameCaptions(a: readonly CaptionChoice[], b: readonly CaptionChoice[]): boolean {
+function sameCaptions(a: readonly (CaptionChoice | AudioChoice)[], b: readonly (CaptionChoice | AudioChoice)[]): boolean {
   return a.length === b.length && a.every((c, i) => c.key === b[i]?.key && c.selected === b[i]?.selected);
 }
 
@@ -145,12 +148,13 @@ export function MediaPlayer({
 
   const [reading, setReading] = useState<EngineReading>(EMPTY_READING);
   const [speed, setSpeed] = useState(NORMAL_SPEED);
-  const lines = menuLines(kind);
+  const lines = menuLines(kind, { audioTracks: engineHasAudioTracks(engine) });
   const [menuOpen, setMenuOpen] = useState(defaultMenuOpen && lines.length > 0);
   const menuRise = useRef(new Animated.Value(defaultMenuOpen ? 1 : 0)).current;
   const [captions, setCaptions] = useState<CaptionChoice[]>([]);
   /** The caption track last shown for this file, so off and on again returns to it. */
   const [captionMemory, setCaptionMemory] = useState(-1);
+  const [audioTracks, setAudioTracks] = useState<AudioChoice[]>([]);
   const [barWidth, setBarWidth] = useState(0);
   /** Where the finger is on the bar, in seconds, while it is down. */
   const [scrub, setScrub] = useState<number | null>(null);
@@ -174,12 +178,14 @@ export function MediaPlayer({
     return () => clearInterval(id);
   }, [engine]);
 
-  // A file may list its captions a moment after it opens; keep the open menu up to date.
+  // A file may list its captions and sound tracks a moment after it opens; keep the open menu up to date.
   useEffect(() => {
     if (!engine || !menuOpen) return;
     const look = () => {
       const next = engineCaptionChoices(engine);
       setCaptions((prev) => (sameCaptions(prev, next) ? prev : next));
+      const sound = engineAudioChoices(engine);
+      setAudioTracks((prev) => (sameCaptions(prev, sound) ? prev : sound));
     };
     look();
     const id = setInterval(look, 500);
@@ -279,6 +285,7 @@ export function MediaPlayer({
 
   const openMenu = useCallback(() => {
     setCaptions(engineCaptionChoices(engine));
+    setAudioTracks(engineAudioChoices(engine));
     setMenuOpen(true);
     showControls();
     menuRise.setValue(0);
@@ -295,6 +302,14 @@ export function MediaPlayer({
       safely(() => engine?.chooseCaption(index), undefined);
       if (index >= 0) setCaptionMemory(index);
       setCaptions(engineCaptionChoices(engine));
+    },
+    [engine],
+  );
+
+  const onAudioTrack = useCallback(
+    (index: number) => {
+      safely(() => engine?.chooseAudioTrack?.(index), undefined);
+      setAudioTracks(engineAudioChoices(engine));
     },
     [engine],
   );
@@ -609,6 +624,8 @@ export function MediaPlayer({
                 captions={captions}
                 captionMemory={captionMemory}
                 onCaption={onCaption}
+                audioTracks={audioTracks}
+                onAudioTrack={onAudioTrack}
                 accent={accent}
                 glass={glass}
               />

@@ -2,6 +2,11 @@
 import { describe, expect, test } from 'vitest';
 
 import {
+  audioChoices,
+  audioLine,
+  audioNames,
+  engineAudioChoices,
+  engineHasAudioTracks,
   applyPlayback,
   canStepSpeed,
   captionLine,
@@ -252,6 +257,93 @@ describe("captions", () => {
     expect(byName).toHaveLength(3);
     const byId = captionChoices([{ id: "1", language: "en" }, { id: "2", language: "en" }], null);
     expect(byId.map((c) => c.label)).toEqual(["Off", "English", "English 2"]);
+  });
+});
+
+describe("audio tracks: the sound tracks inside a video", () => {
+  const original = { id: "1", language: "eng", label: "English" };
+  const riff = { id: "2", language: "eng", label: "RiffTrax" };
+  const french = { id: "3", language: "fra", label: "French audio track" };
+
+  test("a track is called by its own name, else by its language", () => {
+    expect(audioNames([original, riff, french])).toEqual([
+      { label: "English", short: "EN" },
+      { label: "RiffTrax", short: "RiffTrax" },
+      { label: "French", short: "FR" },
+    ]);
+  });
+
+  test("a track that says nothing about itself is numbered", () => {
+    expect(audioNames([{ language: "und", label: "" }, { label: "Track 2" }]).map((n) => n.label)).toEqual(["Track 1", "Track 2"]);
+  });
+
+  test("the same name in two languages gets the language added; twins are numbered", () => {
+    const names = audioNames([
+      { language: "en", label: "Commentary" },
+      { language: "fr", label: "Commentary" },
+      { language: "en", label: "" },
+      { language: "en", label: "" },
+    ]);
+    expect(names.map((n) => n.label)).toEqual(["Commentary (English)", "Commentary (French)", "English", "English 2"]);
+  });
+
+  test("there is no Off, and the playing track is the chosen one", () => {
+    const choices = audioChoices([original, riff, french], riff);
+    expect(choices.map((c) => c.index)).toEqual([0, 1, 2]);
+    expect(choices.map((c) => c.selected)).toEqual([false, true, false]);
+    expect(audioChoices([], null)).toEqual([]);
+    expect(audioChoices(null, null)).toEqual([]);
+  });
+
+  test("one track is nothing to choose from: the line is dimmed but names it", () => {
+    const one = audioLine(audioChoices([original], original));
+    expect(one.available).toBe(false);
+    expect(one.shown?.short).toBe("EN");
+    expect(audioLine([]).shown).toBeNull();
+    expect(audioLine(undefined)).toEqual({ available: false, shown: null, tracks: [] });
+  });
+
+  test("two or more: the line shows the playing track, or the first while the engine has not said", () => {
+    expect(audioLine(audioChoices([original, riff], riff)).shown?.label).toBe("RiffTrax");
+    const unsaid = audioLine(audioChoices([original, riff], null));
+    expect(unsaid.available).toBe(true);
+    expect(unsaid.shown?.label).toBe("English");
+  });
+
+  test("the menu has the line only for an engine that can list tracks", () => {
+    expect(menuLines("video", { audioTracks: true })).toEqual(["speed", "loop", "orientation", "audio", "captions"]);
+    expect(menuLines("video", { audioTracks: false })).toEqual(["speed", "loop", "orientation", "captions"]);
+    expect(menuLines("audio", { audioTracks: true })).toEqual(["speed", "loop"]);
+  });
+
+  test("an engine without the two calls is left alone", () => {
+    const f = fakeEngine();
+    expect(engineHasAudioTracks(f.engine)).toBe(false);
+    expect(engineAudioChoices(f.engine)).toEqual([]);
+    expect(engineHasAudioTracks(null)).toBe(false);
+  });
+
+  test("an engine with them: the list comes from it, and choosing moves the tick", () => {
+    const f = fakeEngine();
+    const tracks = [original, riff];
+    let playing = 0;
+    f.engine.audioTracks = () => ({ tracks, current: tracks[playing] ?? null });
+    f.engine.chooseAudioTrack = (i) => {
+      playing = i;
+    };
+    expect(engineHasAudioTracks(f.engine)).toBe(true);
+    expect(engineAudioChoices(f.engine).map((c) => c.selected)).toEqual([true, false]);
+    f.engine.chooseAudioTrack(1);
+    expect(engineAudioChoices(f.engine).map((c) => c.selected)).toEqual([false, true]);
+  });
+
+  test("an engine that throws lists nothing", () => {
+    const f = fakeEngine();
+    f.engine.audioTracks = () => {
+      throw new Error("released");
+    };
+    f.engine.chooseAudioTrack = () => {};
+    expect(engineAudioChoices(f.engine)).toEqual([]);
   });
 });
 
