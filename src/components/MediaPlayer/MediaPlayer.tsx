@@ -101,6 +101,7 @@ export type MediaPlayerProps = {
 
 // Animations run on the device's own thread where there is one; a browser has none.
 const NATIVE = Platform.OS !== 'web';
+const WEB = !NATIVE;
 const NO_INSETS: Edges = { top: 0, bottom: 0, left: 0, right: 0 };
 /** How far to the side a player starts when it arrives by a swipe. */
 const ARRIVE_FROM = 72;
@@ -141,7 +142,10 @@ export function MediaPlayer({
 }: MediaPlayerProps) {
   const [size, setSize] = useState({ width: 0, height: 0 });
   const sideways = size.width > size.height && size.height > 0;
-  const edges = playerEdges(insets, sideways);
+  // A phone on its side moves its cut-out to a side, so the upright insets are turned with it. A wide window is not
+  // a turned phone: on the web (a desktop window, a WebView whose env() insets already follow the turn) the insets
+  // are kept as given, or the Mac's title bar inset vanished under the traffic lights (rKeyChat, 2026-11-25).
+  const edges = playerEdges(insets, sideways && !WEB);
 
   const [reading, setReading] = useState<EngineReading>(EMPTY_READING);
   const [speed, setSpeed] = useState(NORMAL_SPEED);
