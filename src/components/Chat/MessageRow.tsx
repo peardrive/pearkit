@@ -130,6 +130,7 @@ export function MessageRow({
         </View>
       ) : null}
 
+      {text || !m.attachments?.length ? (
       <Pressable
         onPress={hasActions ? () => setOpen((o) => !o) : undefined}
         accessibilityRole={hasActions ? 'button' : undefined}
@@ -169,10 +170,11 @@ export function MessageRow({
           <MarkdownText text={m.text} variant={compact ? 'body-sm' : 'body'} tone="foreground" selectable onLinkPress={onLinkPress} />
         )}
       </Pressable>
+      ) : null}
 
       {m.attachments?.length ? (
         <View className="pt-1.5">
-          <Attachments items={m.attachments} align={right ? 'right' : 'left'} onOpen={onOpenAttachment ? (a) => onOpenAttachment(a, m) : undefined} />
+          <Attachments items={m.attachments} align={right ? 'right' : 'left'} onOpen={onOpenAttachment ? (a) => onOpenAttachment(a, m) : undefined} onActions={hasActions ? () => setOpen((o) => !o) : undefined} />
         </View>
       ) : null}
 

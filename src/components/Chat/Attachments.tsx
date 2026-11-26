@@ -1,11 +1,12 @@
 import React from 'react';
-import { Image, Platform, Pressable, View, type StyleProp, type ViewStyle } from 'react-native';
+import { Platform, Pressable, View, type StyleProp, type ViewStyle } from 'react-native';
 import { cn } from '../../utils/cn';
 import { formatBytes } from '../../utils/format';
 import { Icon } from '../../icons/Icon';
 import { statusToken } from '../../theme/tones';
 import { Text } from '../Text/Text';
 import { Thumbnail, fileKindMeta } from '../Thumbnail/Thumbnail';
+import { RetryImage } from '../Thumbnail/RetryImage';
 import { attachmentAspect, attachmentKind, galleryLayout, splitAttachments } from './attachmentsLogic';
 import type { ChatAttachment } from './types';
 
@@ -13,6 +14,8 @@ export interface AttachmentsProps {
   items: ChatAttachment[];
   /** Open one (a picture in the viewer, a file wherever the app opens files). Without it nothing is pressable. */
   onOpen?: (attachment: ChatAttachment, index: number) => void;
+  /** A long press on a tile or chip: the message's actions (react, reply), for a message that is only its pictures. */
+  onActions?: () => void;
   /** Under a message of mine the gallery and chips sit at the right. */
   align?: 'left' | 'right';
   /** The widest a gallery gets, in px. Default 300. */
@@ -30,7 +33,7 @@ const web = Platform.OS === 'web';
  * side, three as one over two, four or more as a grid with "+N" on the last), every other file as a small chip
  * with its kind, name and size. One press opens it. The same piece in every app's chat.
  */
-export function Attachments({ items, onOpen, align = 'left', width = 300, compact = false, className, style }: AttachmentsProps) {
+export function Attachments({ items, onOpen, onActions, align = 'left', width = 300, compact = false, className, style }: AttachmentsProps) {
   const { gallery, files } = splitAttachments(compact ? [] : items);
   const chips = compact ? items.map((item, index) => ({ item, index })) : files;
   const right = align === 'right';
@@ -50,13 +53,15 @@ export function Attachments({ items, onOpen, align = 'left', width = 300, compac
               <Pressable
                 key={`${item.name}-${index}`}
                 onPress={onOpen ? () => onOpen(item, index) : undefined}
-                disabled={!onOpen}
+                onLongPress={onActions}
+                disabled={!onOpen && !onActions}
                 accessibilityRole="button"
                 accessibilityLabel={last ? `Open ${item.name} and ${layout.more} more` : `Open ${item.name}`}
+                accessibilityHint={onActions ? 'Hold for reactions and reply' : undefined}
                 className={cn('absolute overflow-hidden rounded-control border border-overlay/[0.10] bg-inset active:border-primary/60', web && onOpen && 'cursor-pointer hover:border-overlay/[0.22]')}
                 style={{ left: c.x, top: c.y, width: c.w, height: c.h }}
               >
-                {src ? <Image source={{ uri: src }} resizeMode="cover" style={{ width: c.w, height: c.h }} accessibilityIgnoresInvertColors accessibilityLabel={item.name} /> : null}
+                {src ? <RetryImage uri={src} resizeMode="cover" style={{ width: c.w, height: c.h }} accessibilityIgnoresInvertColors accessibilityLabel={item.name} /> : null}
                 {kind === 'video' ? (
                   <View className="absolute inset-0 items-center justify-center">
                     <View className="h-9 w-9 items-center justify-center rounded-full bg-black/55">
@@ -93,9 +98,11 @@ export function Attachments({ items, onOpen, align = 'left', width = 300, compac
               <Pressable
                 key={`${item.name}-${index}`}
                 onPress={onOpen ? () => onOpen(item, index) : undefined}
-                disabled={!onOpen}
+                onLongPress={onActions}
+                disabled={!onOpen && !onActions}
                 accessibilityRole="button"
                 accessibilityLabel={`Open ${item.name}`}
+                accessibilityHint={onActions ? 'Hold for reactions and reply' : undefined}
                 className={cn('flex-row items-center gap-2 rounded-control border border-overlay/[0.10] bg-pane py-1.5 pl-1.5 pr-2.5 active:border-primary/60', web && onOpen && 'cursor-pointer hover:border-overlay/[0.22]')}
                 style={{ maxWidth: 240 }}
               >

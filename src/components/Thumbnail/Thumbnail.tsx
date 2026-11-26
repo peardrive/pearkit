@@ -5,6 +5,7 @@ import { Icon } from '../../icons/Icon';
 import type { IconName } from '../../icons/registry';
 import { statusSoftBg, statusToken, type StatusTone } from '../../theme/tones';
 import { fileKindMeta, type FileKind } from './fileKind';
+import { RetryImage } from './RetryImage';
 
 export { fileKindMeta, fileKindFromName, type FileKind } from './fileKind';
 
@@ -42,7 +43,9 @@ export function Thumbnail({ source, kind = 'file', size = 40, radius, bordered, 
       className={cn('items-center justify-center overflow-hidden', !src && statusSoftBg[t], bordered && 'border border-overlay/10', className)}
       style={[{ width: size, height: size, borderRadius: r }, style]}
     >
-      {src ? (
+      {typeof source === 'string' ? (
+        <RetryImage uri={source} resizeMode="cover" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }} />
+      ) : src ? (
         <Image source={src} resizeMode="cover" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }} />
       ) : (
         <Icon name={icon ?? meta.icon} size={Math.round(size * 0.5)} tone={statusToken[t]} strokeWidth={kind === 'folder' ? 1.6 : 1.5} />
