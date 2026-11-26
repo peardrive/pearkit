@@ -1,0 +1,5 @@
+---
+"pearkit": minor
+---
+
+New **`Attachments`**: what a message carries under its text, as every app's chat shows it. Pictures and videos form a gallery (one keeps its own shape, two sit side by side, three are one over two, four or more a two-by-two grid with "+N" on the last cell); every other file is a small chip with its kind, name and size; one press opens it. `MessageRow` now draws its attachments with it. `ChatAttachment` gained `id`, `mime`, `thumbnail`, `width`/`height` and `state`. New **`MediaViewer`**: one attachment on a dark full-screen layer with the shared `MediaPlayer`'s controls: a picture as it is, a video or sound through the player's engine (the browser's `<video>`/`<audio>` on the web, the app's own on a phone through `renderMedia`), close, share, next and previous by swipe or arrow key; any other file says it cannot be shown here and offers Share. The rules (`attachmentKind`, `splitAttachments`, `galleryLayout`, `viewableAttachments`) are plain functions with tests.

@@ -1,17 +1,15 @@
 import React, { useRef, useState } from 'react';
-import { Image, Platform, Pressable, View, type StyleProp, type ViewStyle } from 'react-native';
+import { Platform, Pressable, View, type StyleProp, type ViewStyle } from 'react-native';
 import { cn } from '../../utils/cn';
 import { copyToClipboard } from '../../utils/clipboard';
-import { formatBytes } from '../../utils/format';
 import { Icon } from '../../icons/Icon';
-import { statusToken } from '../../theme/tones';
 import { Avatar } from '../Avatar/Avatar';
 import { EmojiBar } from '../EmojiPicker/EmojiPicker';
 import { IconButton } from '../IconButton/IconButton';
 import { Text } from '../Text/Text';
 import { SelectionReply } from './SelectionReply';
+import { Attachments } from './Attachments';
 import { MarkdownText } from '../MarkdownText/MarkdownText';
-import { fileKindFromName, fileKindMeta, type FileKind } from '../Thumbnail/Thumbnail';
 import { AgentMark } from './AgentMark';
 import { messageTime } from './chatLogic';
 import { QUICK_REACTIONS, type ChatAttachment, type ChatAuthor, type ChatMessage } from './types';
@@ -58,10 +56,6 @@ export interface MessageRowProps {
   className?: string;
   style?: StyleProp<ViewStyle>;
 }
-
-const KINDS: readonly FileKind[] = ['folder', 'video', 'image', 'audio', 'document', 'file'];
-const kindOf = (a: ChatAttachment): FileKind =>
-  a.kind && (KINDS as readonly string[]).includes(a.kind) ? (a.kind as FileKind) : fileKindFromName(a.name);
 
 /**
  * One message: the author's avatar (or the agent's mark) and name on the first of a group, the text in a bubble
@@ -177,41 +171,8 @@ export function MessageRow({
       </Pressable>
 
       {m.attachments?.length ? (
-        <View className={cn('flex-row flex-wrap items-start gap-1.5 pt-1.5', right && 'justify-end')}>
-          {m.attachments.map((a, i) => {
-            const kind = kindOf(a);
-            const meta = fileKindMeta[kind];
-            const picture = kind === 'image' && a.url;
-            return (
-              <Pressable
-                key={`${a.name}-${i}`}
-                onPress={onOpenAttachment ? () => onOpenAttachment(a, m) : undefined}
-                disabled={!onOpenAttachment}
-                accessibilityRole="button"
-                accessibilityLabel={`Open ${a.name}`}
-                className={cn(
-                  'overflow-hidden rounded-control border border-overlay/[0.10] bg-pane active:border-primary/60',
-                  web && onOpenAttachment && 'cursor-pointer hover:border-overlay/[0.18]',
-                )}
-                style={{ width: picture ? 132 : undefined, maxWidth: 220 }}
-              >
-                {picture ? <Image source={{ uri: a.url }} resizeMode="cover" style={{ width: 132, height: 84 }} accessibilityIgnoresInvertColors /> : null}
-                <View className="flex-row items-center gap-1.5 px-2 py-1.5">
-                  <Icon name={meta.icon} size={14} tone={statusToken[meta.tone]} />
-                  <View className="shrink">
-                    <Text variant="micro" weight="semibold" tone="foreground" numberOfLines={1}>
-                      {a.name}
-                    </Text>
-                    {a.size != null ? (
-                      <Text variant="micro" tone="muted" numberOfLines={1}>
-                        {formatBytes(a.size)}
-                      </Text>
-                    ) : null}
-                  </View>
-                </View>
-              </Pressable>
-            );
-          })}
+        <View className="pt-1.5">
+          <Attachments items={m.attachments} align={right ? 'right' : 'left'} onOpen={onOpenAttachment ? (a) => onOpenAttachment(a, m) : undefined} />
         </View>
       ) : null}
 

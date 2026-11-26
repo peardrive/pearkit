@@ -34,6 +34,8 @@ A map of everything pearkit exports. Storybook has full prop tables, controls an
 | `KeyValueList`, `KeyValueRow` | Metadata lists, data-driven or composed. |
 | `EmptyState` | Icon, title, description, actions. |
 | `MediaNotice` | Over a player that cannot play: `offline` / `unplayable` presets or custom copy, theme scrim, retry button, inline mode. |
+| `MediaViewer` | One attachment on a dark full-screen layer with the shared MediaPlayer's controls: a picture as it is, a video or sound through the player's engine (`<video>`/`<audio>` on the web, the app's own on a phone via `renderMedia`), close, share, next and previous by swipe or arrow key; any other file says it cannot be shown here and offers Share. |
+| `Attachments` (+ `attachmentKind`, `splitAttachments`, `galleryLayout`, `viewableAttachments`) | What a message carries under its text: pictures and videos as a gallery (one keeps its shape, two side by side, three as one over two, four or more as a grid with +N), every other file as a chip with its kind, name and size; one press opens it. `MessageRow` draws its attachments with it. |
 | `Card`, `Divider`, `Kbd`, `SectionLabel`, `Spacer` | Small building blocks. |
 | `TextField` | Label, hint / error, icons, trailing slot, password reveal, monospace and multiline modes. |
 | `Dialog` | Modal on RN `Modal` (portalled on web with the theme re-applied), icon + title + description, footer actions, Escape / backdrop to close. |

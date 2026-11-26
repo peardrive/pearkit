@@ -99,6 +99,7 @@ export * from './Order/useOrderedSelection';
 
 // Media
 export * from './MediaPlayer';
+export * from './MediaViewer';
 
 // Files
 export * from './FileViews';

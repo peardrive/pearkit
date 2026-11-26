@@ -24,8 +24,18 @@ export interface ChatAttachment {
   size?: number;
   /** Where to open it; for a picture, also what to show on the tile. */
   url?: string;
-  /** `image`, `video`, `audio`, `document`, `folder`… Guessed from the name when left out. */
+  /** `image`, `video`, `audio`, `document`, `folder`… Guessed from the mime, then the name, when left out. */
   kind?: string;
+  /** The app's id for it (a content hash). */
+  id?: string;
+  mime?: string;
+  /** A small picture for the tile when `url` is the file itself (a video's frame, a reduced photo). */
+  thumbnail?: string;
+  /** The picture's own size in px, so a gallery can keep its shape before it loads. */
+  width?: number;
+  height?: number;
+  /** Where the bytes are: on this device, elsewhere on the network, or on their way. */
+  state?: 'here' | 'away' | 'fetching';
 }
 
 export interface ChatMessage {
