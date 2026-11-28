@@ -1,0 +1,41 @@
+import{n as e,o as t}from"./rolldown-runtime-BCiCTKAo.js";import{t as n}from"./react-BWPDF9mI.js";import{a as r,i,n as a,o,r as s,t as c}from"./Text-CGstUeEZ.js";import{L as l,a as u,h as d,o as f,s as p,u as m,z as h}from"./iframe-BRms_EWO.js";import{n as g,t as _}from"./Icon-B0Axo6_1.js";import{i as v,n as y}from"./helpers-C15c0YMr.js";function b({label:e,icon:t,count:n,tone:a=`primary`,selected:s,disabled:u,onPress:p,onRemove:m,size:g=`md`,removeLabel:v,className:y,style:b}){let C=S[g],w=!!p&&!u;return(0,x.jsxs)(w?d:l,{onPress:w?p:void 0,accessibilityRole:w?`button`:void 0,accessibilityLabel:e,accessibilityState:{selected:!!s,disabled:u||void 0},className:f(`flex-row items-center self-start rounded-full`,C.box,s?i[a]:`bg-overlay/5`,w&&!s&&`hover:bg-overlay/[0.08]`,w&&h.OS===`web`&&`cursor-pointer`,u&&`opacity-40`,y),style:b,children:[t?typeof t==`string`?(0,x.jsx)(_,{name:t,size:C.icon,tone:s?o[a]:`icon`}):t:null,(0,x.jsx)(c,{variant:C.text,weight:s?`semibold`:`medium`,tone:s?void 0:`foreground`,className:s?r[a]:void 0,numberOfLines:1,children:e}),n==null?null:(0,x.jsx)(c,{variant:C.text,tone:`muted`,numberOfLines:1,children:String(n)}),m?(0,x.jsx)(d,{onPress:u?void 0:m,accessibilityRole:`button`,accessibilityLabel:v??`Remove ${e}`,hitSlop:6,className:f(`items-center justify-center rounded-full hover:bg-overlay/[0.12]`,C.closeBox,h.OS===`web`&&`cursor-pointer`),children:(0,x.jsx)(_,{name:`close`,size:C.close,tone:s?o[a]:`icon`})}):null]})}var x,S;function C(){return(C=e((()=>{n(),m(),p(),s(),g(),a(),x=u(),S={sm:{box:`gap-1 py-[3px] pl-2 pr-2`,text:`micro`,icon:12,close:10,closeBox:`ml-px -mr-1 p-[3px]`},md:{box:`gap-1.5 py-[5px] pl-2.5 pr-2.5`,text:`caption`,icon:14,close:11,closeBox:`ml-px -mr-1.5 p-1`}},b.__docgenInfo={description:"A small token for a tag or an active filter: press to toggle, ✕ to remove. The independent\nsibling of `SegmentedControl` — chips don't exclude each other.",methods:[],displayName:`Chip`,props:{label:{required:!0,tsType:{name:`string`},description:``},icon:{required:!1,tsType:{name:`union`,raw:`IconName | React.ReactElement`,elements:[{name:`IconName`},{name:`ReactReactElement`,raw:`React.ReactElement`}]},description:`Leading icon name, or any element (a swatch, a tiny avatar).`},count:{required:!1,tsType:{name:`union`,raw:`number | string`,elements:[{name:`number`},{name:`string`}]},description:`Quiet count after the label — how many results carry the tag.`},tone:{required:!1,tsType:{name:`StatusTone`},description:"Tint of the selected state. Default `primary`.",defaultValue:{value:`'primary'`,computed:!1}},selected:{required:!1,tsType:{name:`boolean`},description:``},disabled:{required:!1,tsType:{name:`boolean`},description:``},onPress:{required:!1,tsType:{name:`signature`,type:`function`,raw:`() => void`,signature:{arguments:[],return:{name:`void`}}},description:`Makes the chip pressable (toggle a filter, open the tag).`},onRemove:{required:!1,tsType:{name:`signature`,type:`function`,raw:`() => void`,signature:{arguments:[],return:{name:`void`}}},description:`Shows a trailing ✕ that calls this — a removable chip.`},size:{required:!1,tsType:{name:`union`,raw:`'sm' | 'md'`,elements:[{name:`literal`,value:`'sm'`},{name:`literal`,value:`'md'`}]},description:``,defaultValue:{value:`'md'`,computed:!1}},removeLabel:{required:!1,tsType:{name:`string`},description:"Accessible label of the ✕. Default `Remove <label>`."},className:{required:!1,tsType:{name:`string`},description:``},style:{required:!1,tsType:{name:`StyleProp`,elements:[{name:`ViewStyle`}],raw:`StyleProp<ViewStyle>`},description:``}}}})))()}var w,T,E,D,O,k,A;function j(){return(j=e((()=>{w=t(n()),m(),C(),v(),T=u(),E={title:`Chip`,component:b,parameters:{docs:{description:{component:"A small token for a tag or an active filter: press to toggle, ✕ to remove. The independent sibling of `SegmentedControl` — chips don't exclude each other, so they fit tag lists, filter bars and token inputs."}}},argTypes:{tone:{control:`select`,options:[`primary`,`accent`,`info`,`success`,`warning`,`danger`,`neutral`]},size:{control:`inline-radio`,options:[`sm`,`md`]},icon:{control:`select`,options:[void 0,`star`,`filter`,`video`,`image`,`music`,`clock`]}},args:{label:`sunset`,size:`md`,tone:`primary`}},D={args:{selected:!0,count:412,onPress:()=>{},onRemove:()=>{}}},O={render:()=>(0,T.jsxs)(l,{className:`gap-6`,children:[(0,T.jsxs)(y,{title:`Tags on a result (static, with counts)`,children:[(0,T.jsx)(b,{label:`sunset`,count:412}),(0,T.jsx)(b,{label:`harbor`,count:38}),(0,T.jsx)(b,{label:`wide shot`,count:7,size:`sm`}),(0,T.jsx)(b,{label:`golden hour`,size:`sm`})]}),(0,T.jsxs)(y,{title:`Pressable, selected tints`,children:[(0,T.jsx)(b,{label:`videos`,icon:`video`,selected:!0,onPress:()=>{}}),(0,T.jsx)(b,{label:`pictures`,icon:`image`,selected:!0,tone:`accent`,onPress:()=>{}}),(0,T.jsx)(b,{label:`music`,icon:`music`,selected:!0,tone:`info`,onPress:()=>{}}),(0,T.jsx)(b,{label:`favorites`,icon:`star`,onPress:()=>{}})]}),(0,T.jsxs)(y,{title:`Removable (active filters)`,children:[(0,T.jsx)(b,{label:`over 10 min`,onRemove:()=>{}}),(0,T.jsx)(b,{label:`1080p and up`,selected:!0,onRemove:()=>{},onPress:()=>{}}),(0,T.jsx)(b,{label:`this week`,selected:!0,tone:`accent`,size:`sm`,onRemove:()=>{},onPress:()=>{}})]}),(0,T.jsxs)(y,{title:`Disabled`,children:[(0,T.jsx)(b,{label:`no matches`,disabled:!0,onPress:()=>{}}),(0,T.jsx)(b,{label:`locked`,disabled:!0,selected:!0,onRemove:()=>{}})]})]})},k={render:function(){let e=[`sunset`,`harbor`,`ridge`,`night`,`aerial`,`close up`],[t,n]=w.useState([`sunset`,`night`]),r=e=>n(t=>t.includes(e)?t.filter(t=>t!==e):[...t,e]);return(0,T.jsx)(y,{title:`Filters`,children:e.map(e=>(0,T.jsx)(b,{label:e,selected:t.includes(e),onPress:()=>r(e),onRemove:t.includes(e)?()=>r(e):void 0},e))})}},A=[`Playground`,`Variants`,`FilterBar`],D.parameters={...D.parameters,docs:{...D.parameters?.docs,source:{originalSource:`{
+  args: {
+    selected: true,
+    count: 412,
+    onPress: () => {},
+    onRemove: () => {}
+  }
+}`,...D.parameters?.docs?.source}}},O.parameters={...O.parameters,docs:{...O.parameters?.docs,source:{originalSource:`{
+  render: () => <View className="gap-6">
+      <Showcase title="Tags on a result (static, with counts)">
+        <Chip label="sunset" count={412} />
+        <Chip label="harbor" count={38} />
+        <Chip label="wide shot" count={7} size="sm" />
+        <Chip label="golden hour" size="sm" />
+      </Showcase>
+      <Showcase title="Pressable, selected tints">
+        <Chip label="videos" icon="video" selected onPress={() => {}} />
+        <Chip label="pictures" icon="image" selected tone="accent" onPress={() => {}} />
+        <Chip label="music" icon="music" selected tone="info" onPress={() => {}} />
+        <Chip label="favorites" icon="star" onPress={() => {}} />
+      </Showcase>
+      <Showcase title="Removable (active filters)">
+        <Chip label="over 10 min" onRemove={() => {}} />
+        <Chip label="1080p and up" selected onRemove={() => {}} onPress={() => {}} />
+        <Chip label="this week" selected tone="accent" size="sm" onRemove={() => {}} onPress={() => {}} />
+      </Showcase>
+      <Showcase title="Disabled">
+        <Chip label="no matches" disabled onPress={() => {}} />
+        <Chip label="locked" disabled selected onRemove={() => {}} />
+      </Showcase>
+    </View>
+}`,...O.parameters?.docs?.source}}},k.parameters={...k.parameters,docs:{...k.parameters?.docs,source:{originalSource:`{
+  render: function FilterBarStory() {
+    const all = ['sunset', 'harbor', 'ridge', 'night', 'aerial', 'close up'];
+    const [on, setOn] = React.useState<string[]>(['sunset', 'night']);
+    const toggle = (t: string) => setOn(v => v.includes(t) ? v.filter(x => x !== t) : [...v, t]);
+    return <Showcase title="Filters">
+        {all.map(t => <Chip key={t} label={t} selected={on.includes(t)} onPress={() => toggle(t)} onRemove={on.includes(t) ? () => toggle(t) : undefined} />)}
+      </Showcase>;
+  }
+}`,...k.parameters?.docs?.source},description:{story:`A working filter bar: press toggles, ✕ clears.`,...k.parameters?.docs?.description}}}})))()}j();export{k as FilterBar,D as Playground,O as Variants,A as __namedExportsOrder,E as default};
