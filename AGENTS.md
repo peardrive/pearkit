@@ -19,37 +19,41 @@ for using it and adding to it. It is written for people and for coding agents al
 
 ## Where a piece goes
 
-Every piece has **one home category**. The category is the first part of its Storybook title
-(`title: 'Media/Scrubber'`), and that is the only place it is recorded. Ask one question:
+Every piece has **one home category**, and the category is the folder the piece lives in:
+`src/components/media/Scrubber/`. Storybook takes the sidebar section from that folder, so the
+category is recorded once and the story's `title` is just the piece's name (`title: 'Scrubber'`).
+Folder names are camelCase and, where a single word will do, one word. Ask one question:
 
 > **What is the person making when they reach for this?**
 
 | Category | What goes there | Examples |
 | --- | --- | --- |
 | **Foundations** | The look everything shares | Colors, Typography, Icons, Theming, Gradient |
-| **Buttons & actions** | Things you press | Button, IconButton, Chip, Kbd |
-| **Text & input** | Things you type or drop into | TextField, SearchField, LinkField |
-| **Status & messages** | Things that tell you something | Status, CountBadge, ProgressBar, Tooltip, Dialog, EmptyState, DangerZone |
+| **Buttons** | Things you press | Button, IconButton, Chip, Kbd, Switch |
+| **Input** | Things you type or drop into | TextField, SearchField, LinkField |
+| **Feedback** | Things that tell you something | Status, CountBadge, ProgressBar, Tooltip, Dialog, EmptyState, DangerZone |
 | **People** | Who someone is | Avatar, PeerChip |
-| **Files & sharing** | Showing, listing and sending files | Thumbnail, MediaTile, FileViews, Masonry, FileHeader, ShareRow, ShareLinkCard, TransferCard, QRCode |
+| **Files** | Showing, listing and sending files | Thumbnail, MediaTile, FileViews, Masonry, FileHeader, ShareRow, ShareLinkCard, TransferCard, QRCode |
 | **Media** | Playing and editing audio and video | Transport, Scrubber, Waveform, Filmstrip, TrimStrip, MediaPlayer |
 | **Conversation** | Chat, comments and reactions | SocialBar, CommentBox, CommentThread |
-| **App frame** | The window and how you move around it | AppWindow & Pane, Sidebar, Toolbar, PaneHeader, FolderTabs, WindowControls, ResizeHandle, Card, Divider |
-| **App tools** | Ready-made features every app carries | DebugNotesButton, UpdateNotice, NetworkStatusCard |
+| **Frame** | The window and how you move around it | AppWindow & Pane, Sidebar, Toolbar, PaneHeader, FolderTabs, WindowControls, ResizeHandle, Card, Divider |
+| **Tools** | Ready-made features every app carries | DebugNotesButton, UpdateNotice, NetworkStatusCard |
 | **Layouts** | Whole screens, built only from the pieces above | PearDrop Desktop, PearDrop Mobile |
 
 How to choose:
 
-- **General beats specific.** A button used in a video editor is still a button: Buttons & actions. Only a piece
+- **General beats specific.** A button used in a video editor is still a button: Buttons. Only a piece
   that makes no sense outside one kind of work goes in that kind's category (a trim strip: Media).
 - **Size does not change the category.** A play button, a scrub bar and the whole player are all Media. Small
   single pieces and assembled ones live side by side.
 - **A whole screen is a Layout.** A podcast player screen (artwork, player, controls, settings) is a Layout made
   from Media pieces. If a Layout needs markup of its own, a piece is missing: add the piece.
 - **Nothing fits?** Pick the closest and say so in the pull request. A new category is added only when three or
-  more pieces share a job no category covers; add it to the table above, to `CATEGORIES` in
-  `src/organization.test.ts` and to the sidebar order in `.storybook/preview.tsx`, in the same pull request.
-- **Moving a piece to another category is free.** It changes the Storybook title and nothing else.
+  more pieces share a job no category covers; add it to the table above, add its folder and `titlePrefix` to
+  `COMPONENT_CATEGORIES` in `.storybook/main.ts`, and add it to the sidebar order in `.storybook/preview.tsx`, in
+  the same pull request.
+- **Moving a piece to another category is free.** Move the folder. Its Storybook section follows, and no import
+  changes: everything across folders is imported as `@/components/<category>/<Piece>/…`.
 
 ## Names are the promise
 
@@ -71,10 +75,10 @@ Apps break when a name changes, never when a piece moves. So:
 
 ## Adding a piece: the checklist
 
-1. `src/components/<Name>/<Name>.tsx`, plus `index.ts`, exported from `src/components/index.ts`. The folder is
-   named after the piece, not the category: folders stay flat.
-2. `src/components/<Name>/<Name>.stories.tsx` with `title: '<Category>/<Name>'`, a `Playground` story and at
-   least one story showing the real variants.
+1. `src/components/<category>/<Name>/<Name>.tsx`, plus `index.ts`, exported from `src/components/index.ts`. One
+   folder per piece inside the folder of its category; the category folder holds no files of its own.
+2. `src/components/<category>/<Name>/<Name>.stories.tsx` with `title: '<Name>'` (the category comes from the
+   folder), a `Playground` story and at least one story showing the real variants.
 3. React Native primitives only, styled with `className` and theme tokens. Works in both built-in themes.
 4. Update the names list (command above) and add a changeset (`npm run changeset`).
 5. Pull request into `develop`, titled `type(Name): subject` with a lowercase subject, for example
