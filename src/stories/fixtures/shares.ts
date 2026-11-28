@@ -1,9 +1,9 @@
 /** Demo data mirroring the PearDrop Figma frame. Used by stories and examples. */
-import type { FileKind, ShareStatus } from '../../index';
-import videoDusk from '../assets/video-dusk.jpg';
-import photoHarbor from '../assets/photo-harbor.jpg';
-import photoRidge from '../assets/photo-ridge.jpg';
-import albumEmber from '../assets/album-ember.jpg';
+import type { FileKind, ShareStatus } from '@/index';
+import videoDusk from '@/stories/assets/video-dusk.jpg';
+import photoHarbor from '@/stories/assets/photo-harbor.jpg';
+import photoRidge from '@/stories/assets/photo-ridge.jpg';
+import albumEmber from '@/stories/assets/album-ember.jpg';
 
 export const images = { videoDusk, photoHarbor, photoRidge, albumEmber };
 

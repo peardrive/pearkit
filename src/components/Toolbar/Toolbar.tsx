@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, type StyleProp, type ViewStyle } from 'react-native';
-import { cn } from '../../utils/cn';
-import type { IconSource } from '../../icons/Icon';
-import type { ColorToken } from '../../theme/tokens';
-import { IconButton } from '../IconButton/IconButton';
-import { Divider } from '../Divider/Divider';
-import { Spacer } from '../Spacer/Spacer';
+import { cn } from '@/utils/cn';
+import type { IconSource } from '@/icons/Icon';
+import type { ColorToken } from '@/theme/tokens';
+import { IconButton } from '@/components/IconButton/IconButton';
+import { Divider } from '@/components/Divider/Divider';
+import { Spacer } from '@/components/Spacer/Spacer';
 
 export interface ToolbarProps {
   children?: React.ReactNode;

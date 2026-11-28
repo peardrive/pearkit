@@ -12,12 +12,12 @@ import {
   type ViewStyle,
 } from 'react-native';
 import Svg, { Defs, LinearGradient as SvgLinearGradient, Path, Stop } from 'react-native-svg';
-import { cn } from '../../utils/cn';
-import { renderIcon, type IconSource } from '../../icons/Icon';
-import { useTheme } from '../../theme/ThemeProvider';
-import { withAlpha } from '../../theme/createTheme';
-import { CountBadge } from '../Badge/CountBadge';
-import { Text } from '../Text/Text';
+import { cn } from '@/utils/cn';
+import { renderIcon, type IconSource } from '@/icons/Icon';
+import { useTheme } from '@/theme/ThemeProvider';
+import { withAlpha } from '@/theme/createTheme';
+import { CountBadge } from '@/components/Badge/CountBadge';
+import { Text } from '@/components/Text/Text';
 
 /* ───────────────────────── the frame ───────────────────────── */
 

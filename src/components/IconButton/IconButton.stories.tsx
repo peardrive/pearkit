@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
 import { IconButton } from './IconButton';
-import { iconNames } from '../../icons/registry';
-import { Column, Showcase } from '../../stories/helpers';
+import { iconNames } from '@/icons/registry';
+import { Column, Showcase } from '@/stories/helpers';
 
 const meta: Meta<typeof IconButton> = {
   title: 'Buttons & actions/IconButton',

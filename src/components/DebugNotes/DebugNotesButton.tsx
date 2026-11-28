@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Platform, Pressable, View, type StyleProp, type ViewStyle } from 'react-native';
-import { cn } from '../../utils/cn';
-import { Icon } from '../../icons/Icon';
-import { Text } from '../Text/Text';
-import type { DebugNotes, StoppedNote } from '../../debug';
+import { cn } from '@/utils/cn';
+import { Icon } from '@/icons/Icon';
+import { Text } from '@/components/Text/Text';
+import type { DebugNotes, StoppedNote } from '@/debug';
 
 /* ───────────────────────── useDebugNotes ───────────────────────── */
 

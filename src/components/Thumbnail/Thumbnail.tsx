@@ -1,9 +1,9 @@
 import React from 'react';
 import { Image, View, type ImageSourcePropType, type StyleProp, type ViewStyle } from 'react-native';
-import { cn } from '../../utils/cn';
-import { Icon } from '../../icons/Icon';
-import type { IconName } from '../../icons/registry';
-import { statusSoftBg, statusToken, type StatusTone } from '../../theme/tones';
+import { cn } from '@/utils/cn';
+import { Icon } from '@/icons/Icon';
+import type { IconName } from '@/icons/registry';
+import { statusSoftBg, statusToken, type StatusTone } from '@/theme/tones';
 
 export type FileKind = 'folder' | 'video' | 'image' | 'audio' | 'document' | 'file';
 

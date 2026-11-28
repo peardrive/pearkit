@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { View } from 'react-native';
-import { Text, type TextVariant } from '../../index';
+import { Text, type TextVariant } from '@/index';
 
 const meta: Meta<typeof Text> = {
   title: 'Foundations/Typography',

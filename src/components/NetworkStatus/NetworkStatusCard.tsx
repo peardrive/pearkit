@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, type StyleProp, type ViewStyle } from 'react-native';
-import { cn } from '../../utils/cn';
-import { Icon, type IconSource } from '../../icons/Icon';
-import type { StatusTone } from '../../theme/tones';
-import { Button } from '../Button/Button';
-import { Card } from '../Card/Card';
-import { Spacer } from '../Spacer/Spacer';
-import { StatusDot } from '../Status/StatusDot';
-import { Text } from '../Text/Text';
-import { Tooltip } from '../Tooltip/Tooltip';
-import { TransferRate } from '../Transfer/TransferRate';
+import { cn } from '@/utils/cn';
+import { Icon, type IconSource } from '@/icons/Icon';
+import type { StatusTone } from '@/theme/tones';
+import { Button } from '@/components/Button/Button';
+import { Card } from '@/components/Card/Card';
+import { Spacer } from '@/components/Spacer/Spacer';
+import { StatusDot } from '@/components/Status/StatusDot';
+import { Text } from '@/components/Text/Text';
+import { Tooltip } from '@/components/Tooltip/Tooltip';
+import { TransferRate } from '@/components/Transfer/TransferRate';
 
 export type NetworkState = 'connected' | 'connecting' | 'offline';
 

@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { View } from 'react-native';
 import { fn } from 'storybook/test';
 import { Button } from './Button';
-import { iconNames } from '../../icons/registry';
-import { Column, Showcase } from '../../stories/helpers';
+import { iconNames } from '@/icons/registry';
+import { Column, Showcase } from '@/stories/helpers';
 
 const meta: Meta<typeof Button> = {
   title: 'Buttons & actions/Button',

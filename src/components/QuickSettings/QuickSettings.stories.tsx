@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { View } from 'react-native';
 import { QuickSettings, QuickSettingsLine } from './QuickSettings';
-import { Switch } from '../Switch/Switch';
-import { IconButton } from '../IconButton/IconButton';
-import { Text } from '../Text/Text';
-import { Showcase } from '../../stories/helpers';
+import { Switch } from '@/components/Switch/Switch';
+import { IconButton } from '@/components/IconButton/IconButton';
+import { Text } from '@/components/Text/Text';
+import { Showcase } from '@/stories/helpers';
 
 const meta: Meta<typeof QuickSettings> = {
   title: 'App frame/QuickSettings',

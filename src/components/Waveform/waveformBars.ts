@@ -2,7 +2,7 @@
  * Waveform geometry — peaks in, bars out. `<Waveform/>` renders the bars as views; `paintWaveform`
  * draws the same bars on a canvas. Both come from `waveformBars`, so a strip and a timeline agree.
  */
-import type { Canvas2D } from '../Scrubber/timeGlyphs';
+import type { Canvas2D } from '@/components/Scrubber/timeGlyphs';
 
 export interface WaveformSource {
   /** One peak (0–1) per `1 / peaksPerSecond` seconds. */

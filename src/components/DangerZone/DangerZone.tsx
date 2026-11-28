@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, type StyleProp, type ViewStyle } from 'react-native';
-import { cn } from '../../utils/cn';
-import type { IconSource } from '../../icons/Icon';
-import { Button } from '../Button/Button';
-import { Text } from '../Text/Text';
+import { cn } from '@/utils/cn';
+import type { IconSource } from '@/icons/Icon';
+import { Button } from '@/components/Button/Button';
+import { Text } from '@/components/Text/Text';
 
 export interface DangerZoneProps {
   actionLabel?: string;

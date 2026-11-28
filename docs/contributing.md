@@ -61,6 +61,21 @@ tailwind.preset.js · global.css · vite.js
 6. **Layout stories use only exported components.** If a layout needs custom markup, it's a sign a component is missing.
 7. **Public API changes need a changeset.** Renaming or removing a prop, token or component is breaking: say so in the changeset and include a migration note.
 
+## Imports
+
+Two forms, nothing else:
+
+```ts
+import { cn } from '@/utils/cn';            // crossing folders
+import { Scrubber } from './Scrubber';      // inside the same folder
+```
+
+`@/` is `src/`, set once in `tsconfig.json` (`paths`). Babel turns it into a relative path when it
+builds `lib/` (`babel-plugin-module-resolver` in `babel.config.js`), and
+`scripts/fix-alias-declarations.mjs` does the same for the generated `.d.ts` files, because `tsc`
+never rewrites `paths`. Nothing an app installs ever sees `@/` — library entry points point at
+`lib/`, so it cannot collide with an app's own `@/` alias.
+
 ## Icons
 
 Drop a 24×24 SVG into `icons/pearkit/` (1.5px strokes to match the Vuesax set) and run `npm run icons`. Colours in the file are ignored — every stroke and fill takes the icon's `tone`/`color`.

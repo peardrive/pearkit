@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { View } from 'react-native';
 import { Tooltip } from './Tooltip';
-import { IconButton } from '../IconButton/IconButton';
-import { Button } from '../Button/Button';
+import { IconButton } from '@/components/IconButton/IconButton';
+import { Button } from '@/components/Button/Button';
 
 const meta: Meta<typeof Tooltip> = {
   title: 'Status & messages/Tooltip',

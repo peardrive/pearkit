@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, type StyleProp, type ViewStyle } from 'react-native';
-import { cn } from '../../utils/cn';
-import { Icon, renderIcon, type IconSource } from '../../icons/Icon';
-import type { IconName } from '../../icons/registry';
-import { statusToken, type StatusTone } from '../../theme/tones';
-import { Button } from '../Button/Button';
-import { EmptyState } from '../EmptyState/EmptyState';
+import { cn } from '@/utils/cn';
+import { Icon, renderIcon, type IconSource } from '@/icons/Icon';
+import type { IconName } from '@/icons/registry';
+import { statusToken, type StatusTone } from '@/theme/tones';
+import { Button } from '@/components/Button/Button';
+import { EmptyState } from '@/components/EmptyState/EmptyState';
 
 /** What the notice is about. Each kind brings an icon, a title, a description and a tone; any of them can be overridden. */
 export type MediaNoticeKind = 'offline' | 'unplayable' | 'custom';

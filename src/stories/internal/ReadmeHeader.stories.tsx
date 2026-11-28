@@ -10,9 +10,9 @@ import {
   Button, Icon, IconButton, NetworkStatusCard, PeerChip, ProgressBar, QRCode, RadialGlow, SearchField, ShareRow,
   Sidebar, SidebarHeader, SidebarItem, SidebarSection, SidebarSpacer, SidebarToggle, StatusPill, Text, Thumbnail,
   TransferCard, WindowControls, useTheme,
-} from '../../index';
-import { PearDropDesktop } from '../layouts/PearDropDesktop';
-import { images } from '../fixtures/shares';
+} from '@/index';
+import { PearDropDesktop } from '@/stories/layouts/PearDropDesktop';
+import { images } from '@/stories/fixtures/shares';
 
 const meta: Meta = {
   title: 'Internal/README header',

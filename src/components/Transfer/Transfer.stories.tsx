@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { TransferCard } from './TransferCard';
 import { TransferRate } from './TransferRate';
-import { Showcase } from '../../stories/helpers';
+import { Showcase } from '@/stories/helpers';
 
 const peers = ['a12b9f03c7d14f5g', '9e7c55e0b2a811ad', 'c03fd18e4a7cb82e'];
 

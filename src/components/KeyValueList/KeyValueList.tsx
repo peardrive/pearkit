@@ -1,8 +1,8 @@
 import React from 'react';
 import { Platform, Pressable, View, type StyleProp, type ViewStyle } from 'react-native';
-import { cn } from '../../utils/cn';
-import { SectionLabel } from '../SectionLabel/SectionLabel';
-import { Text } from '../Text/Text';
+import { cn } from '@/utils/cn';
+import { SectionLabel } from '@/components/SectionLabel/SectionLabel';
+import { Text } from '@/components/Text/Text';
 
 export interface KeyValueRowProps {
   label: string;

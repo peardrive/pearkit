@@ -1,6 +1,6 @@
 import React from 'react';
 import { Pressable, View, type StyleProp, type ViewStyle } from 'react-native';
-import { cn } from '../../utils/cn';
+import { cn } from '@/utils/cn';
 import { OrderBadge } from './OrderBadge';
 
 export interface OrderTileProps {

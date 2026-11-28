@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 import { View } from 'react-native';
 import { TextField } from './TextField';
-import { Kbd } from '../Kbd/Kbd';
-import { iconNames } from '../../icons/registry';
+import { Kbd } from '@/components/Kbd/Kbd';
+import { iconNames } from '@/icons/registry';
 
 const meta: Meta<typeof TextField> = {
   title: 'Text & input/TextField',

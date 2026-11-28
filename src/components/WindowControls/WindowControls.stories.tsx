@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { View } from 'react-native';
 import { fn } from 'storybook/test';
 import { DragRegion, WindowControls } from './WindowControls';
-import { Text } from '../Text/Text';
-import { Showcase, Column } from '../../stories/helpers';
+import { Text } from '@/components/Text/Text';
+import { Showcase, Column } from '@/stories/helpers';
 
 const meta: Meta<typeof WindowControls> = {
   title: 'App frame/WindowControls',

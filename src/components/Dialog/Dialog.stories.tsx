@@ -3,9 +3,9 @@ import { useState } from 'react';
 import { expect, userEvent, waitFor, within } from 'storybook/test';
 import { View } from 'react-native';
 import { Dialog } from './Dialog';
-import { Button } from '../Button/Button';
-import { TextField } from '../TextField/TextField';
-import { Text } from '../Text/Text';
+import { Button } from '@/components/Button/Button';
+import { TextField } from '@/components/TextField/TextField';
+import { Text } from '@/components/Text/Text';
 
 const meta: Meta<typeof Dialog> = {
   title: 'Status & messages/Dialog',

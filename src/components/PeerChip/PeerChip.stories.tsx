@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
 import { PeerChip } from './PeerChip';
-import { Showcase } from '../../stories/helpers';
+import { Showcase } from '@/stories/helpers';
 
 const meta: Meta<typeof PeerChip> = {
   title: 'People/PeerChip',

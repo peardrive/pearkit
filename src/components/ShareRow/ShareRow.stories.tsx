@@ -3,9 +3,9 @@ import { useState } from 'react';
 import { View } from 'react-native';
 import { fn } from 'storybook/test';
 import { ShareRow } from './ShareRow';
-import { shareStatusMeta } from '../Status/status';
-import { SectionLabel } from '../SectionLabel/SectionLabel';
-import { images, shareMeta, shares } from '../../stories/fixtures/shares';
+import { shareStatusMeta } from '@/components/Status/status';
+import { SectionLabel } from '@/components/SectionLabel/SectionLabel';
+import { images, shareMeta, shares } from '@/stories/fixtures/shares';
 
 const meta: Meta<typeof ShareRow> = {
   title: 'Files & sharing/ShareRow',

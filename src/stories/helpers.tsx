@@ -1,7 +1,7 @@
 /** Tiny layout helpers for stories (not exported from the library). */
 import React from 'react';
 import { View } from 'react-native';
-import { Text, cn } from '../index';
+import { Text, cn } from '@/index';
 
 export function Showcase({ title, children, className }: { title?: string; children: React.ReactNode; className?: string }) {
   return (

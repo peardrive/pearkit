@@ -2,9 +2,9 @@ import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { View } from 'react-native';
 
-import { Text } from '../Text/Text';
-import { ProgressBar } from '../ProgressBar/ProgressBar';
-import { Column } from '../../stories/helpers';
+import { Text } from '@/components/Text/Text';
+import { ProgressBar } from '@/components/ProgressBar/ProgressBar';
+import { Column } from '@/stories/helpers';
 import { ShareProgressBar } from './ShareProgressBar';
 import { describeShareState, type ShareStateInput, type ShareStateTone } from './shareState';
 

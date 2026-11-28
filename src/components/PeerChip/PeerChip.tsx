@@ -1,10 +1,10 @@
 import React from 'react';
 import { Platform, Pressable, View, type StyleProp, type ViewStyle } from 'react-native';
-import { cn } from '../../utils/cn';
-import { truncateMiddle } from '../../utils/format';
-import { Avatar } from '../Avatar/Avatar';
-import { StatusDot } from '../Status/StatusDot';
-import { Text } from '../Text/Text';
+import { cn } from '@/utils/cn';
+import { truncateMiddle } from '@/utils/format';
+import { Avatar } from '@/components/Avatar/Avatar';
+import { StatusDot } from '@/components/Status/StatusDot';
+import { Text } from '@/components/Text/Text';
 
 export interface PeerChipProps {
   /** Peer public key / id. Shortened to `a12b…4f5g` unless `label` is given. */

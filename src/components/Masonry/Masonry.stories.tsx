@@ -2,9 +2,9 @@ import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { View } from 'react-native';
 import { Masonry } from './Masonry';
-import { MediaTile } from '../MediaTile/MediaTile';
-import { Text } from '../Text/Text';
-import { demoWall, type DemoMediaItem } from '../../stories/fixtures/browse';
+import { MediaTile } from '@/components/MediaTile/MediaTile';
+import { Text } from '@/components/Text/Text';
+import { demoWall, type DemoMediaItem } from '@/stories/fixtures/browse';
 
 const wall = demoWall(18);
 

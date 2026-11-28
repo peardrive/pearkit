@@ -12,11 +12,11 @@ import {
   SidebarToggle,
   useSidebar,
 } from './Sidebar';
-import { WindowControls } from '../WindowControls/WindowControls';
-import { Button } from '../Button/Button';
-import { NetworkStatusCard } from '../NetworkStatus/NetworkStatusCard';
-import { Text } from '../Text/Text';
-import { SidebarSurface } from '../../stories/helpers';
+import { WindowControls } from '@/components/WindowControls/WindowControls';
+import { Button } from '@/components/Button/Button';
+import { NetworkStatusCard } from '@/components/NetworkStatus/NetworkStatusCard';
+import { Text } from '@/components/Text/Text';
+import { SidebarSurface } from '@/stories/helpers';
 
 const meta: Meta<typeof Sidebar> = {
   title: 'App frame/Sidebar',

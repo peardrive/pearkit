@@ -35,8 +35,8 @@ import {
   TransferCard,
   useSidebar,
   WindowControls,
-} from '../../index';
-import { shareMeta, shares as allShares, type DemoShare } from '../fixtures/shares';
+} from '@/index';
+import { shareMeta, shares as allShares, type DemoShare } from '@/stories/fixtures/shares';
 
 export interface PearDropDesktopProps {
   /** Draw rounded window chrome (for docs / screenshots). */

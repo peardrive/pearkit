@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { View } from 'react-native';
 import { fn } from 'storybook/test';
 import { KeyValueList, KeyValueRow } from './KeyValueList';
-import { StatusPill } from '../Status/StatusPill';
+import { StatusPill } from '@/components/Status/StatusPill';
 
 const meta: Meta<typeof KeyValueList> = {
   title: 'Files & sharing/KeyValueList',

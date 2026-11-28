@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, type StyleProp, type ViewStyle } from 'react-native';
-import { cn } from '../../utils/cn';
-import { useTheme } from '../../theme/ThemeProvider';
-import type { Theme } from '../../theme/tokens';
-import { LinearGradient } from '../Gradient/LinearGradient';
-import { Text } from '../Text/Text';
+import { cn } from '@/utils/cn';
+import { useTheme } from '@/theme/ThemeProvider';
+import type { Theme } from '@/theme/tokens';
+import { LinearGradient } from '@/components/Gradient/LinearGradient';
+import { Text } from '@/components/Text/Text';
 
 /** Gradient pairs for generated avatars (first three come from the Figma peer chips). */
 export const avatarPalette = (theme: Theme): [string, string][] => [

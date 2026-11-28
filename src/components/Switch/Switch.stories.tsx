@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { View } from 'react-native';
 import { Switch } from './Switch';
-import { Text } from '../Text/Text';
-import { Showcase } from '../../stories/helpers';
+import { Text } from '@/components/Text/Text';
+import { Showcase } from '@/stories/helpers';
 
 const meta: Meta<typeof Switch> = {
   title: 'Buttons & actions/Switch',

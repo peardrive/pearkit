@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { View } from 'react-native';
 import { fn } from 'storybook/test';
 import { PaneHeader } from './PaneHeader';
-import { IconButton } from '../IconButton/IconButton';
+import { IconButton } from '@/components/IconButton/IconButton';
 
 const meta: Meta<typeof PaneHeader> = {
   title: 'App frame/PaneHeader',

@@ -1,8 +1,8 @@
 import React from 'react';
 import Svg, { Path } from 'react-native-svg';
 import { View, type StyleProp, type ViewStyle } from 'react-native';
-import { useTheme } from '../theme/ThemeProvider';
-import type { ColorToken } from '../theme/tokens';
+import { useTheme } from '@/theme/ThemeProvider';
+import type { ColorToken } from '@/theme/tokens';
 import { iconRegistry, type IconName } from './registry';
 
 export interface IconProps {

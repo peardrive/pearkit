@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { View } from 'react-native';
 import { RecordButton, type RecordState } from './RecordButton';
-import { Showcase } from '../../stories/helpers';
-import { formatClock } from '../../utils/format';
+import { Showcase } from '@/stories/helpers';
+import { formatClock } from '@/utils/format';
 
 const meta: Meta<typeof RecordButton> = {
   title: 'Media/RecordButton',

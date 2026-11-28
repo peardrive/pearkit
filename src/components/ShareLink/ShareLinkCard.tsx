@@ -1,13 +1,13 @@
 import React from 'react';
 import { View, type StyleProp, type ViewStyle } from 'react-native';
-import { cn } from '../../utils/cn';
-import { copyToClipboard } from '../../utils/clipboard';
-import type { IconSource } from '../../icons/Icon';
-import { Button } from '../Button/Button';
-import { Card } from '../Card/Card';
-import { LinkField } from '../LinkField/LinkField';
-import { QRCode } from '../QRCode/QRCode';
-import { Text } from '../Text/Text';
+import { cn } from '@/utils/cn';
+import { copyToClipboard } from '@/utils/clipboard';
+import type { IconSource } from '@/icons/Icon';
+import { Button } from '@/components/Button/Button';
+import { Card } from '@/components/Card/Card';
+import { LinkField } from '@/components/LinkField/LinkField';
+import { QRCode } from '@/components/QRCode/QRCode';
+import { Text } from '@/components/Text/Text';
 
 export interface ShareLinkCardProps {
   /** The share link, e.g. `peardrop://1de09…`. */

@@ -3,8 +3,8 @@ import { View } from 'react-native';
 import { StatusPill } from './StatusPill';
 import { StatusDot } from './StatusDot';
 import { shareStatusMeta, type ShareStatus } from './status';
-import { Column, Showcase } from '../../stories/helpers';
-import { Text } from '../Text/Text';
+import { Column, Showcase } from '@/stories/helpers';
+import { Text } from '@/components/Text/Text';
 
 const tones = ['success', 'warning', 'danger', 'neutral', 'primary', 'info', 'accent'] as const;
 

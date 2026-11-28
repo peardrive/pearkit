@@ -1,11 +1,11 @@
 import React, { useContext, useState } from 'react';
 import { Platform, Pressable, TextInput, View, type StyleProp, type TextInputProps, type TextStyle, type ViewStyle } from 'react-native';
-import { cn } from '../../utils/cn';
-import { Icon, renderIcon, type IconSource } from '../../icons/Icon';
-import { useTheme } from '../../theme/ThemeProvider';
-import { fontWeightValue } from '../../theme/tokens';
-import { Text } from '../Text/Text';
-import { DialogSubmitContext } from '../Dialog/enterKey';
+import { cn } from '@/utils/cn';
+import { Icon, renderIcon, type IconSource } from '@/icons/Icon';
+import { useTheme } from '@/theme/ThemeProvider';
+import { fontWeightValue } from '@/theme/tokens';
+import { Text } from '@/components/Text/Text';
+import { DialogSubmitContext } from '@/components/Dialog/enterKey';
 
 export interface TextFieldProps extends Omit<TextInputProps, 'style' | 'placeholderTextColor' | 'editable'> {
   /** Label above the field. */

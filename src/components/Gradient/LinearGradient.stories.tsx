@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { View } from 'react-native';
 import { LinearGradient, RadialGlow } from './LinearGradient';
-import { Text } from '../Text/Text';
+import { Text } from '@/components/Text/Text';
 
 const meta: Meta<typeof LinearGradient> = {
   title: 'Foundations/Gradient',

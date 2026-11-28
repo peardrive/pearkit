@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, type StyleProp, type ViewStyle } from 'react-native';
-import { cn } from '../../utils/cn';
-import { statusSoftBg, statusText, type StatusTone } from '../../theme/tones';
-import { Text } from '../Text/Text';
+import { cn } from '@/utils/cn';
+import { statusSoftBg, statusText, type StatusTone } from '@/theme/tones';
+import { Text } from '@/components/Text/Text';
 import { StatusDot } from './StatusDot';
 import { shareStatusMeta, statusLabel, type ShareStatus } from './status';
 

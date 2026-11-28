@@ -7,7 +7,7 @@ import {
   type StyleProp,
   type ViewStyle,
 } from 'react-native';
-import { cn } from '../../utils/cn';
+import { cn } from '@/utils/cn';
 
 export interface ResizeHandleProps {
   /**

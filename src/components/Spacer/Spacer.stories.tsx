@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { View } from 'react-native';
 import { Spacer } from './Spacer';
-import { Text } from '../Text/Text';
-import { IconButton } from '../IconButton/IconButton';
+import { Text } from '@/components/Text/Text';
+import { IconButton } from '@/components/IconButton/IconButton';
 
 const meta: Meta<typeof Spacer> = {
   title: 'App frame/Spacer',

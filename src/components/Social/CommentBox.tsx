@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Platform, Pressable, TextInput, View, type StyleProp, type TextInputProps, type TextStyle, type ViewStyle } from 'react-native';
-import { cn } from '../../utils/cn';
-import { Icon } from '../../icons';
-import { useTheme } from '../../theme/ThemeProvider';
-import { fontWeightValue } from '../../theme/tokens';
-import { Text } from '../Text/Text';
+import { cn } from '@/utils/cn';
+import { Icon } from '@/icons';
+import { useTheme } from '@/theme/ThemeProvider';
+import { fontWeightValue } from '@/theme/tokens';
+import { Text } from '@/components/Text/Text';
 
 const LINE = 20; // one line of the box
 const PAD = 16;  // its padding, top and bottom together

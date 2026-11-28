@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, type StyleProp, type ViewStyle } from 'react-native';
-import { cn } from '../../utils/cn';
-import { clamp } from '../../utils/format';
-import { useTheme } from '../../theme/ThemeProvider';
-import type { ColorToken } from '../../theme/tokens';
-import { LinearGradient } from '../Gradient/LinearGradient';
+import { cn } from '@/utils/cn';
+import { clamp } from '@/utils/format';
+import { useTheme } from '@/theme/ThemeProvider';
+import type { ColorToken } from '@/theme/tokens';
+import { LinearGradient } from '@/components/Gradient/LinearGradient';
 
 export type ProgressVariant = 'transfer' | 'brand' | 'solid';
 

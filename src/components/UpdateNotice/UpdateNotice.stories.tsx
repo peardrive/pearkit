@@ -2,9 +2,9 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useEffect, useRef, useState } from 'react';
 import { View } from 'react-native';
 import { UpdateNotice, type UpdateState } from './UpdateNotice';
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarItem, SidebarSection, SidebarSpacer, SidebarToggle } from '../Sidebar/Sidebar';
-import { WindowControls } from '../WindowControls/WindowControls';
-import { Text } from '../Text/Text';
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarItem, SidebarSection, SidebarSpacer, SidebarToggle } from '@/components/Sidebar/Sidebar';
+import { WindowControls } from '@/components/WindowControls/WindowControls';
+import { Text } from '@/components/Text/Text';
 
 const meta: Meta<typeof UpdateNotice> = {
   title: 'App tools/UpdateNotice',

@@ -3,13 +3,13 @@ import {
   Image, Platform, Pressable, StyleSheet, View,
   type ImageSourcePropType, type StyleProp, type ViewStyle,
 } from 'react-native';
-import { cn } from '../../utils/cn';
-import { useTheme } from '../../theme/ThemeProvider';
-import { statusSoftBg, statusToken } from '../../theme/tones';
-import { Icon } from '../../icons/Icon';
-import { Text } from '../Text/Text';
-import { LinearGradient } from '../Gradient/LinearGradient';
-import { fileKindMeta, type FileKind } from '../Thumbnail/Thumbnail';
+import { cn } from '@/utils/cn';
+import { useTheme } from '@/theme/ThemeProvider';
+import { statusSoftBg, statusToken } from '@/theme/tones';
+import { Icon } from '@/icons/Icon';
+import { Text } from '@/components/Text/Text';
+import { LinearGradient } from '@/components/Gradient/LinearGradient';
+import { fileKindMeta, type FileKind } from '@/components/Thumbnail/Thumbnail';
 
 export interface MediaTileProps {
   /** Picture (`require(...)`, `{ uri }` or a URL string). Falls back to the kind icon. */

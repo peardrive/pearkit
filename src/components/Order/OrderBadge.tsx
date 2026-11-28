@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, type StyleProp, type ViewStyle } from 'react-native';
-import { cn } from '../../utils/cn';
-import { Text } from '../Text/Text';
+import { cn } from '@/utils/cn';
+import { Text } from '@/components/Text/Text';
 
 export interface OrderBadgeProps {
   /** The number of the thing in the selection: 1 leads. 0 (or less) means it is not chosen. */

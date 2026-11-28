@@ -1,10 +1,10 @@
 import React from 'react';
 import { Platform, Pressable, View, type StyleProp, type ViewStyle } from 'react-native';
-import { cn } from '../../utils/cn';
-import { statusSoftBg, statusText, statusToken, type StatusTone } from '../../theme/tones';
-import { Icon } from '../../icons/Icon';
-import type { IconName } from '../../icons/registry';
-import { Text } from '../Text/Text';
+import { cn } from '@/utils/cn';
+import { statusSoftBg, statusText, statusToken, type StatusTone } from '@/theme/tones';
+import { Icon } from '@/icons/Icon';
+import type { IconName } from '@/icons/registry';
+import { Text } from '@/components/Text/Text';
 
 export interface ChipProps {
   label: string;

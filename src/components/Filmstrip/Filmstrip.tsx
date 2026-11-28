@@ -1,6 +1,6 @@
 import React from 'react';
 import { Image, View, type StyleProp, type ViewStyle } from 'react-native';
-import { cn } from '../../utils/cn';
+import { cn } from '@/utils/cn';
 import type { FilmstripFrame } from './filmstripCells';
 
 export interface FilmstripProps {

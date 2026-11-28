@@ -2,10 +2,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { View } from 'react-native';
 import { Transport, type TransportProps } from './Transport';
-import type { TimeRange } from '../Scrubber/timeRange';
-import { Text } from '../Text/Text';
-import { Waveform } from '../Waveform/Waveform';
-import { demoPeaks } from '../../stories/fixtures/media';
+import type { TimeRange } from '@/components/Scrubber/timeRange';
+import { Text } from '@/components/Text/Text';
+import { Waveform } from '@/components/Waveform/Waveform';
+import { demoPeaks } from '@/stories/fixtures/media';
 
 const meta: Meta<typeof Transport> = {
   title: 'Media/Transport',

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { View } from 'react-native';
 import { SectionLabel } from './SectionLabel';
-import { IconButton } from '../IconButton/IconButton';
+import { IconButton } from '@/components/IconButton/IconButton';
 
 const meta: Meta<typeof SectionLabel> = {
   title: 'App frame/SectionLabel',

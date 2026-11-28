@@ -2,7 +2,7 @@ import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { View } from 'react-native';
 import { Chip } from './Chip';
-import { Showcase } from '../../stories/helpers';
+import { Showcase } from '@/stories/helpers';
 
 const meta: Meta<typeof Chip> = {
   title: 'Buttons & actions/Chip',

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, type ViewProps } from 'react-native';
-import { cn } from '../../utils/cn';
+import { cn } from '@/utils/cn';
 
 export interface CardProps extends ViewProps {
   /** `md` — 16px padding / 14px radius (detail cards). `sm` — 12px / 12px (sidebar cards). */

@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import { Animated, View, type StyleProp, type ViewStyle } from 'react-native';
-import { cn } from '../../utils/cn';
-import { useTheme } from '../../theme/ThemeProvider';
-import { withAlpha } from '../../theme/createTheme';
-import { statusToken, type StatusTone } from '../../theme/tones';
+import { cn } from '@/utils/cn';
+import { useTheme } from '@/theme/ThemeProvider';
+import { withAlpha } from '@/theme/createTheme';
+import { statusToken, type StatusTone } from '@/theme/tones';
 
 export interface StatusDotProps {
   tone?: StatusTone;

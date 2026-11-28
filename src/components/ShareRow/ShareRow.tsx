@@ -1,13 +1,13 @@
 import React from 'react';
 import { Platform, Pressable, View, type StyleProp, type ViewStyle } from 'react-native';
-import { cn } from '../../utils/cn';
-import { Icon } from '../../icons/Icon';
-import type { StatusTone } from '../../theme/tones';
-import { ProgressBar } from '../ProgressBar/ProgressBar';
-import { StatusPill } from '../Status/StatusPill';
-import type { ShareStatus } from '../Status/status';
-import { Text } from '../Text/Text';
-import { Thumbnail, type ThumbnailProps } from '../Thumbnail/Thumbnail';
+import { cn } from '@/utils/cn';
+import { Icon } from '@/icons/Icon';
+import type { StatusTone } from '@/theme/tones';
+import { ProgressBar } from '@/components/ProgressBar/ProgressBar';
+import { StatusPill } from '@/components/Status/StatusPill';
+import type { ShareStatus } from '@/components/Status/status';
+import { Text } from '@/components/Text/Text';
+import { Thumbnail, type ThumbnailProps } from '@/components/Thumbnail/Thumbnail';
 
 export interface ShareRowProps {
   name: string;

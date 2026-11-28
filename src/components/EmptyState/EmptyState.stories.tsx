@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { View } from 'react-native';
 import { EmptyState } from './EmptyState';
-import { Button } from '../Button/Button';
-import { iconNames } from '../../icons/registry';
+import { Button } from '@/components/Button/Button';
+import { iconNames } from '@/icons/registry';
 
 const meta: Meta<typeof EmptyState> = {
   title: 'Status & messages/EmptyState',

@@ -5,11 +5,13 @@
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
   "types": "./lib/typescript/commonjs/index.d.ts",
-  "react-native": "src/index.ts",
-  "source": "src/index.ts",
+  "react-native": "./lib/module/index.js",
   "exports": {
     ".": {
-      "react-native": "./src/index.ts",
+      "react-native": {
+        "types": "./lib/typescript/module/index.d.ts",
+        "default": "./lib/module/index.js"
+      },
       "import": {
         "types": "./lib/typescript/module/index.d.ts",
         "default": "./lib/module/index.js"
@@ -47,7 +49,7 @@
     "!src/stories"
   ],
   "scripts": {
-    "prepare": "bob build",
+    "prepare": "bob build && node scripts/fix-alias-declarations.mjs",
     "typecheck": "tsc --noEmit",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
@@ -93,6 +95,7 @@
     "@vitest/browser-playwright": "latest",
     "@vitest/coverage-v8": "latest",
     "autoprefixer": "^10.6.2",
+    "babel-plugin-module-resolver": "^5.0.3",
     "nativewind": "^4.2.7",
     "playwright": "latest",
     "postcss": "^8.5.32",

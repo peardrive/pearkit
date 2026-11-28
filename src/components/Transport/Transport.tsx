@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, type StyleProp, type ViewStyle } from 'react-native';
-import { cn } from '../../utils/cn';
-import { formatClock } from '../../utils/format';
-import { IconButton } from '../IconButton/IconButton';
-import { Text } from '../Text/Text';
-import { Scrubber, type ScrubberSize } from '../Scrubber/Scrubber';
-import { isWholeRange, type TimeRange } from '../Scrubber/timeRange';
+import { cn } from '@/utils/cn';
+import { formatClock } from '@/utils/format';
+import { IconButton } from '@/components/IconButton/IconButton';
+import { Text } from '@/components/Text/Text';
+import { Scrubber, type ScrubberSize } from '@/components/Scrubber/Scrubber';
+import { isWholeRange, type TimeRange } from '@/components/Scrubber/timeRange';
 
 export interface TransportProps {
   playing: boolean;

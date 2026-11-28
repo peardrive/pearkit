@@ -1,11 +1,11 @@
 import React from 'react';
 import type { StyleProp, ViewStyle } from 'react-native';
-import { Scrubber } from '../Scrubber/Scrubber';
-import type { TimeRange } from '../Scrubber/timeRange';
-import { Waveform } from '../Waveform/Waveform';
-import type { WaveformSource } from '../Waveform/waveformBars';
-import { Filmstrip } from '../Filmstrip/Filmstrip';
-import type { FilmstripFrame } from '../Filmstrip/filmstripCells';
+import { Scrubber } from '@/components/Scrubber/Scrubber';
+import type { TimeRange } from '@/components/Scrubber/timeRange';
+import { Waveform } from '@/components/Waveform/Waveform';
+import type { WaveformSource } from '@/components/Waveform/waveformBars';
+import { Filmstrip } from '@/components/Filmstrip/Filmstrip';
+import type { FilmstripFrame } from '@/components/Filmstrip/filmstripCells';
 
 export interface TrimStripProps {
   /** Length of the media, seconds. */

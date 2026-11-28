@@ -8,9 +8,9 @@ import {
   type StyleProp,
   type ViewStyle,
 } from 'react-native';
-import { cn } from '../../utils/cn';
-import { clamp } from '../../utils/format';
-import { useTheme } from '../../theme/ThemeProvider';
+import { cn } from '@/utils/cn';
+import { clamp } from '@/utils/format';
+import { useTheme } from '@/theme/ThemeProvider';
 import { InOutPin, Playhead } from './Glyphs';
 import { PIN, PIN_PAD } from './timeGlyphs';
 import { useTimeRange } from './useTimeRange';

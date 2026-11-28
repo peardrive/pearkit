@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, type StyleProp, type ViewStyle } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
-import { cn } from '../../utils/cn';
-import { useTheme } from '../../theme/ThemeProvider';
-import type { ColorToken } from '../../theme/tokens';
+import { cn } from '@/utils/cn';
+import { useTheme } from '@/theme/ThemeProvider';
+import type { ColorToken } from '@/theme/tokens';
 import { PIN, PLAYHEAD, pinBallCenterY, playheadCapPath } from './timeGlyphs';
 
 export interface PlayheadProps {

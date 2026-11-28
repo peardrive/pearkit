@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { View } from 'react-native';
 import {
   Button, Card, NetworkStatusCard, ShareRow, StatusPill, Text, ThemeProvider, createTheme, darkTheme, lightTheme, type Theme,
-} from '../../index';
-import { images } from '../fixtures/shares';
+} from '@/index';
+import { images } from '@/stories/fixtures/shares';
 
 const meta: Meta = {
   title: 'Foundations/Theming',

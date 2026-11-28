@@ -1,8 +1,8 @@
 import React, { useMemo, useState } from 'react';
 import { View, type LayoutChangeEvent, type StyleProp, type ViewStyle } from 'react-native';
-import { cn } from '../../utils/cn';
-import { useTheme } from '../../theme/ThemeProvider';
-import type { ColorToken } from '../../theme/tokens';
+import { cn } from '@/utils/cn';
+import { useTheme } from '@/theme/ThemeProvider';
+import type { ColorToken } from '@/theme/tokens';
 import { waveformBars, type WaveformAnchor, type WaveformSource, type WaveformWindow } from './waveformBars';
 
 export interface WaveformProps {

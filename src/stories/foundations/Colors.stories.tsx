@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { View } from 'react-native';
-import { Text, colorTokenNames, useTheme, type ColorToken } from '../../index';
+import { Text, colorTokenNames, useTheme, type ColorToken } from '@/index';
 
 const meta: Meta = {
   title: 'Foundations/Colors',

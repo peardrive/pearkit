@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { View } from 'react-native';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { SocialBar } from './SocialBar';
-import { Showcase, Column } from '../../stories/helpers';
-import { toggleLiked, type SocialCounts } from '../../utils/social';
+import { Showcase, Column } from '@/stories/helpers';
+import { toggleLiked, type SocialCounts } from '@/utils/social';
 
 const meta: Meta<typeof SocialBar> = {
   title: 'Conversation/SocialBar',
