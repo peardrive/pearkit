@@ -80,15 +80,15 @@ Then follow the guide for your platform:
 | Category | Pieces |
 | --- | --- |
 | **Foundations** | `ThemeProvider` · `createTheme` · `Text` (9-step type scale) · `Icon` · `LinearGradient` / `RadialGlow` |
-| **Buttons & actions** | `Button` · `IconButton` · `Chip` · `Kbd` |
-| **Text & input** | `TextField` · `SearchField` · `LinkField` |
-| **Status & messages** | `StatusPill` · `StatusDot` · `CountBadge` · `ProgressBar` · `Tooltip` · `Dialog` · `EmptyState` · `DangerZone` |
+| **Buttons** | `Button` · `IconButton` · `Chip` · `Kbd` · `Switch` |
+| **Input** | `TextField` · `SearchField` · `LinkField` |
+| **Feedback** | `StatusPill` · `StatusDot` · `CountBadge` · `ProgressBar` · `Tooltip` · `Dialog` · `EmptyState` · `DangerZone` |
 | **People** | `Avatar` · `PeerChip` |
-| **Files & sharing** | `Thumbnail` · `MediaTile` · `FileViews` · `Masonry` · `FileHeader` · `ShareRow` · `ShareLinkCard` · `TransferCard` · `QRCode` · `KeyValueList` |
+| **Files** | `Thumbnail` · `MediaTile` · `FileViews` · `Masonry` · `FileHeader` · `ShareRow` · `ShareLinkCard` · `TransferCard` · `QRCode` · `KeyValueList` |
 | **Media** | `Transport` · `Scrubber` · `Waveform` · `Filmstrip` · `TrimStrip` · `MediaPlayer` · `MediaNotice` |
 | **Conversation** | `SocialBar` · `CommentBox` · `CommentThread` |
-| **App frame** | `AppWindow` / `Pane` / `PaneBody` · `Sidebar` · `Toolbar` · `PaneHeader` · `FolderTabs` · `WindowControls` · `DragRegion` · `ResizeHandle` · `Card` · `Divider` · `SectionLabel` · `Spacer` |
-| **App tools** | `DebugNotesButton` · `UpdateNotice` · `NetworkStatusCard` |
+| **Frame** | `AppWindow` / `Pane` / `PaneBody` · `Sidebar` · `Toolbar` · `PaneHeader` · `FolderTabs` · `WindowControls` · `DragRegion` · `ResizeHandle` · `Card` · `Divider` · `SectionLabel` · `Spacer` |
+| **Tools** | `DebugNotesButton` · `UpdateNotice` · `NetworkStatusCard` |
 | **Layouts** | Full desktop and mobile PearDrop screens, built only from the pieces above |
 
 Where a new piece goes, and the rules that keep app imports from breaking: [AGENTS.md](AGENTS.md).
@@ -147,7 +147,8 @@ npm run storybook        # http://localhost:6006
 src/
   theme/        tokens · themes · createTheme · ThemeProvider
   icons/        generated icon registry · <Icon/>
-  components/   one folder per component (Component.tsx + Component.stories.tsx)
+  components/   one folder per category, one per component inside it
+                (category/Component/Component.tsx + Component.stories.tsx)
   electron/     window bridge (pearkit/electron)
   stories/      docs, foundations, layouts, fixtures
 icons/          SVG sources → `npm run icons`

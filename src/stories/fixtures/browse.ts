@@ -3,7 +3,7 @@ import videoDusk from '@/stories/assets/video-dusk.jpg';
 import photoHarbor from '@/stories/assets/photo-harbor.jpg';
 import photoRidge from '@/stories/assets/photo-ridge.jpg';
 import albumEmber from '@/stories/assets/album-ember.jpg';
-import type { FileKind } from '@/components/Thumbnail/Thumbnail';
+import type { FileKind } from '@/components/files/Thumbnail/Thumbnail';
 
 export interface DemoMediaItem {
   id: string;

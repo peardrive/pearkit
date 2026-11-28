@@ -1,97 +1,97 @@
 // Primitives
-export * from './Text/Text';
-export * from './Button/Button';
-export * from './IconButton/IconButton';
-export * from './Tooltip/Tooltip';
-export * from './Badge/CountBadge';
-export * from './Status/status';
-export * from './Status/StatusDot';
-export * from './Status/StatusPill';
-export * from './ProgressBar/ProgressBar';
-export * from './Kbd/Kbd';
-export * from './Divider/Divider';
-export * from './Spacer/Spacer';
-export * from './Card/Card';
-export * from './SectionLabel/SectionLabel';
-export * from './SearchField/SearchField';
-export * from './Thumbnail/Thumbnail';
-export * from './Avatar/Avatar';
-export * from './PeerChip/PeerChip';
-export * from './Chip/Chip';
-export * from './QRCode/QRCode';
-export * from './LinkField/LinkField';
-export * from './KeyValueList/KeyValueList';
-export * from './EmptyState/EmptyState';
-export * from './MediaNotice/MediaNotice';
-export * from './Gradient/LinearGradient';
-export * from './ResizeHandle/ResizeHandle';
+export * from './foundations/Text/Text';
+export * from './buttons/Button/Button';
+export * from './buttons/IconButton/IconButton';
+export * from './feedback/Tooltip/Tooltip';
+export * from './feedback/Badge/CountBadge';
+export * from './feedback/Status/status';
+export * from './feedback/Status/StatusDot';
+export * from './feedback/Status/StatusPill';
+export * from './feedback/ProgressBar/ProgressBar';
+export * from './buttons/Kbd/Kbd';
+export * from './frame/Divider/Divider';
+export * from './frame/Spacer/Spacer';
+export * from './frame/Card/Card';
+export * from './frame/SectionLabel/SectionLabel';
+export * from './input/SearchField/SearchField';
+export * from './files/Thumbnail/Thumbnail';
+export * from './people/Avatar/Avatar';
+export * from './people/PeerChip/PeerChip';
+export * from './buttons/Chip/Chip';
+export * from './files/QRCode/QRCode';
+export * from './input/LinkField/LinkField';
+export * from './files/KeyValueList/KeyValueList';
+export * from './feedback/EmptyState/EmptyState';
+export * from './media/MediaNotice/MediaNotice';
+export * from './foundations/Gradient/LinearGradient';
+export * from './frame/ResizeHandle/ResizeHandle';
 
 // Capture: what a recording app's dock is made of
-export * from './LevelMeter/LevelMeter';
-export * from './RecordButton/RecordButton';
-export * from './DeviceToggle/DeviceToggle';
+export * from './media/LevelMeter/LevelMeter';
+export * from './media/RecordButton/RecordButton';
+export * from './media/DeviceToggle/DeviceToggle';
 
 // App chrome & navigation
-export * from './WindowControls/WindowControls';
-export * from './Sidebar/Sidebar';
-export * from './Toolbar/Toolbar';
-export * from './PaneHeader/PaneHeader';
-export * from './Layout/AppWindow';
-export * from './FolderTabs/FolderTabs';
+export * from './frame/WindowControls/WindowControls';
+export * from './frame/Sidebar/Sidebar';
+export * from './frame/Toolbar/Toolbar';
+export * from './frame/PaneHeader/PaneHeader';
+export * from './frame/Layout/AppWindow';
+export * from './frame/FolderTabs/FolderTabs';
 
 // PearDrop patterns
-export * from './NetworkStatus/NetworkStatusCard';
-export * from './Transfer/TransferRate';
-export * from './Transfer/TransferCard';
-export * from './ShareRow/ShareRow';
-export * from './FileHeader/FileHeader';
-export * from './ShareLink/ShareLinkCard';
-export * from './DangerZone/DangerZone';
+export * from './tools/NetworkStatus/NetworkStatusCard';
+export * from './files/Transfer/TransferRate';
+export * from './files/Transfer/TransferCard';
+export * from './files/ShareRow/ShareRow';
+export * from './files/FileHeader/FileHeader';
+export * from './files/ShareLink/ShareLinkCard';
+export * from './feedback/DangerZone/DangerZone';
 
 // Media browse
-export * from './Masonry/masonryColumns';
-export * from './Masonry/Masonry';
-export * from './MediaTile/MediaTile';
+export * from './files/Masonry/masonryColumns';
+export * from './files/Masonry/Masonry';
+export * from './files/MediaTile/MediaTile';
 // Media time
-export * from './Scrubber/timeRange';
-export * from './Scrubber/useTimeRange';
-export * from './Scrubber/timeGlyphs';
-export * from './Scrubber/Glyphs';
-export * from './Scrubber/Scrubber';
+export * from './media/Scrubber/timeRange';
+export * from './media/Scrubber/useTimeRange';
+export * from './media/Scrubber/timeGlyphs';
+export * from './media/Scrubber/Glyphs';
+export * from './media/Scrubber/Scrubber';
 
-export * from './Transport/Transport';
+export * from './media/Transport/Transport';
 
-export * from './Waveform/waveformBars';
-export * from './Waveform/Waveform';
+export * from './media/Waveform/waveformBars';
+export * from './media/Waveform/Waveform';
 
-export * from './Filmstrip/filmstripCells';
-export * from './Filmstrip/Filmstrip';
-export * from './TrimStrip/TrimStrip';
+export * from './media/Filmstrip/filmstripCells';
+export * from './media/Filmstrip/Filmstrip';
+export * from './media/TrimStrip/TrimStrip';
 
 // Forms & overlays
-export * from './Switch/Switch';
-export * from './QuickSettings/QuickSettings';
-export * from './TextField/TextField';
+export * from './buttons/Switch/Switch';
+export * from './frame/QuickSettings/QuickSettings';
+export * from './input/TextField/TextField';
 
-export * from './Dialog/Dialog';
-export { enterPressesMain, type EnterKey } from './Dialog/enterKey';
+export * from './feedback/Dialog/Dialog';
+export { enterPressesMain, type EnterKey } from './feedback/Dialog/enterKey';
 
-export * from './Social/SocialBar';
-export * from './Social/CommentThread';
-export * from './Social/CommentBox';
+export * from './conversation/Social/SocialBar';
+export * from './conversation/Social/CommentThread';
+export * from './conversation/Social/CommentBox';
 
-export * from './Order/OrderBadge';
-export * from './Order/OrderTile';
-export * from './Order/useOrderedSelection';
+export * from './files/Order/OrderBadge';
+export * from './files/Order/OrderTile';
+export * from './files/Order/useOrderedSelection';
 
 // Media
-export * from './MediaPlayer';
+export * from './media/MediaPlayer';
 
 // Files
-export * from './FileViews';
+export * from './files/FileViews';
 
 // Share states: the universal words, colours and progress bar
-export * from './ShareState';
+export * from './files/ShareState';
 // In-app tools
-export * from './UpdateNotice/UpdateNotice';
-export * from './DebugNotes/DebugNotesButton';
+export * from './tools/UpdateNotice/UpdateNotice';
+export * from './tools/DebugNotes/DebugNotesButton';

@@ -1,11 +1,13 @@
 /**
- * Two promises from AGENTS.md, checked:
+ * One promise from AGENTS.md, checked:
  *
- *   1. A name an app can import never disappears by accident. scripts/public-names.txt lists every name exported from
- *      `pearkit` and `pearkit/electron`. A name missing from the code fails here; so does a new name missing from the
- *      list. After adding a name on purpose: `UPDATE_NAMES=1 npx vitest run --project unit organization`.
- *      Removing a line from the list is a breaking change and needs a major changeset.
- *   2. Every story is filed under one of the categories.
+ *   A name an app can import never disappears by accident. scripts/public-names.txt lists every name exported from
+ *   `pearkit` and `pearkit/electron`. A name missing from the code fails here; so does a new name missing from the
+ *   list. After adding a name on purpose: `UPDATE_NAMES=1 npx vitest run --project unit organization`.
+ *   Removing a line from the list is a breaking change and needs a major changeset.
+ *
+ * Where a piece is filed is not checked here: the category is the folder it lives in, and Storybook takes the
+ * section from that folder (`.storybook/main.ts`), so there is nothing that can drift.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -13,21 +15,6 @@ import { describe, expect, it } from 'vitest';
 
 const root = path.resolve(__dirname, '..');
 const LIST = path.join(root, 'scripts/public-names.txt');
-
-export const CATEGORIES = [
-  'Foundations',
-  'Buttons & actions',
-  'Text & input',
-  'Status & messages',
-  'People',
-  'Files & sharing',
-  'Media',
-  'Conversation',
-  'App frame',
-  'App tools',
-  'Layouts',
-  'Internal',
-];
 
 /* The names a file exports, following `export * from` into other files. Read as text: nothing is compiled. */
 function namesOf(file: string, seen = new Set<string>()): string[] {
@@ -62,15 +49,6 @@ function exported(): string[] {
   return names.sort();
 }
 
-function walk(dir: string, out: string[] = []): string[] {
-  for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
-    const p = path.join(dir, e.name);
-    if (e.isDirectory()) walk(p, out);
-    else if (/\.stories\.tsx$/.test(e.name)) out.push(p);
-  }
-  return out;
-}
-
 describe('names apps import', () => {
   const now = exported();
   if (process.env.UPDATE_NAMES) fs.writeFileSync(LIST, now.join('\n') + '\n');
@@ -84,17 +62,5 @@ describe('names apps import', () => {
   });
   it('lists every new name (UPDATE_NAMES=1 adds them)', () => {
     expect(now.filter((n) => !listed.includes(n))).toEqual([]);
-  });
-});
-
-describe('story categories', () => {
-  it('files every story under a known category', () => {
-    const stray: string[] = [];
-    for (const f of walk(path.join(root, 'src'))) {
-      // The story's own title is the first one with a slash in it (fixtures in the same file have plain titles).
-      const title = [...fs.readFileSync(f, 'utf8').matchAll(/^\s*title:\s*['"]([^'"]+)['"]/gm)].map((m) => m[1]!).find((t) => t.includes('/'));
-      if (!title || !CATEGORIES.includes(title.split('/')[0]!)) stray.push(`${path.relative(root, f)}: ${title ?? 'no category in the title'}`);
-    }
-    expect(stray).toEqual([]);
   });
 });

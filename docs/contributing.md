@@ -39,7 +39,8 @@ Which category a piece belongs to, and the rules about names: [AGENTS.md](../AGE
 src/
   theme/          tokens, built-in themes, createTheme, ThemeProvider, tone class maps
   icons/          generated registry + <Icon/>
-  components/     one folder per component: Component.tsx + Component.stories.tsx
+  components/     one folder per category, one folder per component inside it:
+                  <category>/<Component>/Component.tsx + Component.stories.tsx
   electron/       window bridge types + main/preload helpers (pearkit/electron)
   utils/          cn, formatters, clipboard
   stories/        docs (MDX), foundations, layouts, fixtures & demo assets
@@ -57,7 +58,7 @@ tailwind.preset.js · global.css · vite.js
 2. **Style with `className`, colour with tokens.** Never hard-code hex values in components; use token classes (`bg-primary`) or `useTheme().colors` for SVG.
 3. **Write complete class names.** Tailwind scans source files, so `bg-${tone}` won't work. Use the literal maps in `src/theme/tones.ts`.
 4. **Expose `className` and `style`** on the root of every component and merge with `cn()`.
-5. **Every component gets a story** next to it, titled `<Category>/<Name>`, with a `Playground` (args/controls) and at least one story showing real variants.
+5. **Every component gets a story** next to it, titled with just the piece's name (`title: 'Scrubber'` — the folder supplies the category), with a `Playground` (args/controls) and at least one story showing real variants.
 6. **Layout stories use only exported components.** If a layout needs custom markup, it's a sign a component is missing.
 7. **Public API changes need a changeset.** Renaming or removing a prop, token or component is breaking: say so in the changeset and include a migration note.
 

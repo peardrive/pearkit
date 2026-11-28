@@ -5,8 +5,8 @@
 //   node scripts/draw-own-icons.mjs                 print every glyph as JSON
 //   node scripts/draw-own-icons.mjs --preview x.html  also write a page showing them at four sizes
 //
-// The glyphs are pasted into src/components/MediaPlayer/PlayerIcon.tsx (speed, turn-auto) and
-// src/components/FileViews/FileViewIcon.tsx (the rest).
+// The glyphs are pasted into src/components/media/MediaPlayer/PlayerIcon.tsx (speed, turn-auto) and
+// src/components/files/FileViews/FileViewIcon.tsx (the rest).
 
 import fs from "node:fs";
 

@@ -10,8 +10,35 @@ const { pearkit } = require('../vite.js');
 const srcDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../src');
 const srcAlias = { find: /^@\//, replacement: `${srcDir.replace(/\\/g, '/')}/` };
 
+/**
+ * A piece's category is the folder it lives in, and its Storybook section is that folder's
+ * `titlePrefix`. Moving a folder between categories moves the story with it: there is no
+ * category string to keep in sync, and so nothing for a test to check.
+ */
+const COMPONENT_CATEGORIES = {
+  foundations: 'Foundations',
+  buttons: 'Buttons',
+  input: 'Input',
+  feedback: 'Feedback',
+  people: 'People',
+  files: 'Files',
+  media: 'Media',
+  conversation: 'Conversation',
+  frame: 'Frame',
+  tools: 'Tools',
+};
+
 const config: StorybookConfig = {
-  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(ts|tsx)'],
+  stories: [
+    ...Object.entries(COMPONENT_CATEGORIES).map(([directory, titlePrefix]) => ({
+      directory: `../src/components/${directory}`,
+      titlePrefix,
+      files: '**/*.stories.@(ts|tsx)',
+    })),
+    '../src/**/*.mdx',
+    // Whole screens and the internal README story keep explicit `Layouts/…` and `Internal/…` titles.
+    '../src/stories/**/*.stories.@(ts|tsx)',
+  ],
   addons: ['@storybook/addon-docs', '@storybook/addon-a11y'],
   framework: '@storybook/react-vite',
   staticDirs: [{ from: '../docs/assets', to: '/assets' }],
