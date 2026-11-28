@@ -1,4 +1,4 @@
-import type { StatusTone } from '../../theme/tones';
+import type { StatusTone } from '@/theme/tones';
 
 /** Lifecycle states of a share / transfer in PearDrop-style apps. */
 export type ShareStatus = 'sharing' | 'receiving' | 'active' | 'completed' | 'failed' | 'paused' | 'inactive';

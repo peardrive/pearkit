@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { Modal, Platform, Pressable, ScrollView, View, type StyleProp, type ViewStyle } from 'react-native';
 import { vars } from 'nativewind';
-import { cn } from '../../utils/cn';
-import { useTheme } from '../../theme/ThemeProvider';
-import { themeToCssVariables } from '../../theme/createTheme';
-import { renderIcon, type IconSource } from '../../icons/Icon';
-import { IconButton } from '../IconButton/IconButton';
-import { Text } from '../Text/Text';
+import { cn } from '@/utils/cn';
+import { useTheme } from '@/theme/ThemeProvider';
+import { themeToCssVariables } from '@/theme/createTheme';
+import { renderIcon, type IconSource } from '@/icons/Icon';
+import { IconButton } from '@/components/IconButton/IconButton';
+import { Text } from '@/components/Text/Text';
 import { DialogSubmitContext, enterPressesMain } from './enterKey';
 
 export interface DialogProps {

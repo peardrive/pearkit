@@ -12,6 +12,10 @@ const dirname =
 
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
+  // `@/…` is the repo's shorthand for `src/…` (tsconfig paths). Bundlers need it too.
+  resolve: {
+    alias: [{ find: /^@\//, replacement: `${path.resolve(dirname, 'src').replace(/\\/g, '/')}/` }],
+  },
   test: {
     projects: [
       // The rules that need no screen: plain files, run in Node.

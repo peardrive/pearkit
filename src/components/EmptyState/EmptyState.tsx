@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, type StyleProp, type ViewStyle } from 'react-native';
-import { cn } from '../../utils/cn';
-import { renderIcon, type IconSource } from '../../icons/Icon';
-import { Text } from '../Text/Text';
+import { cn } from '@/utils/cn';
+import { renderIcon, type IconSource } from '@/icons/Icon';
+import { Text } from '@/components/Text/Text';
 
 export interface EmptyStateProps {
   icon?: IconSource;

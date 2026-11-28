@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { View } from 'react-native';
 import { Divider } from './Divider';
-import { IconButton } from '../IconButton/IconButton';
-import { Text } from '../Text/Text';
+import { IconButton } from '@/components/IconButton/IconButton';
+import { Text } from '@/components/Text/Text';
 
 const meta: Meta<typeof Divider> = {
   title: 'App frame/Divider',

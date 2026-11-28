@@ -1,20 +1,20 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { Platform, Pressable, ScrollView, View, type StyleProp, type ViewStyle } from 'react-native';
-import { cn } from '../../utils/cn';
-import { clamp } from '../../utils/format';
-import { renderIcon, type IconSource } from '../../icons/Icon';
-import { useTheme } from '../../theme/ThemeProvider';
-import type { ColorToken } from '../../theme/tokens';
-import type { StatusTone } from '../../theme/tones';
-import { CountBadge } from '../Badge/CountBadge';
-import { LinearGradient } from '../Gradient/LinearGradient';
-import { IconButton } from '../IconButton/IconButton';
-import { SectionLabel } from '../SectionLabel/SectionLabel';
-import { Spacer } from '../Spacer/Spacer';
-import { StatusDot } from '../Status/StatusDot';
-import { Text } from '../Text/Text';
-import { Tooltip } from '../Tooltip/Tooltip';
-import { ResizeHandle } from '../ResizeHandle/ResizeHandle';
+import { cn } from '@/utils/cn';
+import { clamp } from '@/utils/format';
+import { renderIcon, type IconSource } from '@/icons/Icon';
+import { useTheme } from '@/theme/ThemeProvider';
+import type { ColorToken } from '@/theme/tokens';
+import type { StatusTone } from '@/theme/tones';
+import { CountBadge } from '@/components/Badge/CountBadge';
+import { LinearGradient } from '@/components/Gradient/LinearGradient';
+import { IconButton } from '@/components/IconButton/IconButton';
+import { SectionLabel } from '@/components/SectionLabel/SectionLabel';
+import { Spacer } from '@/components/Spacer/Spacer';
+import { StatusDot } from '@/components/Status/StatusDot';
+import { Text } from '@/components/Text/Text';
+import { Tooltip } from '@/components/Tooltip/Tooltip';
+import { ResizeHandle } from '@/components/ResizeHandle/ResizeHandle';
 
 /* ───────────────────────── context ───────────────────────── */
 

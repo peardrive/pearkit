@@ -5,7 +5,7 @@
  * drag in a pearkit app (a trim strip's pins, a scrubber's range, a timeline's clip edges) goes
  * through these functions, so a clip can never be dragged inside out or past its media.
  */
-import { clamp } from '../../utils/format';
+import { clamp } from '@/utils/format';
 
 export interface TimeRange {
   /** Start of the chosen part, seconds. */

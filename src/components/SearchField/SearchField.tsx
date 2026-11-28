@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Platform, Pressable, TextInput, View, type StyleProp, type TextInputProps, type TextStyle, type ViewStyle } from 'react-native';
-import { cn } from '../../utils/cn';
-import { Icon } from '../../icons/Icon';
-import { useTheme } from '../../theme/ThemeProvider';
-import { fontWeightValue } from '../../theme/tokens';
-import { Kbd } from '../Kbd/Kbd';
+import { cn } from '@/utils/cn';
+import { Icon } from '@/icons/Icon';
+import { useTheme } from '@/theme/ThemeProvider';
+import { fontWeightValue } from '@/theme/tokens';
+import { Kbd } from '@/components/Kbd/Kbd';
 
 export interface SearchFieldProps extends Omit<TextInputProps, 'style' | 'placeholderTextColor'> {
   /** Shortcut hint on the right, e.g. `⌘F`. Hidden while there is text. */

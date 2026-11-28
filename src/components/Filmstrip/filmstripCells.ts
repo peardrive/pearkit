@@ -2,7 +2,7 @@
  * Filmstrip geometry — `n` frames edge to edge across a width. `<Filmstrip/>` lays out images;
  * `paintFilmstrip` draws canvas-ready frames the same way.
  */
-import { roundRectPath, type Canvas2D } from '../Scrubber/timeGlyphs';
+import { roundRectPath, type Canvas2D } from '@/components/Scrubber/timeGlyphs';
 
 /** A frame to show: an image URI, or null while it is still being made. */
 export type FilmstripFrame = string | { uri: string } | null | undefined;

@@ -5,9 +5,9 @@ import { expect, userEvent, within } from 'storybook/test';
 import { OrderTile } from './OrderTile';
 import { OrderBadge } from './OrderBadge';
 import { useOrderedSelection } from './useOrderedSelection';
-import { Text } from '../Text/Text';
-import { Button } from '../Button/Button';
-import { Showcase, Column } from '../../stories/helpers';
+import { Text } from '@/components/Text/Text';
+import { Button } from '@/components/Button/Button';
+import { Showcase, Column } from '@/stories/helpers';
 
 const meta: Meta<typeof OrderTile> = {
   title: 'Files & sharing/OrderTile',

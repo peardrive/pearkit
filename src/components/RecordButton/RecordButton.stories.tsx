@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { View } from 'react-native';
 import { RecordButton, type RecordState } from './RecordButton';
-import { Showcase } from '../../stories/helpers';
-import { formatClock } from '../../utils/format';
+import { Showcase } from '@/stories/helpers';
+import { formatClock } from '@/utils/format';
 
 const meta: Meta<typeof RecordButton> = {
-  title: 'Components/RecordButton',
+  title: 'Media/RecordButton',
   component: RecordButton,
   parameters: { docs: { description: { component: 'The one record button: arm, record and stop are one round key in three states; a pulsing square says "recording". The label beside it is the app\'s word or its clock.' } } },
   argTypes: {

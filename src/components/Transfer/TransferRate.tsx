@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, type StyleProp, type ViewStyle } from 'react-native';
-import { cn } from '../../utils/cn';
-import { formatSpeed } from '../../utils/format';
-import { Icon } from '../../icons/Icon';
-import type { ColorToken } from '../../theme/tokens';
-import { Text } from '../Text/Text';
+import { cn } from '@/utils/cn';
+import { formatSpeed } from '@/utils/format';
+import { Icon } from '@/icons/Icon';
+import type { ColorToken } from '@/theme/tokens';
+import { Text } from '@/components/Text/Text';
 
 export interface TransferRateProps {
   direction: 'up' | 'down';

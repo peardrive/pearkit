@@ -1,10 +1,10 @@
 /** Demo media for the time components: a speech-like waveform and a few frames. */
-import videoDusk from '../assets/video-dusk.jpg';
-import photoHarbor from '../assets/photo-harbor.jpg';
-import photoRidge from '../assets/photo-ridge.jpg';
-import albumEmber from '../assets/album-ember.jpg';
-import type { WaveformSource } from '../../components/Waveform/waveformBars';
-import type { FilmstripFrame } from '../../components/Filmstrip/filmstripCells';
+import videoDusk from '@/stories/assets/video-dusk.jpg';
+import photoHarbor from '@/stories/assets/photo-harbor.jpg';
+import photoRidge from '@/stories/assets/photo-ridge.jpg';
+import albumEmber from '@/stories/assets/album-ember.jpg';
+import type { WaveformSource } from '@/components/Waveform/waveformBars';
+import type { FilmstripFrame } from '@/components/Filmstrip/filmstripCells';
 
 /** A deterministic pseudo-random sequence so stories look the same every time. */
 function prng(seed: number) {

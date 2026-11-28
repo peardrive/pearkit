@@ -1,9 +1,9 @@
 import React from 'react';
 import { Platform, Text as RNText, type TextProps as RNTextProps, type TextStyle } from 'react-native';
-import { cn } from '../../utils/cn';
-import { useTheme } from '../../theme/ThemeProvider';
-import { fontWeightValue, type ColorToken, type FontWeightName } from '../../theme/tokens';
-import { textTone } from '../../theme/tones';
+import { cn } from '@/utils/cn';
+import { useTheme } from '@/theme/ThemeProvider';
+import { fontWeightValue, type ColorToken, type FontWeightName } from '@/theme/tokens';
+import { textTone } from '@/theme/tones';
 
 export type TextVariant =
   | 'display' // 21 / bold — detail hero title

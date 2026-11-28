@@ -2,8 +2,8 @@ import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { View } from 'react-native';
 import { Filmstrip } from './Filmstrip';
-import { Text } from '../Text/Text';
-import { demoFrames } from '../../stories/fixtures/media';
+import { Text } from '@/components/Text/Text';
+import { demoFrames } from '@/stories/fixtures/media';
 
 const meta: Meta<typeof Filmstrip> = {
   title: 'Media/Filmstrip',

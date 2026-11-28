@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Animated, Platform, Pressable, type StyleProp, type ViewStyle } from 'react-native';
-import { cn } from '../../utils/cn';
-import { useTheme } from '../../theme/ThemeProvider';
+import { cn } from '@/utils/cn';
+import { useTheme } from '@/theme/ThemeProvider';
 
 export type SwitchSize = 'sm' | 'md';
 

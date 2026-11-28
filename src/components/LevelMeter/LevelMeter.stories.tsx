@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { View } from 'react-native';
 import { LevelMeter } from './LevelMeter';
-import { Showcase } from '../../stories/helpers';
+import { Showcase } from '@/stories/helpers';
 
 const meta: Meta<typeof LevelMeter> = {
-  title: 'Components/LevelMeter',
+  title: 'Media/LevelMeter',
   component: LevelMeter,
   parameters: { docs: { description: { component: 'An input level as one thin bar: the track faint, the fill in the brand colour, red when it clips. Along the bottom of a dock button, or long in a mixer.' } } },
   argTypes: {

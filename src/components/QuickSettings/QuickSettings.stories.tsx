@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { View } from 'react-native';
 import { QuickSettings, QuickSettingsLine } from './QuickSettings';
-import { Switch } from '../Switch/Switch';
-import { IconButton } from '../IconButton/IconButton';
-import { Text } from '../Text/Text';
-import { Showcase } from '../../stories/helpers';
+import { Switch } from '@/components/Switch/Switch';
+import { IconButton } from '@/components/IconButton/IconButton';
+import { Text } from '@/components/Text/Text';
+import { Showcase } from '@/stories/helpers';
 
 const meta: Meta<typeof QuickSettings> = {
-  title: 'Components/QuickSettings',
+  title: 'App frame/QuickSettings',
   component: QuickSettings,
   subcomponents: { QuickSettingsLine } as never,
   parameters: { docs: { description: { component: 'The small options box that pops up from a control: one line per setting, the name left, its control right, and one plain button at the foot to the full page. The host places it and puts it away on a press outside.' } } },

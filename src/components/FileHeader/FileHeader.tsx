@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, type StyleProp, type ViewStyle } from 'react-native';
-import { cn } from '../../utils/cn';
-import type { StatusTone } from '../../theme/tones';
-import { StatusPill } from '../Status/StatusPill';
-import type { ShareStatus } from '../Status/status';
-import { Text } from '../Text/Text';
-import { Thumbnail, type ThumbnailProps } from '../Thumbnail/Thumbnail';
+import { cn } from '@/utils/cn';
+import type { StatusTone } from '@/theme/tones';
+import { StatusPill } from '@/components/Status/StatusPill';
+import type { ShareStatus } from '@/components/Status/status';
+import { Text } from '@/components/Text/Text';
+import { Thumbnail, type ThumbnailProps } from '@/components/Thumbnail/Thumbnail';
 
 export interface FileHeaderProps {
   title: string;

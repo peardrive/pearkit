@@ -3,9 +3,9 @@ import { View } from 'react-native';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { CommentThread } from './CommentThread';
 import { CommentBox } from './CommentBox';
-import { Showcase, Column } from '../../stories/helpers';
-import { Text } from '../Text/Text';
-import { formatLikers, toggleLiked, type CommentData } from '../../utils/social';
+import { Showcase, Column } from '@/stories/helpers';
+import { Text } from '@/components/Text/Text';
+import { formatLikers, toggleLiked, type CommentData } from '@/utils/social';
 
 const NOW = Date.now();
 const SAMPLE: CommentData[] = [

@@ -1,10 +1,10 @@
 import React from 'react';
 import { Platform, Pressable, View, type StyleProp, type ViewStyle } from 'react-native';
-import { cn } from '../../utils/cn';
-import { formatCount, type SocialCounts } from '../../utils/social';
-import { Icon, type IconName } from '../../icons';
-import { useTheme } from '../../theme/ThemeProvider';
-import { Text } from '../Text/Text';
+import { cn } from '@/utils/cn';
+import { formatCount, type SocialCounts } from '@/utils/social';
+import { Icon, type IconName } from '@/icons';
+import { useTheme } from '@/theme/ThemeProvider';
+import { Text } from '@/components/Text/Text';
 
 export interface SocialBarProps {
   /**

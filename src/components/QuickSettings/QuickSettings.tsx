@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, type StyleProp, type ViewStyle } from 'react-native';
-import { cn } from '../../utils/cn';
-import { useTheme } from '../../theme/ThemeProvider';
-import { withAlpha } from '../../theme/createTheme';
-import { renderIcon, type IconSource } from '../../icons/Icon';
-import { Text } from '../Text/Text';
-import { Button } from '../Button/Button';
+import { cn } from '@/utils/cn';
+import { useTheme } from '@/theme/ThemeProvider';
+import { withAlpha } from '@/theme/createTheme';
+import { renderIcon, type IconSource } from '@/icons/Icon';
+import { Text } from '@/components/Text/Text';
+import { Button } from '@/components/Button/Button';
 
 export interface QuickSettingsProps {
   /** A small heading above the lines, when the box is not obviously about one thing. */

@@ -4,7 +4,7 @@
  * they can be tested without a screen, and so every app words and sizes things the same way.
  */
 
-import { describeShareState, type ShareBar } from '../ShareState/shareState';
+import { describeShareState, type ShareBar } from '@/components/ShareState/shareState';
 
 // ---------------------------------------------------------------------------------------------
 // The views

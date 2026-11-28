@@ -3,15 +3,15 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Image, Pressable, View } from 'react-native';
 import { fn } from 'storybook/test';
 
-import { Text } from '../Text/Text';
-import { Column, Showcase } from '../../stories/helpers';
-import photoHarbor from '../../stories/assets/photo-harbor.jpg';
-import photoRidge from '../../stories/assets/photo-ridge.jpg';
-import sampleTall from '../../stories/assets/sample-tall.mp4';
-import sampleTone from '../../stories/assets/sample-tone.m4a';
-import sampleWide from '../../stories/assets/sample-wide.mp4';
-import captionsEn from '../../stories/assets/sample-wide.en.vtt';
-import captionsEs from '../../stories/assets/sample-wide.es.vtt';
+import { Text } from '@/components/Text/Text';
+import { Column, Showcase } from '@/stories/helpers';
+import photoHarbor from '@/stories/assets/photo-harbor.jpg';
+import photoRidge from '@/stories/assets/photo-ridge.jpg';
+import sampleTall from '@/stories/assets/sample-tall.mp4';
+import sampleTone from '@/stories/assets/sample-tone.m4a';
+import sampleWide from '@/stories/assets/sample-wide.mp4';
+import captionsEn from '@/stories/assets/sample-wide.en.vtt';
+import captionsEs from '@/stories/assets/sample-wide.es.vtt';
 import { MediaPlayer } from './MediaPlayer';
 import { PlayerIcon, playerIconNames } from './PlayerIcon';
 import {

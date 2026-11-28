@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Kbd } from './Kbd';
-import { Showcase } from '../../stories/helpers';
+import { Showcase } from '@/stories/helpers';
 
 const meta: Meta<typeof Kbd> = {
   title: 'Buttons & actions/Kbd',

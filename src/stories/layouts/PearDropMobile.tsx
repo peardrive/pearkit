@@ -18,8 +18,8 @@ import {
   ShareRow,
   Text,
   TransferCard,
-} from '../../index';
-import { shareMeta, shares, type DemoShare } from '../fixtures/shares';
+} from '@/index';
+import { shareMeta, shares, type DemoShare } from '@/stories/fixtures/shares';
 
 function StatusBar() {
   return (

@@ -1,9 +1,9 @@
 /** Demo media items for the browse components: a wall of mixed-ratio tiles. */
-import videoDusk from '../assets/video-dusk.jpg';
-import photoHarbor from '../assets/photo-harbor.jpg';
-import photoRidge from '../assets/photo-ridge.jpg';
-import albumEmber from '../assets/album-ember.jpg';
-import type { FileKind } from '../../components/Thumbnail/Thumbnail';
+import videoDusk from '@/stories/assets/video-dusk.jpg';
+import photoHarbor from '@/stories/assets/photo-harbor.jpg';
+import photoRidge from '@/stories/assets/photo-ridge.jpg';
+import albumEmber from '@/stories/assets/album-ember.jpg';
+import type { FileKind } from '@/components/Thumbnail/Thumbnail';
 
 export interface DemoMediaItem {
   id: string;

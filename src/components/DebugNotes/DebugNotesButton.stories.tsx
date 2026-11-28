@@ -2,13 +2,13 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useEffect, useMemo, useState } from 'react';
 import { ScrollView, View } from 'react-native';
 import { DebugNotesButton } from './DebugNotesButton';
-import { createDebugNotes, createUnavailableRecorder, type SaveNoteInput } from '../../debug';
-import { Button } from '../Button/Button';
-import { Card } from '../Card/Card';
-import { SearchField } from '../SearchField/SearchField';
-import { SectionLabel } from '../SectionLabel/SectionLabel';
-import { Text } from '../Text/Text';
-import { Toolbar, ToolbarSpacer } from '../Toolbar/Toolbar';
+import { createDebugNotes, createUnavailableRecorder, type SaveNoteInput } from '@/debug';
+import { Button } from '@/components/Button/Button';
+import { Card } from '@/components/Card/Card';
+import { SearchField } from '@/components/SearchField/SearchField';
+import { SectionLabel } from '@/components/SectionLabel/SectionLabel';
+import { Text } from '@/components/Text/Text';
+import { Toolbar, ToolbarSpacer } from '@/components/Toolbar/Toolbar';
 
 const meta: Meta<typeof DebugNotesButton> = {
   title: 'App tools/DebugNotesButton',

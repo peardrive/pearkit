@@ -2,9 +2,9 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import React, { useState } from 'react';
 import { View } from 'react-native';
 import { FolderTabPage, FolderTabs, type FolderTab } from './FolderTabs';
-import { IconButton } from '../IconButton/IconButton';
-import { KeyValueList } from '../KeyValueList/KeyValueList';
-import { Text } from '../Text/Text';
+import { IconButton } from '@/components/IconButton/IconButton';
+import { KeyValueList } from '@/components/KeyValueList/KeyValueList';
+import { Text } from '@/components/Text/Text';
 
 const PAGES: FolderTab[] = [
   { value: 'video', label: 'Video', icon: 'video' },

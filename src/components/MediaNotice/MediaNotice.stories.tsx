@@ -2,10 +2,10 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Image, View } from 'react-native';
 import { fn } from 'storybook/test';
 import { MediaNotice } from './MediaNotice';
-import { Button } from '../Button/Button';
-import { iconNames } from '../../icons/registry';
-import { Column, Showcase } from '../../stories/helpers';
-import poster from '../../stories/assets/video-dusk.jpg';
+import { Button } from '@/components/Button/Button';
+import { iconNames } from '@/icons/registry';
+import { Column, Showcase } from '@/stories/helpers';
+import poster from '@/stories/assets/video-dusk.jpg';
 
 /** A player's stage: the poster stays behind the notice. */
 function Stage({ children, width = 360, height = 202 }: { children: React.ReactNode; width?: number; height?: number }) {

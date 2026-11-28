@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { View } from 'react-native';
 import { FileHeader } from './FileHeader';
-import { shareStatusMeta } from '../Status/status';
-import { images } from '../../stories/fixtures/shares';
+import { shareStatusMeta } from '@/components/Status/status';
+import { images } from '@/stories/fixtures/shares';
 
 const meta: Meta<typeof FileHeader> = {
   title: 'Files & sharing/FileHeader',

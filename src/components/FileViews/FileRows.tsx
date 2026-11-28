@@ -1,8 +1,8 @@
 import React, { type ReactNode } from 'react';
 import { Image, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { ShareProgressBar } from '../ShareState/ShareProgressBar';
-import { shareBarColorsFrom, type ShareBarColors } from '../ShareState/shareState';
+import { ShareProgressBar } from '@/components/ShareState/ShareProgressBar';
+import { shareBarColorsFrom, type ShareBarColors } from '@/components/ShareState/shareState';
 import { DownloadPie } from './DownloadPie';
 import { FileViewIcon, type FileViewIconName } from './FileViewIcon';
 import {

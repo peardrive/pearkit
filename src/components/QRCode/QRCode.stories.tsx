@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { QRCode } from './QRCode';
-import { Showcase } from '../../stories/helpers';
+import { Showcase } from '@/stories/helpers';
 
 const meta: Meta<typeof QRCode> = {
   title: 'Files & sharing/QRCode',

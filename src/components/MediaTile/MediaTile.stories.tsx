@@ -2,8 +2,8 @@ import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { View } from 'react-native';
 import { MediaTile } from './MediaTile';
-import { Text } from '../Text/Text';
-import { demoWall } from '../../stories/fixtures/browse';
+import { Text } from '@/components/Text/Text';
+import { demoWall } from '@/stories/fixtures/browse';
 
 const [dusk, harbor, ridge] = demoWall(3, 3);
 

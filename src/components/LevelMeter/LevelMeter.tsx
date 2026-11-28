@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Animated, View, type StyleProp, type ViewStyle } from 'react-native';
-import { cn } from '../../utils/cn';
-import { useTheme } from '../../theme/ThemeProvider';
+import { cn } from '@/utils/cn';
+import { useTheme } from '@/theme/ThemeProvider';
 
 export interface LevelMeterProps {
   /** The level to show, 0..1, already on the curve the app wants (a dB scale is the caller's business). */

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { cn } from '../../utils/cn';
+import { cn } from '@/utils/cn';
 
 export interface SpacerProps {
   /** Fixed size in px along the parent's main axis. Omit to grow (`flex-1`). */

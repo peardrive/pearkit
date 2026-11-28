@@ -1,6 +1,6 @@
 import React, { useMemo, useRef, type CSSProperties } from 'react';
 
-import type { CaptionTrack, MediaAudioTrack, MediaEngine } from '../playerLogic';
+import type { CaptionTrack, MediaAudioTrack, MediaEngine } from '@/components/MediaPlayer/playerLogic';
 
 /**
  * The engine for a browser: the page's own <video> and <audio> elements behind the same few

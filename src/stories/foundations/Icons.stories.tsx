@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 import { View } from 'react-native';
-import { Icon, SearchField, Text, iconNames, iconRegistry, type IconName } from '../../index';
+import { Icon, SearchField, Text, iconNames, iconRegistry, type IconName } from '@/index';
 
 const meta: Meta<typeof Icon> = {
   title: 'Foundations/Icons',

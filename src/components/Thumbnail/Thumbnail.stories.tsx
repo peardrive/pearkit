@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { View } from 'react-native';
 import { Thumbnail, fileKindMeta, type FileKind } from './Thumbnail';
-import { images } from '../../stories/fixtures/shares';
-import { Column, Showcase } from '../../stories/helpers';
-import { Text } from '../Text/Text';
+import { images } from '@/stories/fixtures/shares';
+import { Column, Showcase } from '@/stories/helpers';
+import { Text } from '@/components/Text/Text';
 
 const meta: Meta<typeof Thumbnail> = {
   title: 'Files & sharing/Thumbnail',

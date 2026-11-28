@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { View } from 'react-native';
 import { AppWindow, Pane, PaneBody } from './AppWindow';
-import { Text } from '../Text/Text';
-import { Sidebar, SidebarHeader, SidebarSpacer, SidebarToggle } from '../Sidebar/Sidebar';
-import { WindowControls } from '../WindowControls/WindowControls';
+import { Text } from '@/components/Text/Text';
+import { Sidebar, SidebarHeader, SidebarSpacer, SidebarToggle } from '@/components/Sidebar/Sidebar';
+import { WindowControls } from '@/components/WindowControls/WindowControls';
 
 const meta: Meta<typeof AppWindow> = {
   title: 'App frame/AppWindow & Pane',

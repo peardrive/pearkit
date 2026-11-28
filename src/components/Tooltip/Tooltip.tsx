@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Pressable, View, type StyleProp, type ViewStyle } from 'react-native';
-import { cn } from '../../utils/cn';
-import { Text } from '../Text/Text';
+import { cn } from '@/utils/cn';
+import { Text } from '@/components/Text/Text';
 
 export type TooltipPlacement = 'top' | 'bottom' | 'left' | 'right';
 

@@ -1,10 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import { Animated, Platform, Pressable, View, type StyleProp, type ViewStyle } from 'react-native';
-import { cn } from '../../utils/cn';
-import { renderIcon, type IconSource } from '../../icons/Icon';
-import { Icon } from '../../icons/Icon';
-import { Tooltip } from '../Tooltip/Tooltip';
-import { LevelMeter } from '../LevelMeter/LevelMeter';
+import { cn } from '@/utils/cn';
+import { renderIcon, type IconSource } from '@/icons/Icon';
+import { Icon } from '@/icons/Icon';
+import { Tooltip } from '@/components/Tooltip/Tooltip';
+import { LevelMeter } from '@/components/LevelMeter/LevelMeter';
 
 export type DeviceToggleSize = 'md' | 'sm';
 

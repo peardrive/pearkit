@@ -1,8 +1,8 @@
 import React from 'react';
 import { ScrollView, View, type StyleProp, type ViewStyle } from 'react-native';
-import { cn } from '../../utils/cn';
-import { useTheme } from '../../theme/ThemeProvider';
-import { RadialGlow } from '../Gradient/LinearGradient';
+import { cn } from '@/utils/cn';
+import { useTheme } from '@/theme/ThemeProvider';
+import { RadialGlow } from '@/components/Gradient/LinearGradient';
 
 /* ───────────────────────── AppWindow ───────────────────────── */
 

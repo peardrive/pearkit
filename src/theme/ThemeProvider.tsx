@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useMemo } from 'react';
 import { Platform, useColorScheme, View, type StyleProp, type ViewStyle } from 'react-native';
 import { vars } from 'nativewind';
-import { cn } from '../utils/cn';
+import { cn } from '@/utils/cn';
 import { createTheme, themeToCssVariables, type ThemeOverrides } from './createTheme';
 import { darkTheme, lightTheme } from './themes';
 import type { Theme } from './tokens';

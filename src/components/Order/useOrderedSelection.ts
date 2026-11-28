@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from 'react';
-import { orderNumber, sendFirst as first, sendLast as last, toggleOrder } from '../../utils/order';
+import { orderNumber, sendFirst as first, sendLast as last, toggleOrder } from '@/utils/order';
 
 export interface OrderedSelection<K> {
   /** The chosen keys, in the order they were chosen. `order[0]` leads. */

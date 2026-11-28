@@ -3,9 +3,9 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { View } from 'react-native';
 import { Scrubber, type ScrubberProps } from './Scrubber';
 import type { TimeRange } from './timeRange';
-import { Text } from '../Text/Text';
-import { Waveform } from '../Waveform/Waveform';
-import { demoPeaks } from '../../stories/fixtures/media';
+import { Text } from '@/components/Text/Text';
+import { Waveform } from '@/components/Waveform/Waveform';
+import { demoPeaks } from '@/stories/fixtures/media';
 
 const meta: Meta<typeof Scrubber> = {
   title: 'Media/Scrubber',

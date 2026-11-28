@@ -5,7 +5,7 @@ import '@fontsource/plus-jakarta-sans/500.css';
 import '@fontsource/plus-jakarta-sans/600.css';
 import '@fontsource/plus-jakarta-sans/700.css';
 import '../global.css';
-import { ThemeProvider } from '../src/theme';
+import { ThemeProvider } from '@/theme';
 import { storybookThemes } from './themes';
 
 /* Scroll bars inside a preview stay out of the way: a thin thumb, shown only while the pointer is over the thing that

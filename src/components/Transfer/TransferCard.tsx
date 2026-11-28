@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, type StyleProp, type ViewStyle } from 'react-native';
-import { cn } from '../../utils/cn';
-import { formatBytes, formatEta } from '../../utils/format';
-import { Icon } from '../../icons/Icon';
-import { Card } from '../Card/Card';
-import { Spacer } from '../Spacer/Spacer';
-import { PeerChip } from '../PeerChip/PeerChip';
-import { avatarPalette } from '../Avatar/Avatar';
-import { useTheme } from '../../theme/ThemeProvider';
-import { ProgressBar, type ProgressVariant } from '../ProgressBar/ProgressBar';
-import { Text } from '../Text/Text';
+import { cn } from '@/utils/cn';
+import { formatBytes, formatEta } from '@/utils/format';
+import { Icon } from '@/icons/Icon';
+import { Card } from '@/components/Card/Card';
+import { Spacer } from '@/components/Spacer/Spacer';
+import { PeerChip } from '@/components/PeerChip/PeerChip';
+import { avatarPalette } from '@/components/Avatar/Avatar';
+import { useTheme } from '@/theme/ThemeProvider';
+import { ProgressBar, type ProgressVariant } from '@/components/ProgressBar/ProgressBar';
+import { Text } from '@/components/Text/Text';
 import { TransferRate } from './TransferRate';
 
 export interface TransferPeer {

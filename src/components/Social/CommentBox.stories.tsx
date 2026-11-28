@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View } from 'react-native';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { CommentBox, type CommentBoxProps } from './CommentBox';
-import { Showcase, Column } from '../../stories/helpers';
+import { Showcase, Column } from '@/stories/helpers';
 
 function Held(props: Partial<CommentBoxProps> & { start?: string }) {
   const [text, setText] = useState(props.start ?? '');

@@ -1,11 +1,11 @@
 import React from 'react';
 import { Platform, Pressable, View, type StyleProp, type ViewStyle } from 'react-native';
-import { cn } from '../../utils/cn';
-import { Icon } from '../../icons/Icon';
-import { Text } from '../Text/Text';
-import { Tooltip } from '../Tooltip/Tooltip';
-import { StatusDot } from '../Status/StatusDot';
-import { useSidebar } from '../Sidebar/Sidebar';
+import { cn } from '@/utils/cn';
+import { Icon } from '@/icons/Icon';
+import { Text } from '@/components/Text/Text';
+import { Tooltip } from '@/components/Tooltip/Tooltip';
+import { StatusDot } from '@/components/Status/StatusDot';
+import { useSidebar } from '@/components/Sidebar/Sidebar';
 
 export type UpdateState = 'available' | 'downloading' | 'restarting' | 'error';
 

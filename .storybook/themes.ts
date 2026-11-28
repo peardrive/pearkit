@@ -1,4 +1,4 @@
-import { createTheme, darkTheme, lightTheme, type Theme } from '../src/theme';
+import { createTheme, darkTheme, lightTheme, type Theme } from '@/theme';
 
 /** Example of a fully custom theme built from the dark base. */
 export const blueberryTheme = createTheme(darkTheme, {

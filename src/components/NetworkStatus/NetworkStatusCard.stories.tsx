@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { View } from 'react-native';
 import { fn } from 'storybook/test';
 import { NetworkStatusCard } from './NetworkStatusCard';
-import { SidebarSurface } from '../../stories/helpers';
+import { SidebarSurface } from '@/stories/helpers';
 
 const meta: Meta<typeof NetworkStatusCard> = {
   title: 'App tools/NetworkStatusCard',

@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import React, { useRef, useState } from 'react';
 import { View } from 'react-native';
 import { ResizeHandle } from './ResizeHandle';
-import { Text } from '../Text/Text';
-import { clamp } from '../../utils/format';
+import { Text } from '@/components/Text/Text';
+import { clamp } from '@/utils/format';
 
 const meta: Meta<typeof ResizeHandle> = {
   title: 'App frame/ResizeHandle',

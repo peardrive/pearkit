@@ -2,8 +2,8 @@ import React, { useMemo } from 'react';
 import { View, type StyleProp, type ViewStyle } from 'react-native';
 import Svg, { Path, Rect } from 'react-native-svg';
 import qrcode from 'qrcode-generator';
-import { cn } from '../../utils/cn';
-import { useTheme } from '../../theme/ThemeProvider';
+import { cn } from '@/utils/cn';
+import { useTheme } from '@/theme/ThemeProvider';
 
 export interface QRCodeProps {
   /** Text / URL to encode. */

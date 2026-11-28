@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 import { View } from 'react-native';
 import { SearchField } from './SearchField';
-import { Text } from '../Text/Text';
+import { Text } from '@/components/Text/Text';
 
 const meta: Meta<typeof SearchField> = {
   title: 'Text & input/SearchField',

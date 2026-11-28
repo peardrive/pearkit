@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
-import { cn } from '../../utils/cn';
-import { Text } from '../Text/Text';
+import { cn } from '@/utils/cn';
+import { Text } from '@/components/Text/Text';
 
 export interface KbdProps {
   /** Shortcut text, e.g. `⌘F`. */

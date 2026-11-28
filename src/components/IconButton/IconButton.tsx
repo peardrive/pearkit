@@ -1,9 +1,9 @@
 import React from 'react';
 import { Platform, Pressable, View, type PressableProps, type StyleProp, type ViewStyle } from 'react-native';
-import { cn } from '../../utils/cn';
-import { renderIcon, type IconSource } from '../../icons/Icon';
-import type { ColorToken } from '../../theme/tokens';
-import { Tooltip, type TooltipPlacement } from '../Tooltip/Tooltip';
+import { cn } from '@/utils/cn';
+import { renderIcon, type IconSource } from '@/icons/Icon';
+import type { ColorToken } from '@/theme/tokens';
+import { Tooltip, type TooltipPlacement } from '@/components/Tooltip/Tooltip';
 
 export type IconButtonSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 export type IconButtonVariant = 'ghost' | 'subtle' | 'solid';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, type StyleProp, type ViewStyle } from 'react-native';
-import { cn } from '../../utils/cn';
+import { cn } from '@/utils/cn';
 import { masonryColumnCount, masonryColumns } from './masonryColumns';
 
 export interface MasonryProps<T> {

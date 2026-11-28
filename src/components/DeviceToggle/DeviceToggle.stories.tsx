@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { View } from 'react-native';
 import { DeviceToggle } from './DeviceToggle';
-import { Showcase } from '../../stories/helpers';
+import { Showcase } from '@/stories/helpers';
 
 const meta: Meta<typeof DeviceToggle> = {
-  title: 'Components/DeviceToggle',
+  title: 'Media/DeviceToggle',
   component: DeviceToggle,
   parameters: { docs: { description: { component: 'A live input as a capsule: the body switches the device on and off, the slim caret opens its options. Off is tinted red with a slash through the icon. A microphone shows its level along the bottom. `compact` drops the caret for a thumb; a long press opens the options.' } } },
   argTypes: {

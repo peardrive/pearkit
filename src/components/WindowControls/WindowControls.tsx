@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Platform, Pressable, View, type StyleProp, type ViewStyle } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
-import { cn } from '../../utils/cn';
-import { useTheme } from '../../theme/ThemeProvider';
-import { getWindowBridge, type PearkitWindowState } from '../../electron/types';
+import { cn } from '@/utils/cn';
+import { useTheme } from '@/theme/ThemeProvider';
+import { getWindowBridge, type PearkitWindowState } from '@/electron/types';
 
 /* ───────────────────────── hook ───────────────────────── */
 

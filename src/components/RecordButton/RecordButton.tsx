@@ -1,10 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import { Animated, Platform, Pressable, View, type PressableProps, type StyleProp, type ViewStyle } from 'react-native';
-import { cn } from '../../utils/cn';
-import { useTheme } from '../../theme/ThemeProvider';
-import { withAlpha } from '../../theme/createTheme';
-import { Text } from '../Text/Text';
-import { Tooltip, type TooltipPlacement } from '../Tooltip/Tooltip';
+import { cn } from '@/utils/cn';
+import { useTheme } from '@/theme/ThemeProvider';
+import { withAlpha } from '@/theme/createTheme';
+import { Text } from '@/components/Text/Text';
+import { Tooltip, type TooltipPlacement } from '@/components/Tooltip/Tooltip';
 
 /**
  * `arm`: nothing is armed yet, the disc is a red ring (press to arm). `ready`: armed, a full red disc (press to record).

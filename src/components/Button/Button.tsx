@@ -1,11 +1,11 @@
 import React from 'react';
 import { ActivityIndicator, Platform, Pressable, View, type PressableProps, type StyleProp, type ViewStyle } from 'react-native';
-import { cn } from '../../utils/cn';
-import { renderIcon, type IconSource } from '../../icons/Icon';
-import { useTheme } from '../../theme/ThemeProvider';
-import { withAlpha } from '../../theme/createTheme';
-import type { ColorToken } from '../../theme/tokens';
-import { Text } from '../Text/Text';
+import { cn } from '@/utils/cn';
+import { renderIcon, type IconSource } from '@/icons/Icon';
+import { useTheme } from '@/theme/ThemeProvider';
+import { withAlpha } from '@/theme/createTheme';
+import type { ColorToken } from '@/theme/tokens';
+import { Text } from '@/components/Text/Text';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'subtle' | 'ghost' | 'danger';
 export type ButtonSize = 'sm' | 'md' | 'lg';

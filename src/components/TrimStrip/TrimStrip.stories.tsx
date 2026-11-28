@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { View } from 'react-native';
 import { TrimStrip, type TrimStripProps } from './TrimStrip';
-import { Transport } from '../Transport/Transport';
-import type { TimeRange } from '../Scrubber/timeRange';
-import { Text } from '../Text/Text';
-import { demoFrames, demoPeaks } from '../../stories/fixtures/media';
+import { Transport } from '@/components/Transport/Transport';
+import type { TimeRange } from '@/components/Scrubber/timeRange';
+import { Text } from '@/components/Text/Text';
+import { demoFrames, demoPeaks } from '@/stories/fixtures/media';
 
 const peaks = demoPeaks(92);
 const frames = demoFrames(12);
