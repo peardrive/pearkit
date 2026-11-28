@@ -6,7 +6,7 @@ import { Text } from '../Text/Text';
 import { Showcase } from '../../stories/helpers';
 
 const meta: Meta<typeof Switch> = {
-  title: 'Components/Switch',
+  title: 'Buttons & actions/Switch',
   component: Switch,
   parameters: { docs: { description: { component: 'On or off, as a switch: the track fills with the brand colour and the thumb slides right. A switch reads as a state, where a button reads as an action.' } } },
   argTypes: { size: { control: 'inline-radio', options: ['sm', 'md'] } },

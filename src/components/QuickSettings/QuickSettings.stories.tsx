@@ -8,7 +8,7 @@ import { Text } from '../Text/Text';
 import { Showcase } from '../../stories/helpers';
 
 const meta: Meta<typeof QuickSettings> = {
-  title: 'Components/QuickSettings',
+  title: 'App frame/QuickSettings',
   component: QuickSettings,
   subcomponents: { QuickSettingsLine } as never,
   parameters: { docs: { description: { component: 'The small options box that pops up from a control: one line per setting, the name left, its control right, and one plain button at the foot to the full page. The host places it and puts it away on a press outside.' } } },
