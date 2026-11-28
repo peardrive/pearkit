@@ -25,6 +25,12 @@ export interface AskCardProps {
   ts: number;
   /** When the question lapses (ms). */
   expires: number;
+  /**
+   * What a standing yes would let the agent do, in words ("read anything in ~/Anjou/pearkit"): the second answer
+   * becomes "Allow for this project" with this line under the question. `null`: no standing yes is offered (allow
+   * once or refuse). Left out: the plain "Always" of a host that does not say.
+   */
+  always?: string | null;
   answer?: AskAnswer | null;
   /** This person may answer (one of the owner's own devices). Others see why they cannot. */
   canAnswer?: boolean;
@@ -45,8 +51,9 @@ const toneOf: Record<AskStatus, StatusTone> = { open: 'warning', allowed: 'succe
  * An agent asks a person for a permission, in the conversation where it works: who asks, the tool and the exact
  * thing it would do, and three answers (allow once, always, deny) for the people who may give them. Everyone else
  * sees the question and the lock line. Once answered it says who answered and how, and stays as the record.
+ * With `always`, the standing yes is "Allow for this project" and the card says what it would open.
  */
-export function AskCard({ agent, tool, what, detail, ts, expires, answer, canAnswer, lockHint = "Only the owner's devices can answer", onAnswer, busy, now, className, style }: AskCardProps) {
+export function AskCard({ agent, tool, what, detail, ts, expires, always, answer, canAnswer, lockHint = "Only the owner's devices can answer", onAnswer, busy, now, className, style }: AskCardProps) {
   const [expanded, setExpanded] = useState(false);
   const status = askStatus({ expires }, answer, now ?? Date.now());
   const tone = toneOf[status];
@@ -81,12 +88,20 @@ export function AskCard({ agent, tool, what, detail, ts, expires, answer, canAns
             </Text>
           ) : null}
         </Pressable>
+        {status === 'open' && always ? (
+          <View className="flex-row items-start gap-1.5">
+            <Icon name="folder" size={13} tone="subtle" />
+            <Text variant="micro" tone="muted" className="min-w-0 flex-1">
+              For this project: {always}
+            </Text>
+          </View>
+        ) : null}
         {status === 'open' ? (
           canAnswer ? (
             <View className="flex-row flex-wrap items-center gap-2 pt-0.5">
               <Button size="sm" variant="primary" label="Allow once" loading={busy} disabled={busy} onPress={() => onAnswer?.('allow_once')} />
-              <Button size="sm" variant="secondary" label="Always" disabled={busy} onPress={() => onAnswer?.('allow_always')} />
-              <Button size="sm" variant="danger" label="Deny" disabled={busy} onPress={() => onAnswer?.('reject_once')} />
+              {always === null ? null : <Button size="sm" variant="secondary" label={always ? 'Allow for this project' : 'Always'} disabled={busy} onPress={() => onAnswer?.('allow_always')} />}
+              <Button size="sm" variant="danger" label="Refuse" disabled={busy} onPress={() => onAnswer?.('reject_once')} />
             </View>
           ) : (
             <View className="flex-row items-center gap-1.5">

@@ -22,6 +22,7 @@ export * from './Chip/Chip';
 export * from './QRCode/QRCode';
 export * from './LinkField/LinkField';
 export * from './KeyValueList/KeyValueList';
+export * from './AccessList/AccessList';
 export * from './EmptyState/EmptyState';
 export * from './MediaNotice/MediaNotice';
 export * from './Gradient/LinearGradient';

@@ -28,7 +28,7 @@ export function choiceWords(choice: AskChoice): string {
     case 'allow_once':
       return 'allowed once';
     case 'allow_always':
-      return 'allowed always';
+      return 'allowed for this project';
     case 'reject_always':
       return 'refused always';
     default:
@@ -36,10 +36,14 @@ export function choiceWords(choice: AskChoice): string {
   }
 }
 
-/** "9 min left", "40 s left", or "lapsed". */
+/**
+ * "9 min left", "40 s left", or "lapsed"; a question with more than an hour and a half to go just says it is
+ * waiting (an ask waits for its person, by default a day: the countdown would only be noise).
+ */
 export function askTimeLeft(expires: number, now = Date.now()): string {
   const ms = expires - now;
   if (ms <= 0) return 'lapsed';
+  if (ms >= 90 * 60_000) return 'waiting for you';
   if (ms < 90_000) return `${Math.max(1, Math.round(ms / 1000))} s left`;
   return `${Math.round(ms / 60_000)} min left`;
 }
@@ -47,7 +51,7 @@ export function askTimeLeft(expires: number, now = Date.now()): string {
 /** The one line under an answered or lapsed ask: "allowed once by guy (macbook)". */
 export function askOutcomeLine(status: AskStatus, answer: AskAnswer | null | undefined): string {
   if (answer) return `${choiceWords(answer.choice)} by ${answer.by}${answer.device ? ` (${answer.device})` : ''}`;
-  if (status === 'lapsed') return 'nobody answered in time: refused';
+  if (status === 'lapsed') return 'nobody answered: set aside';
   return '';
 }
 

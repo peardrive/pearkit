@@ -13,7 +13,7 @@ describe('an agent asking a person', () => {
 
   it('says the choice the way a person would', () => {
     expect(choiceWords('allow_once')).toBe('allowed once');
-    expect(choiceWords('allow_always')).toBe('allowed always');
+    expect(choiceWords('allow_always')).toBe('allowed for this project');
     expect(choiceWords('reject_once')).toBe('refused');
     expect(choiceWords('reject_always')).toBe('refused always');
   });
@@ -23,12 +23,14 @@ describe('an agent asking a person', () => {
     expect(askTimeLeft(NOW + 89_000, NOW)).toBe('89 s left');
     expect(askTimeLeft(NOW + 400, NOW)).toBe('1 s left');
     expect(askTimeLeft(NOW, NOW)).toBe('lapsed');
+    expect(askTimeLeft(NOW + 24 * 3600_000, NOW)).toBe('waiting for you');
+    expect(askTimeLeft(NOW + 80 * 60_000, NOW)).toBe('80 min left');
   });
 
   it('names who answered and from where', () => {
     expect(askOutcomeLine('allowed', { choice: 'allow_once', by: 'guy', device: 'macbook', ts: NOW })).toBe('allowed once by guy (macbook)');
     expect(askOutcomeLine('refused', { choice: 'reject_once', by: 'guy', ts: NOW })).toBe('refused by guy');
-    expect(askOutcomeLine('lapsed', null)).toBe('nobody answered in time: refused');
+    expect(askOutcomeLine('lapsed', null)).toBe('nobody answered: set aside');
     expect(askOutcomeLine('open', null)).toBe('');
   });
 });
