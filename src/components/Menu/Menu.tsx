@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Modal, Platform, Pressable, useWindowDimensions, View, type StyleProp, type ViewStyle } from 'react-native';
+import { Dimensions, Modal, Platform, Pressable, useWindowDimensions, View, type StyleProp, type ViewStyle } from 'react-native';
 import { vars } from 'nativewind';
 import { cn } from '../../utils/cn';
 import { useTheme } from '../../theme/ThemeProvider';
@@ -8,6 +8,9 @@ import { renderIcon, type IconSource } from '../../icons/Icon';
 import { Button, type ButtonSize, type ButtonVariant } from '../Button/Button';
 import { IconButton, type IconButtonSize, type IconButtonVariant } from '../IconButton/IconButton';
 import { Text } from '../Text/Text';
+import { EDGE, PAD, ROW, SEPARATOR, menuCenter, menuPlace, type MenuAnchor } from './menuLogic';
+
+export { menuCenter, menuPlace, type MenuAnchor } from './menuLogic';
 
 export type MenuItem =
   | {
@@ -23,17 +26,16 @@ export type MenuItem =
     }
   | { key: string; separator: true };
 
-export interface MenuAnchor {
-  x: number;
-  y: number;
-}
 
 export interface MenuProps {
   open: boolean;
   /** Called after an item is chosen, on a press outside, and on Escape (web). */
   onClose: () => void;
   items: MenuItem[];
-  /** The point the list hangs from, in window coordinates. Without one the list opens at the top left. */
+  /**
+   * The point the list hangs from, in window coordinates. Without one it opens in the middle of the screen (at
+   * the top left it sat under a phone's status bar, its first row out of reach: rKeyChat, 2026-11-28).
+   */
   anchor?: MenuAnchor;
   /** Which edge of the list sits on `anchor.x`. Default `left`. */
   align?: 'left' | 'right';
@@ -41,20 +43,6 @@ export interface MenuProps {
   width?: number;
   className?: string;
   style?: StyleProp<ViewStyle>;
-}
-
-const EDGE = 8;
-const ROW = 32;
-const SEPARATOR = 9;
-const PAD = 5;
-
-/** Where the list goes so it stays on the screen. Exported for hosts that place it themselves. */
-export function menuPlace(anchor: MenuAnchor, align: 'left' | 'right', width: number, height: number, screen: { width: number; height: number }) {
-  const wanted = align === 'right' ? anchor.x - width : anchor.x;
-  const left = Math.round(Math.min(Math.max(EDGE, screen.width - width - EDGE), Math.max(EDGE, wanted)));
-  const below = anchor.y + height <= screen.height - EDGE;
-  const top = Math.round(below ? anchor.y : Math.max(EDGE, anchor.y - height - 4));
-  return { left, top };
 }
 
 /**
@@ -75,7 +63,7 @@ export function Menu({ open, onClose, items, anchor, align = 'left', width = 220
   }, [open, onClose]);
 
   const height = items.reduce((h, it) => h + ('separator' in it ? SEPARATOR : ROW), PAD * 2 + 2);
-  const place = anchor ? menuPlace(anchor, align, width, height, screen) : { left: EDGE, top: EDGE };
+  const place = anchor ? menuPlace(anchor, align, width, height, screen) : menuCenter(width, height, screen);
 
   return (
     <Modal visible={open} transparent animationType="none" statusBarTranslucent onRequestClose={onClose}>
@@ -161,7 +149,7 @@ export function MenuButton({ icon = 'more', label, items, size, variant, tooltip
   const press = () => {
     if (open) return setAnchor(null);
     const node = button.current;
-    if (!node) return setAnchor({ x: EDGE, y: EDGE });
+    if (!node) return setAnchor({ x: Dimensions.get('window').width / 2, y: Dimensions.get('window').height / 3 });
     // Where the button is on the screen, so the list can hang from it inside the pop-up window.
     node.measureInWindow((x, y, w, h) => setAnchor({ x: align === 'right' ? x + w : x, y: y + h + 4 }));
   };
